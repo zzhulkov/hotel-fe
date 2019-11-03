@@ -13,11 +13,14 @@ import {HttpService} from './http.service';
 export class AppComponent implements OnInit {
   title = 'hotel-fe';
   hello: Hello;
-  constructor(private http: HttpClient) {}
-  ngOnInit() {
-    // http://localhost:8090/hello
 
-    this.http.get('http://localhost:8070/hello').subscribe((data: Hello) => {
+  constructor(private http: HttpClient) {
+  }
+
+  ngOnInit() {
+    this.http.get('http://localhost:8080/hello').subscribe((data: Hello) => {
       console.log(data);
       this.hello = data
     });
+  }
+}
