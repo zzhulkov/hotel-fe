@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Hello} from './hello';
 import {HttpService} from './http.service';
 
+const URL = 'http://localhost:8080';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,9 +20,16 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get('http://localhost:8080/hello').subscribe((data: Hello) => {
+    this.http.get(URL + '/hello').subscribe((data: Hello) => {
       console.log(data);
-      this.hello = data
+      this.hello = data;
+    });
+  }
+
+  ngOnClick() {
+    this.http.get(URL + '/hello').subscribe((data: Hello) => {
+      console.log(data);
+      this.hello = data;
     });
   }
 }
