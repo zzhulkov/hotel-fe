@@ -9,6 +9,7 @@ import {HttpService} from './http.service';
   styleUrls: ['./app.component.css'],
   providers: [HttpService]
 })
+
 export class AppComponent implements OnInit {
   title = 'hotel-fe';
   hello: Hello;
@@ -20,5 +21,3 @@ export class AppComponent implements OnInit {
       console.log(data);
       this.hello = data
     });
-  }
-}
