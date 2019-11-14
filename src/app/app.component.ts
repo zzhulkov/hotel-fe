@@ -16,14 +16,15 @@ const URL = 'http://localhost:8080';
 
 export class AppComponent implements OnInit, OnDestroy {
 
-
   constructor(private http: HttpClient) {
   }
+
   title = 'hotel-fe';
   hello: Hello;
   apartmentClasses: ApartmentClass[];
   selectedApartmentClass: ApartmentClass;
   private subscription: Subscription;
+
   onSelect(apartmentClass: ApartmentClass): void {
     this.selectedApartmentClass = apartmentClass;
   }

@@ -6,4 +6,7 @@ import {Observable} from 'rxjs';
 export class HttpService {
   constructor(private http: HttpClient) { }
 
+  getConfig() {
+    return this.http.get('http://localhost:8080/hello');
+  }
 }
