@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Hello} from './hello';
-import {ApartmentsClass} from './apartmentsClass';
+import {ApartmentClass} from './apartmentClass';
 import {HttpService} from './http.service';
 import {Subscription} from 'rxjs';
 
@@ -21,11 +21,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   title = 'hotel-fe';
   hello: Hello;
-  apartmentsClasses: ApartmentsClass[];
-  selectedApartmentsClass: ApartmentsClass;
+  apartmentClasses: ApartmentClass[];
+  selectedApartmentClass: ApartmentClass;
   private subscription: Subscription;
-  onSelect(apartmentsClass: ApartmentsClass): void {
-    this.selectedApartmentsClass = apartmentsClass;
+  onSelect(apartmentClass: ApartmentClass): void {
+    this.selectedApartmentClass = apartmentClass;
   }
 
   ngOnInit() {
@@ -33,9 +33,9 @@ export class AppComponent implements OnInit, OnDestroy {
       console.log(data);
       this.hello = data;
      });
-    this.http.get(URL + '/apartments').subscribe((data: ApartmentsClass[]) => {
+    this.http.get(URL + '/apartments').subscribe((data: ApartmentClass[]) => {
       console.log(data);
-      this.apartmentsClasses = data;
+      this.apartmentClasses = data;
     });
   }
 

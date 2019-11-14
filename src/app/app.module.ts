@@ -5,7 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {ApartmentsClassComponent} from './apartmentsClass.component';
+import {ApartmentClassComponent} from './apartmentClass.component';
 import {HttpService} from './http.service';
 
 @NgModule({
@@ -17,7 +17,7 @@ import {HttpService} from './http.service';
     AppRoutingModule
   ],
   declarations: [
-    AppComponent, ApartmentsClassComponent
+    AppComponent, ApartmentClassComponent
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]
