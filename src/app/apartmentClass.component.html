@@ -1,6 +1,15 @@
-<div>
-  <p> ID is: {{apartmentClass?.id}}</p>
-  <p> Apartments class is: {{apartmentClass?.nameClass}}</p>
-  <p> numberOfRooms is: {{apartmentClass?.numberOfRooms}}</p>
-  <p> numberOfCouchette is: {{apartmentClass?.numberOfCouchette}}</p>
+<link rel="stylesheet" type="text/css" href="apartmentClass.component.css">
+<div class="apartment-box">
+<!--  <p> ID is: {{apartmentClass?.id}}</p>-->
+  <h1>{{apartmentClass?.nameClass}} apartments</h1>
+  <div class="images">
+    <!-- images -->
+  </div>
+  <div class="information">
+  <p> Number of rooms: {{apartmentClass?.numberOfRooms}}</p>
+  <p> Number of couchette: {{apartmentClass?.numberOfCouchette}}</p>
+  </div>
+  <div class="booking">
+    <button>Book apartments</button>
+  </div>
 </div>
