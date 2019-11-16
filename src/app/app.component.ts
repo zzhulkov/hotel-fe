@@ -4,6 +4,8 @@ import {Hello} from './hello';
 import {ApartmentClass} from './apartmentClass';
 import {HttpService} from './http.service';
 import {Subscription} from 'rxjs';
+import {Unsubsribable} from './component/Unsubsribable';
+import {takeUntil} from 'rxjs/operators';
 
 const URL = 'http://localhost:8080';
 
@@ -14,9 +16,10 @@ const URL = 'http://localhost:8080';
   providers: [HttpService]
 })
 
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent extends Unsubsribable implements OnInit{
 
   constructor(private http: HttpClient) {
+    super();
   }
 
   title = 'hotel-fe';
@@ -29,14 +32,15 @@ export class AppComponent implements OnInit, OnDestroy {
     this.selectedApartmentClass = apartmentClass;
   }
 
-  ngOnInit() {
-    this.subscription = this.http.get(URL + '/hello').subscribe((data: Hello) => {
-      console.log(data);
-      this.hello = data;
-     });
-    this.http.get(URL + '/apartments').subscribe((data: ApartmentClass[]) => {
-      console.log(data);
-      this.apartmentClasses = data;
+  ngOnInit(): void {
+    this.http.get('/hello').pipe(takeUntil(this.destroy$)).subscribe(res => {
+      console.log(res);
+      this.hello = (res as Hello);
+    });
+
+    this.http.get(URL + '/apartments').pipe(takeUntil(this.destroy$)).subscribe(res => {
+      console.log(res);
+      this.apartmentClasses = (res as ApartmentClass[]);
     });
   }
 
