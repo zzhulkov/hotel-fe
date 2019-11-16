@@ -6,8 +6,6 @@ import {Unsubsribable} from './component/Unsubsribable';
 import {takeUntil} from 'rxjs/operators';
 
 
-const URL = 'http://localhost:8080';
-
 @Component({
   selector: 'app-root',
   templateUrl: './apartmentClass.component.html',

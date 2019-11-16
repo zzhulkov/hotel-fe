@@ -24,7 +24,7 @@ export class AppComponent extends Unsubsribable implements OnInit{
 
   title = 'hotel-fe';
   hello: Hello;
-  apartmentClasses: ApartmentClass;
+  apartmentClasses: ApartmentClass[];
   selectedApartmentClass: ApartmentClass;
   private subscription: Subscription;
 
@@ -40,7 +40,7 @@ export class AppComponent extends Unsubsribable implements OnInit{
 
     this.http.get(URL + '/apartments').pipe(takeUntil(this.destroy$)).subscribe(res => {
       console.log(res);
-      this.apartmentClasses = (res as ApartmentClass);
+      this.apartmentClasses = (res as ApartmentClass[]);
     });
   }
 
