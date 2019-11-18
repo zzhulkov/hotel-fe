@@ -1,0 +1,14 @@
+<div class="apartment-box" *ngFor="let apartmentClass of apartmentClasses" (click)="onSelect(apartmentClass)">
+<!--  <p> ID is: {{apartmentClass.id}}</p>-->
+  <h1>{{apartmentClass.nameClass}} apartments</h1>
+  <div class="images">
+    <!-- images -->
+  </div>
+  <div class="information">
+    <p> Number of rooms: {{apartmentClass.numberOfRooms}}</p>
+    <p> Number of couchette: {{apartmentClass.numberOfCouchette}}</p>
+  </div>
+  <div class="booking">
+    <button>Book apartments</button>
+  </div>
+</div>
