@@ -2,6 +2,32 @@ section {
   margin-top: 3em;
   margin-bottom: 3em;
 }
+.block {
+  position:relative;
+  width: 100%;;
+  border: 3px solid #000;
+  text-align:center;
+}
+.wrap {
+
+  display:inline-block;
+}
+.table {
+
+  float: left;
+  height: 50px;
+  width: 75%;
+  border: 1px solid #000;
+  margin: 1.5px;
+}
+
+.butt{
+  float: left;
+  height: 50px;
+  width: 24%;
+  border: 1px solid #000;
+  margin: 1.5px;
+}
 
 /*TODO styles for staff page*/
 
