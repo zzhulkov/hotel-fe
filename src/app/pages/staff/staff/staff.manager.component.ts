@@ -3,6 +3,7 @@ import {HttpService} from '../../../http.service';
 import {MatDialog} from '@angular/material/dialog';
 
 
+
 @Component({
   selector: 'app-staff-manager',
   templateUrl: './staff.manager.component.html',
@@ -28,6 +29,7 @@ export class StaffManagerComponent {
 
 @Component({
   selector: 'dialog-change-staff-dialog',
+  styleUrls: ['./staff.manager.component.css'],
   templateUrl: './dialog-change-staff-dialog.html',
 })
 export class DialogChangeStuffDialogComponent {}

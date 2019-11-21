@@ -23,7 +23,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     HomeModule,
     ReviewsModule,
     ServicesModule,
-    StaffModule
+    StaffModule,
   ],
   declarations: [
     AppComponent
