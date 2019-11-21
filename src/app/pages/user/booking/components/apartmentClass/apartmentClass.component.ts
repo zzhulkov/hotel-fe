@@ -5,10 +5,10 @@ import {ApartmentClass} from './apartmentClass';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {takeUntil} from 'rxjs/operators';
 
-const URL = 'http://localhost:8080';
+const URL = 'http://localhost:8090';
 
 @Component({
-  selector: 'app-apartment-list',
+  selector: 'app-apartment-class-list',
   templateUrl: './apartmentClass.component.html',
   styleUrls: ['./apartmentClass.component.css'],
   providers: [HttpService]
@@ -31,7 +31,7 @@ export class ApartmentClassComponent extends Unsubscribable implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get(URL + '/apartments').pipe(takeUntil(this.destroy$)).subscribe(res => {
+    this.http.get(URL + '/apartment-class/all').pipe(takeUntil(this.destroy$)).subscribe(res => {
       console.log(res);
       this.apartmentClasses = (res as ApartmentClass[]);
     });
