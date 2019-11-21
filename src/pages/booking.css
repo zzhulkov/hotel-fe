@@ -1,0 +1,67 @@
+nav {
+  background-color: lightgray;
+  padding: 0.3em;
+}
+
+nav ul {
+  list-style-type: none;
+  overflow: hidden;
+}
+
+nav li {
+  display: block;
+  float: right;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+.account{
+  margin-left: 2em;
+}
+
+.logo{
+  float: left;
+  margin-left: 1em;
+}
+
+section {
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+.filters{
+  background-color: whitesmoke;
+  padding: 2em;
+}
+
+.filters button{
+  border: none;
+  background-color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 7px;
+}
+
+.contacts{
+  padding: 1em;
+  text-align: center;
+  background-color: darkgrey;
+}
+
+.three-column div{
+  padding: 1em;
+}
+
+.three-column{
+  margin-left: 5em;
+  margin-right: 5em;
+  column-count: 3;
+}
+
+footer{
+  background-color: dimgrey;
+  padding: 0.3em;
+  text-align: center;
+}
