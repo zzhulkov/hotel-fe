@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {MatButtonModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from '../../../http.service';
-import {StaffManagerComponent, DialogChangeStuffComponent, DialogChangeStuffDialogComponent} from './staff.manager.component';
+import {StaffManagerComponent, DialogChangeStuffDialogComponent} from './staff.manager.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 
@@ -18,11 +18,10 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatSelectModule
   ],
   declarations: [
-    StaffManagerComponent,[DialogChangeStuffComponent, DialogChangeStuffDialogComponent],
+    StaffManagerComponent, DialogChangeStuffDialogComponent ,
   ],
-  bootstrap: [DialogChangeStuffComponent],
   providers: [HttpService],
-  entryComponents: [DialogChangeStuffComponent, DialogChangeStuffDialogComponent],
+  entryComponents: [ DialogChangeStuffDialogComponent],
 })
 export class StaffManagerModule {
 }

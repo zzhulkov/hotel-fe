@@ -11,17 +11,6 @@ import {MatDialog} from '@angular/material/dialog';
 })
 
 export class StaffManagerComponent {
-
-}
-
-/**
- * @title Dialog with header, scrollable content and actions
- */
-@Component({
-  selector: 'dialog-change-stuff',
-  templateUrl: './dialog-change-staff.html',
-})
-export class DialogChangeStuffComponent {
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
@@ -32,6 +21,10 @@ export class DialogChangeStuffComponent {
     });
   }
 }
+
+/**
+ * @title Dialog with header, scrollable content and actions
+ */
 
 @Component({
   selector: 'dialog-change-staff-dialog',
