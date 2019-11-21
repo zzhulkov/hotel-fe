@@ -4,13 +4,14 @@ section {
 }
 .block {
   position:relative;
-  width: 100%;;
+  width: 100%;
+  height:auto;
   border: 3px solid #000;
   text-align:center;
 }
 .wrap {
 
-  display:inline-block;
+  display:block;
 }
 .table {
 
@@ -23,10 +24,14 @@ section {
 
 .butt{
   float: left;
-  height: 50px;
+  height: auto;
   width: 24%;
   border: 1px solid #000;
   margin: 1.5px;
+}
+
+.buttons{
+  width: 100%
 }
 
 /*TODO styles for staff page*/

@@ -3,18 +3,26 @@ import {NgModule} from '@angular/core';
 import {MatButtonModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from '../../../http.service';
-import {StaffManagerComponent} from './staff.manager.component';
+import {StaffManagerComponent, DialogChangeStuffComponent, DialogChangeStuffDialogComponent} from './staff.manager.component';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   imports: [
     BrowserModule,
     HttpClientModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
+  ],
+  exports: [
+    MatSelectModule
   ],
   declarations: [
-    StaffManagerComponent
+    StaffManagerComponent,[DialogChangeStuffComponent, DialogChangeStuffDialogComponent],
   ],
-  providers: [HttpService]
+  bootstrap: [DialogChangeStuffComponent],
+  providers: [HttpService],
+  entryComponents: [DialogChangeStuffComponent, DialogChangeStuffDialogComponent],
 })
 export class StaffManagerModule {
 }

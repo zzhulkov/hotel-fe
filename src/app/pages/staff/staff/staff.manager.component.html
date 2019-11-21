@@ -3,6 +3,27 @@ Staff list
 <div class="block">
 <!--  <div class="wrap">-->
     <div class="table">    </div>
-    <div class="butt"></div>
+    <div class="butt">
+      <div class="buttons">
+        <button mat-raised-button>Add</button>
+      </div>
+      <div class="buttons">
+        <dialog-change-stuff>loading</dialog-change-stuff>
+      </div>
+      <div class="buttons">
+        <button mat-raised-button>Delete</button>
+      </div>
+
+
+      <div class="buttons">
+        User roles:
+          <select matNativeControl required>
+            <option value="Client">Client</option>
+            <option value="Manager">Manager</option>
+            <option value="Administrator">Administrator</option>
+            <option value="Worker">Worker</option>
+          </select>
+      </div>
+    </div>
 <!--  </div>-->
 </div>
