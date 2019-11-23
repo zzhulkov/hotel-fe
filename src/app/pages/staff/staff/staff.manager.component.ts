@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {HttpService} from '../../../http.service';
 import {MatDialog} from '@angular/material/dialog';
+import {ChangeStuffDialogComponent} from './components/change-staff-dialog/change-staff-dialog-component';
 
 
 
@@ -15,7 +16,7 @@ export class StaffManagerComponent {
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
-    const dialogRef = this.dialog.open(DialogChangeStuffDialogComponent  );
+    const dialogRef = this.dialog.open(ChangeStuffDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -23,16 +24,6 @@ export class StaffManagerComponent {
   }
 }
 
-/**
- * @title Dialog with header, scrollable content and actions
- */
-
-@Component({
-  selector: 'dialog-change-staff-dialog',
-  styleUrls: ['./staff.manager.component.css'],
-  templateUrl: './dialog-change-staff-dialog.html',
-})
-export class DialogChangeStuffDialogComponent {}
 
 
 

@@ -15,13 +15,16 @@ Staff list
         <button class="mat-button" mat-raised-button>Delete</button>
       </div>
       <div class="buttons">
-        User roles:
-          <select matNativeControl required>
-            <option value="Client">Client</option>
-            <option value="Manager">Manager</option>
-            <option value="Administrator">Administrator</option>
-            <option value="Worker">Worker</option>
-          </select>
+        <mat-form-field>
+          <mat-label>Speciality</mat-label>
+          <mat-select matNativeControl required>
+            <mat-option value="All">All</mat-option>
+            <mat-option value="Client">Client</mat-option>
+            <mat-option value="Manager">Manager</mat-option>
+            <mat-option value="Administrator">Administrator</mat-option>
+            <mat-option value="Worker">Worker</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
     </div>
   </div>
