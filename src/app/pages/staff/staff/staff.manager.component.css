@@ -3,5 +3,35 @@ section {
   margin-bottom: 3em;
 }
 
+
+.wrap {
+  display:block;
+}
+
+.table {
+  float: left;
+  height: 50px;
+  width: 75%;
+  border: 1px solid #000;
+  margin: 1.5px;
+}
+
+.tools{
+  margin-left: auto;
+  height: auto;
+  width: 24%;
+  border: 1px solid #000;
+}
+
+.buttons{
+  width: 100%;
+  margin: 1em;
+}
+.mat-button{
+  width: 100px;
+ /* margin-bottom: 2px;*/
+}
+
+
 /*TODO styles for staff page*/
 
