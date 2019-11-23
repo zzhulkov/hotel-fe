@@ -9,7 +9,7 @@ import {Component} from '@angular/core';
   styleUrls: ['./change-staff-dialog.css'],
   templateUrl: './change-staff-dialog.html',
 })
-export class ChangeStuffDialogComponent {}
+export class ChangeStaffDialogComponent {}
 
 
 
