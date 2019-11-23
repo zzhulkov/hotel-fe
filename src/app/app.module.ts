@@ -10,9 +10,11 @@ import {HomeModule} from './pages/user/home/home.module';
 import {ReviewsModule} from './pages/user/reviews/reviews.module';
 import {ServicesModule} from './pages/user/services/services.module';
 import {StaffModule} from './pages/staff/staff.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
     MatButtonModule,
@@ -21,7 +23,7 @@ import {StaffModule} from './pages/staff/staff.module';
     HomeModule,
     ReviewsModule,
     ServicesModule,
-    StaffModule
+    StaffModule,
   ],
   declarations: [
     AppComponent
