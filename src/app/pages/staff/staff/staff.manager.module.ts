@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {MatButtonModule} from '@angular/material';
+import {MatButtonModule, MatInputModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from '../../../http.service';
 import {StaffManagerComponent, DialogChangeStuffDialogComponent} from './staff.manager.component';
@@ -12,9 +12,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     BrowserModule,
     HttpClientModule,
     MatButtonModule,
-    MatDialogModule
-  ],
-  exports: [
+    MatDialogModule,
+    MatInputModule,
     MatSelectModule
   ],
   declarations: [

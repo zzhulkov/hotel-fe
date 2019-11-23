@@ -3,13 +3,16 @@ section {
   margin-bottom: 3em;
 }
 
+.input{
+  width: 600px;
+}
+
 .full-width {
   width: 100%;
   margin-bottom: 3px;
 }
 
 .wrap {
-
   display:block;
 }
 
@@ -20,14 +23,6 @@ section {
   border: 1px solid #000;
   margin: 1.5px;
 }
-
-/*.butt{
-  float: left;
-  height: auto;
-  width: 24%;
-  border: 1px solid #000;
-  margin: 1.5px;
-}*/
 
 .tools{
   margin-left: auto;
@@ -44,6 +39,7 @@ section {
   width: 100px;
  /* margin-bottom: 2px;*/
 }
+
 
 /*TODO styles for staff page*/
 
