@@ -1,6 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Unsubscribable} from './component/Unsubscribable';
+import { Location } from '@angular/common';
 import {HttpService} from './http.service';
+
+
 
 
 @Component({
@@ -10,5 +13,21 @@ import {HttpService} from './http.service';
   providers: [HttpService]
 })
 
-export class AppComponent extends Unsubscribable {
+export class AppComponent extends Unsubscribable implements OnInit {
+
+  private userPaths: Array<string> = ['/staff/apartments', '/staff/booking',
+                          '/staff/services', '/staff/staff', '/staff/tasks'];
+  condition: boolean;
+
+  constructor(private location: Location) {
+    super();
+  }
+
+  ngOnInit() {
+    if (this.userPaths.includes(this.location.path())) {
+      this.condition = false;
+    } else {
+      this.condition = true;
+    }
+  }
 }

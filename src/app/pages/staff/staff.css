@@ -1,0 +1,33 @@
+/*styles for navigation*/
+nav {
+  background-color: lightgray;
+  padding: 0.3em;
+}
+
+nav ul {
+  list-style-type: none;
+  overflow: hidden;
+}
+
+nav li {
+  display: block;
+  float: right;
+  text-decoration: none;
+  margin-right: 1em;
+}
+
+/*.account{*/
+/*  margin-left: 2em;*/
+/*}*/
+
+.logo{
+  float: left;
+  margin-left: 1em;
+}
+/*end of styles for navigation*/
+
+footer{
+  background-color: dimgrey;
+  padding: 0.3em;
+  text-align: center;
+}

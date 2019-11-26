@@ -9,6 +9,7 @@ import {StaffComponent} from './staff.component';
 import {StaffManagerModule} from './staff/staff.manager.module';
 import {ApartmentsManagerModule} from './apartments/apartments.manager.module';
 import {HttpService} from '../../http.service';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
@@ -19,9 +20,13 @@ import {HttpService} from '../../http.service';
     BookingManagerModule,
     ServicesManagerModule,
     StaffManagerModule,
-    TaskManagerModule
+    TaskManagerModule,
+    RouterModule
   ],
   declarations: [
+    StaffComponent
+  ],
+  exports: [
     StaffComponent
   ],
   providers: [HttpService]
