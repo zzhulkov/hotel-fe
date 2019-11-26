@@ -7,6 +7,8 @@ import {StaffManagerComponent} from './staff.manager.component';
 import {ChangeStaffDialogComponent} from './components/change-staff-dialog/change-staff-dialog-component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table';
+import {StaffTableComponent} from './components/staff-table/staff-table.component';
 
 @NgModule({
   imports: [
@@ -15,10 +17,11 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatButtonModule,
     MatDialogModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule
   ],
   declarations: [
-    StaffManagerComponent, ChangeStaffDialogComponent ,
+    StaffManagerComponent, ChangeStaffDialogComponent , StaffTableComponent
   ],
   providers: [HttpService],
   entryComponents: [ ChangeStaffDialogComponent],
