@@ -4,7 +4,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {ChangeStaffDialogComponent} from './components/change-staff-dialog/change-staff-dialog-component';
 
 
-
 @Component({
   selector: 'app-staff-manager',
   templateUrl: './staff.manager.component.html',
