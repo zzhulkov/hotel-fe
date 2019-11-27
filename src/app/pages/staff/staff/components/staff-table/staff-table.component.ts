@@ -1,18 +1,43 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ApartmentClass} from '../../../../user/booking/components/apartmentClass/apartmentClass';
+import {takeUntil} from 'rxjs/operators';
+import {Staff} from '../../../../../component/staff';
+import {Unsubscribable} from '../../../../../component/Unsubscribable';
+import {HttpClient} from '@angular/common/http';
 
+
+const URL = 'http://localhost:8080';
 /**
  * @title Table with sticky header
  */
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'staff-table-component',
   styleUrls: ['staff-table.css'],
   templateUrl: 'staff-table.html',
 })
-export class StaffTableComponent {
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
-}
+export class StaffTableComponent extends Unsubscribable implements OnInit {
+  staffList: Staff[];
+  selectedStaff: Staff;
+  displayedColumns = ['id', 'user.firstname', 'user.lastname', 'user.email', 'user.phone', 'user.login', 'speciality', 'active'];
+  dataSource = this.staffList;
 
+  constructor(private http: HttpClient) {
+    super();
+  }
+
+  onSelect(staff: Staff): void {
+    this.selectedStaff = staff;
+  }
+
+  ngOnInit() {
+    this.http.get(URL + '/staff/').pipe(takeUntil(this.destroy$)).subscribe(res => {
+      console.log(res);
+      this.staffList = (res as Staff[]);
+    });
+  }
+}
+/*
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -32,3 +57,4 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
 ];
+*/
