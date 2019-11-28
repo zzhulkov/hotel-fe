@@ -5,7 +5,7 @@ import {ApartmentClass} from './apartmentClass';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {takeUntil} from 'rxjs/operators';
 
-const URL = 'http://localhost:8090';
+const URL = 'http://localhost:8080';
 
 @Component({
   selector: 'app-apartment-class-list',
