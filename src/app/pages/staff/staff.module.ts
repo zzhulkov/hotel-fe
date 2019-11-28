@@ -6,7 +6,7 @@ import {BookingManagerModule} from './booking/booking.manager.module';
 import {ServicesManagerModule} from './services/services.manager.module';
 import {TaskManagerModule} from './tasks/task.manager.module';
 import {StaffComponent} from './staff.component';
-import {StaffManagerModule} from './staff/staff.manager.module';
+import {StaffManagerModule} from './staff/staff-manager.module';
 import {ApartmentsManagerModule} from './apartments/apartments.manager.module';
 import {HttpService} from '../../http.service';
 import {RouterModule} from '@angular/router';
