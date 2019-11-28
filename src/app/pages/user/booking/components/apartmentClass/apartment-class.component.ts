@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {HttpService} from '../../../../../http.service';
-import {ApartmentClass} from './apartmentClass';
+import {ApartmentClass} from '../../../../../component/apartment-class';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {takeUntil} from 'rxjs/operators';
 
@@ -9,8 +9,8 @@ const URL = 'http://localhost:8090';
 
 @Component({
   selector: 'app-apartment-class-list',
-  templateUrl: './apartmentClass.component.html',
-  styleUrls: ['./apartmentClass.component.css'],
+  templateUrl: './apartment-class.component.html',
+  styleUrls: ['./apartment-class.component.css'],
   providers: [HttpService]
 })
 
