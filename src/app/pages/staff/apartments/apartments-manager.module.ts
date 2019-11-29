@@ -20,7 +20,8 @@ import {ApartmentsTableComponent} from './components/apartments-table/apartments
   declarations: [
     ApartmentsManagerComponent, ApartmentsTableComponent, ChangeApartmentsDialogComponent
   ],
-  providers: [HttpService]
+  providers: [HttpService],
+  entryComponents: [ ChangeApartmentsDialogComponent],
 })
 export class ApartmentsManagerModule {
 }
