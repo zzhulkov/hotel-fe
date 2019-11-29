@@ -1,19 +1,19 @@
 section {
-  margin-top: 3em;
-  margin-bottom: 3em;
+  margin: 3em;
+  overflow: auto;
+  overflow-x:hidden;
 }
 
-
 .wrap {
-  display:block;
+  margin-top: 1em;
 }
 
 .table {
   float: left;
-  height: 50px;
   width: 75%;
+  height: 25em;
   border: 1px solid #000;
-  margin: 1.5px;
+  margin-right: 1.5px;
 }
 
 .tools{
@@ -29,9 +29,5 @@ section {
 }
 .mat-button{
   width: 100px;
- /* margin-bottom: 2px;*/
 }
-
-
-/*TODO styles for staff page*/
 
