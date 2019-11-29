@@ -6,10 +6,12 @@ import {HttpService} from '../../../http.service';
 import {ApartmentsManagerComponent} from './apartments-manager.component';
 import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog-component';
 import {ApartmentsTableComponent} from './components/apartments-table/apartments-table.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     HttpClientModule,
     MatButtonModule,
     MatFormFieldModule,

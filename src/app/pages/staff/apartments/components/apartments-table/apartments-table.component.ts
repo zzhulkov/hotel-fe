@@ -30,6 +30,7 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit {
     this.selectedApartments = apartments;
   }
 
+  // TODO form control, закрывать форму после успешного подтверждеия транзакции, отправлять запросы, пофиксить верстку, прикрутить bootstrap css
   ngOnInit() {
     this.http.get(URL + '/apartment/all').pipe(takeUntil(this.destroy$)).subscribe(res => {
       console.log(res);
