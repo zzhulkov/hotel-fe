@@ -1,22 +1,18 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {MatButtonModule, MatPaginatorModule, MatTableModule} from '@angular/material';
+import {MatButtonModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from '../../../http.service';
-import {BookingManagerComponent} from './booking-manager.component';
-import {BookingTableComponent} from './components/booking-table/booking-table';
+import {BookingManagerComponent} from './booking.manager.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     HttpClientModule,
-    MatButtonModule,
-    MatTableModule,
-    MatPaginatorModule
+    MatButtonModule
   ],
   declarations: [
-    BookingManagerComponent,
-    BookingTableComponent
+    BookingManagerComponent
   ],
   providers: [HttpService]
 })
