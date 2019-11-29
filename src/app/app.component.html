@@ -1,36 +1,3 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div>
-  <p> ID is: {{hello?.id}}</p>
-  <p> Content is: {{hello?.content}}</p>
-</div>
-<h2>
-  Apartments!!!!!
-</h2>
-<ul>
-  <li *ngFor="let apartmentClass of apartmentClasses" (click)="onSelect(apartmentClass)">
-    id: {{apartmentClass.id}}, nameClass: {{apartmentClass.nameClass}},   numberOfRooms: {{apartmentClass.numberOfRooms}}, numberOfCouchette: {{apartmentClass.numberOfCouchette}}
-  </li>
-</ul>
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <button mat-raised-button (click) = ngOnClick()>Material Button</button>
- </div>
- <h2>Here are some links to help you start: </h2>
- <ul>
-   <li>
-     <h2><a target="_blank" rel="noopener" href="https://material.angular.io/components">Material</a></h2>
-   </li>
-   <li>
-     <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-   </li>
-   <li>
-     <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-   </li>
-   <li>
-     <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-   </li>
- </ul>
-
- <router-outlet></router-outlet>
+<div *ngIf="condition; then userBlock else staffBlock"></div>
+<ng-template #userBlock><app-user></app-user></ng-template>
+<ng-template #staffBlock><app-staff></app-staff></ng-template>
