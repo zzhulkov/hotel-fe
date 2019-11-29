@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {HttpService} from '../../../../../http.service';
-import {ApartmentClass} from './apartmentClass';
+import {ApartmentClass} from '../../../../../component/apartmentClass';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {takeUntil} from 'rxjs/operators';
 
