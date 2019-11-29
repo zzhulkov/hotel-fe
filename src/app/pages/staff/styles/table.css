@@ -1,8 +1,7 @@
 .example-container {
-  height: 400px;
+  /*height: 400px;*/
 }
 
-table {
-  overflow-y: scroll;
+.table-component {
   width: 100%;
 }

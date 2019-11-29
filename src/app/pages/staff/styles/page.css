@@ -6,9 +6,11 @@ section {
 
 .wrap {
   margin-top: 1em;
+  position: relative;
 }
 
 .table {
+  overflow-y: scroll;
   float: left;
   width: 75%;
   height: 25em;
