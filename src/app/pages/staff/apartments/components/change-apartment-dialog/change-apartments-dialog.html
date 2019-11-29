@@ -1,12 +1,12 @@
-<section class="change-apartment">
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="change-apartment">
   <h2 mat-dialog-title>Edit Apartment</h2>
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
-      <input matInput class="full-width" placeholder="Room number">
+      <input matInput formControlName="roomNumber" class="full-width" placeholder="Room number">
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput class="full-width" placeholder="Photo">
+      <input matInput formControlName="photo" class="full-width" placeholder="Photo">
     </mat-form-field>
     <br/>
     <mat-form-field>
@@ -40,8 +40,9 @@
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Change</button>
+    <button mat-button [mat-dialog-close]
+      ="true" mat-dialog-close>Cancel</button>
+    <button mat-button type="submit" cdkFocusInitial>Change</button>
   </mat-dialog-actions>
-</section>
+</form>
 
