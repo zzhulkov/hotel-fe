@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {MatButtonModule, MatDialogModule, MatFormFieldModule, MatSelectModule, MatTableModule} from '@angular/material';
+import {MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTableModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from '../../../http.service';
 import {ApartmentsManagerComponent} from './apartments-manager.component';
@@ -15,7 +15,8 @@ import {ApartmentsTableComponent} from './components/apartments-table/apartments
     MatFormFieldModule,
     MatSelectModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule
   ],
   declarations: [
     ApartmentsManagerComponent, ApartmentsTableComponent, ChangeApartmentsDialogComponent
