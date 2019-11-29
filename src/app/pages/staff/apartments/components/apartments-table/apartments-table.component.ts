@@ -17,8 +17,8 @@ const URL = 'http://localhost:8090';
 export class ApartmentsTableComponent extends Unsubscribable implements OnInit {
   apartmentsList: Apartments[];
   selectedApartments: Apartments;
-  displayedColumns = ['id', 'roomNumber', 'photoUrl', 'description', 'status', 'apartmentsClass.id',
-    'apartmentsClass.nameClass', 'apartmentsClass.numberOfRooms', 'apartmentsClass.numberOfCouchette'];
+  displayedColumns = ['id', 'roomNumber', 'photo', 'description', 'status', 'apartmentClass.id',
+    'apartmentClass.nameClass', 'apartmentClass.numberOfRooms', 'apartmentClass.numberOfCouchette'];
 
   dataSource = this.apartmentsList;
 
@@ -31,7 +31,7 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get(URL + '/staff/').pipe(takeUntil(this.destroy$)).subscribe(res => {
+    this.http.get(URL + '/apartment/all').pipe(takeUntil(this.destroy$)).subscribe(res => {
       console.log(res);
       this.apartmentsList = (res as Apartments[]);
     });
