@@ -1,5 +1,12 @@
 <div class="staff-table-component">
 
+  <mat-form-field>
+    <input matInput (keyup)="doFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
   <table mat-table [dataSource]="staffList">
 
     <ng-container matColumnDef="id">
