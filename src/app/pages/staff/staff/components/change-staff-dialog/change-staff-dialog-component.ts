@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-change-staff-dialog',
-  styleUrls: ['./change-staff-dialog.css'],
+  styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './change-staff-dialog.html',
 })
 export class ChangeStaffDialogComponent {}

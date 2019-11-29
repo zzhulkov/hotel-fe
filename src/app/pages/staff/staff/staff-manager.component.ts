@@ -6,8 +6,8 @@ import {ChangeStaffDialogComponent} from './components/change-staff-dialog/chang
 
 @Component({
   selector: 'app-staff-manager',
-  templateUrl: './staff.manager.component.html',
-  styleUrls: ['./staff.manager.component.css'],
+  templateUrl: './staff-manager.component.html',
+  styleUrls: ['../styles/page.css'],
   providers: [HttpService]
 })
 
