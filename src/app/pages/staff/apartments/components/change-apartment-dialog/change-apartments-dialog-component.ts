@@ -5,11 +5,11 @@ import {Component} from '@angular/core';
  */
 
 @Component({
-  selector: 'app-change-staff-dialog',
+  selector: 'app-change-apartments-dialog',
   styleUrls: ['../../../styles/change-dialog.css'],
-  templateUrl: './change-staff-dialog.html',
+  templateUrl: './change-apartments-dialog.html',
 })
-export class ChangeStaffDialogComponent {}
+export class ChangeApartmentsDialogComponent {}
 
 
 

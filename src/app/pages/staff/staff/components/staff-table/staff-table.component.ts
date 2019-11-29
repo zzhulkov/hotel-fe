@@ -6,14 +6,14 @@ import {HttpClient} from '@angular/common/http';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 
 
-const URL = 'http://localhost:8080';
+const URL = 'http://localhost:8090';
 /**
  * @title Table with sticky header
  */
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'staff-table-component',
-  styleUrls: ['staff-table.css'],
+  styleUrls: ['../../../styles/table.css'],
   templateUrl: 'staff-table.html',
 })
 export class StaffTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
