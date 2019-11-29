@@ -10,7 +10,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import {StaffTableComponent} from './components/staff-table/staff-table.component';
 import {MatPaginatorModule} from '@angular/material';
-import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -23,8 +22,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatInputModule,
     MatSelectModule,
     MatTableModule,
-    MatFormFieldModule,
-    ReactiveFormsModule
+    MatFormFieldModule
   ],
   exports: [
     MatButtonModule,
