@@ -1,4 +1,4 @@
-export class ApartmentClass {
+export class ApartmentsClass {
   id: number;
   nameClass: string;
   numberOfRooms: number;

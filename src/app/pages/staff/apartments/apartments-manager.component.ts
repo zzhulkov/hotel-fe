@@ -1,28 +1,25 @@
 import {Component} from '@angular/core';
 import {HttpService} from '../../../http.service';
+import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog-component';
 import {MatDialog} from '@angular/material/dialog';
-import {ChangeStaffDialogComponent} from './components/change-staff-dialog/change-staff-dialog-component';
 
 
 @Component({
-  selector: 'app-staff-manager',
-  templateUrl: './staff-manager.component.html',
+  selector: 'app-apartments-manager',
+  templateUrl: './apartments-manager.component.html',
   styleUrls: ['../styles/page.css'],
   providers: [HttpService]
 })
 
-export class StaffManagerComponent {
+export class ApartmentsManagerComponent {
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
-    const dialogRef = this.dialog.open(ChangeStaffDialogComponent);
+    const dialogRef = this.dialog.open(ChangeApartmentsDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
 }
-
-
-
 
