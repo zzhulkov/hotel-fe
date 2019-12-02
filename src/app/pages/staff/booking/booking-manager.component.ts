@@ -4,8 +4,8 @@ import {HttpService} from '../../../http.service';
 
 @Component({
   selector: 'app-booking-manager',
-  templateUrl: './booking.manager.component.html',
-  styleUrls: ['./booking.manager.component.css'],
+  templateUrl: './booking-manager.component.html',
+  styleUrls: ['../styles/page.css'],
   providers: [HttpService]
 })
 
