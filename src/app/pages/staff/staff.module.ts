@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {MatButtonModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
-import {BookingManagerModule} from './booking/booking.manager.module';
+import {BookingManagerModule} from './booking/booking-manager.module';
 import {ServicesManagerModule} from './services/services.manager.module';
 import {TaskManagerModule} from './tasks/task.manager.module';
 import {StaffComponent} from './staff.component';
