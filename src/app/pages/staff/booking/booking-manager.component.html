@@ -1,3 +1,31 @@
-<!-- TODO for booking page-->
-
-<booking-table-component></booking-table-component>
+<section class="staff-list">
+  Staff list
+  <div class="wrap">
+    <div class="table">
+      <booking-table-component></booking-table-component>
+    </div>
+    <div class="tools">
+      <div class="buttons">
+        <button class="mat-button" mat-raised-button>Add</button>
+      </div>
+      <div class="buttons">
+        <button class="mat-button" mat-raised-button>Change</button>
+      </div>
+      <div class="buttons">
+        <button class="mat-button" mat-raised-button>Delete</button>
+      </div>
+      <div class="buttons">
+        <mat-form-field>
+          <mat-label>Speciality</mat-label>
+          <mat-select>
+            <mat-option value="All">All</mat-option>
+            <mat-option value="Client">Client</mat-option>
+            <mat-option value="Worker">Worker</mat-option>
+            <mat-option value="Manager">Manager</mat-option>
+            <mat-option value="Administrator">Administrator</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</section>
