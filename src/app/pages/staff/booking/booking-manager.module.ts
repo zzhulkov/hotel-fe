@@ -4,7 +4,7 @@ import {MatButtonModule, MatPaginatorModule, MatTableModule} from '@angular/mate
 import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from '../../../http.service';
 import {BookingManagerComponent} from './booking-manager.component';
-import {BookingTableComponent} from './components/booking-table/booking-table';
+// import {BookingTableComponent} from './components/booking-table/booking-table';
 
 @NgModule({
   imports: [
@@ -16,7 +16,7 @@ import {BookingTableComponent} from './components/booking-table/booking-table';
   ],
   declarations: [
     BookingManagerComponent,
-    BookingTableComponent
+    // BookingTableComponent
   ],
   providers: [HttpService]
 })
