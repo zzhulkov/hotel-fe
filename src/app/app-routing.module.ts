@@ -5,10 +5,10 @@ import {HomeComponent} from './pages/user/home/home.component';
 import {ServicesComponent} from './pages/user/services/services.component';
 import {ReviewsComponent} from './pages/user/reviews/reviews.component';
 import {ApartmentsManagerComponent} from './pages/staff/apartments/apartments-manager.component';
+import {BookingManagerComponent} from './pages/staff/booking/booking-manager.component';
 import {ServicesManagerComponent} from './pages/staff/services/services.manager.component';
 import {TaskManagerComponent} from './pages/staff/tasks/task.manager.component';
 import {StaffManagerComponent} from './pages/staff/staff/staff-manager.component';
-import {BookingManagerComponent} from './pages/staff/booking/booking-manager.component';
 
 const routes: Routes = [
   {
