@@ -49,7 +49,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
   }
 
   public getAllBookings = () => {
-    this.http.get(URL + '/booking/all').subscribe(res => {
+    this.http.get(URL + '/bookings').subscribe(res => {
       console.log(res);
       this.dataSource.data = (res as Booking[]);
     });

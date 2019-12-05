@@ -102,7 +102,7 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
   }
 
   public getAllStaff = () => {
-    this.http.get(URL + '/staff/').subscribe(res => {
+    this.http.get(URL + '/staff').subscribe(res => {
       console.log(res);
       this.staffList.data = (res as Staff[]);
     });
