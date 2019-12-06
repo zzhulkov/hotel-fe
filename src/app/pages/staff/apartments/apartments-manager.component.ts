@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {HttpService} from '../../../http.service';
 import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog-component';
+import {AddApartmentsDialogComponent} from './components/add-apartments-dialog/add-apartments-dialog-component';
 import {MatDialog} from '@angular/material/dialog';
 
 
@@ -16,6 +17,14 @@ export class ApartmentsManagerComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(ChangeApartmentsDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  changeApartmentDialog() {
+    const dialogRef = this.dialog.open(AddApartmentsDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
