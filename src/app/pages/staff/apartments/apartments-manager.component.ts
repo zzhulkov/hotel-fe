@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {HttpService} from '../../../http.service';
 import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog-component';
-import {AddApartmentsDialogComponent} from './components/add-apartments-dialog/add-apartments-dialog-component';
+import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog-component';
 import {MatDialog} from '@angular/material/dialog';
 
 
