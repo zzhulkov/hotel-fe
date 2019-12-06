@@ -8,6 +8,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from '../../../http.service';
 import {ApartmentsManagerComponent} from './apartments-manager.component';
 import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog-component';
+import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog-component';
 import {ApartmentsTableComponent} from './components/apartments-table/apartments-table.component';
 import {MatPaginatorModule} from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -34,10 +35,10 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatTableModule
   ],
   declarations: [
-    ApartmentsManagerComponent, ApartmentsTableComponent, ChangeApartmentsDialogComponent
+    ApartmentsManagerComponent, ApartmentsTableComponent, ChangeApartmentsDialogComponent, AddApartmentsDialogComponent
   ],
   providers: [HttpService],
-  entryComponents: [ ChangeApartmentsDialogComponent],
+  entryComponents: [ ChangeApartmentsDialogComponent, AddApartmentsDialogComponent],
 })
 export class ApartmentsManagerModule {
 }
