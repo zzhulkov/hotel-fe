@@ -14,11 +14,6 @@ export class ChangeApartmentsDialogComponent {
   profileForm = new FormGroup({
     roomNumber: new FormControl('', Validators.required),
     photo: new FormControl(null),
-    description: new FormControl(''),
-    status:  new FormControl(''),
-    className: new FormControl(''),
-    numberOfRooms: new FormControl(''),
-    numberOfCouchette: new FormControl('')
   });
 
   onSubmit() {
