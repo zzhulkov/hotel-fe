@@ -5,9 +5,10 @@ import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {HttpClient} from '@angular/common/http';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {FormControl} from '@angular/forms';
+import {ShareService} from './share-service';
 
 
-const URL = 'http://localhost:8090';
+const URL = 'http://localhost:8080';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -38,28 +39,76 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
     speciality: '',
     active: ''
   };
+  private ss: ShareService;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, ss: ShareService) {
     super();
     this.getAllStaff();
     this.staffList.filterPredicate = this.createFilter();
+    this.ss = ss;
   }
+
 // вынести input
   ngOnInit() {
-    this.firstNameFilter.valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe(
-        firstname => {
-          this.filterValues.firstname = firstname;
+/*    this.ss.getEmittedValue()
+      .subscribe(item => {
+        this.filterValues.firstname = item;
+        this.staffList.filter = JSON.stringify(this.filterValues);
+      }
+      );*/
+    this.ss.getEmittedValue()
+      .subscribe(item => {
+          this.filterValues.firstname = item.firstName;
           this.staffList.filter = JSON.stringify(this.filterValues);
+          console.log(this.filterValues.firstname);
         }
       );
-    this.lastNameFilter.valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe(
-        lastname => {
-          this.filterValues.lastname = lastname;
+
+    this.ss.getEmittedValue()
+      .subscribe(item => {
+          this.filterValues.lastname = item.lastName;
           this.staffList.filter = JSON.stringify(this.filterValues);
+          console.log(this.filterValues.lastname);
         }
       );
+    this.ss.getEmittedValue()
+      .subscribe(item => {
+          this.filterValues.email = item.email;
+          this.staffList.filter = JSON.stringify(this.filterValues);
+          console.log(this.filterValues.email);
+        }
+      );
+    this.ss.getEmittedValue()
+      .subscribe(item => {
+          this.filterValues.phone = item.phone;
+          this.staffList.filter = JSON.stringify(this.filterValues);
+          console.log(this.filterValues.phone);
+        }
+      );
+    this.ss.getEmittedValue()
+      .subscribe(item => {
+          this.filterValues.login = item.login;
+          this.staffList.filter = JSON.stringify(this.filterValues);
+          console.log(this.filterValues.login);
+        }
+      );
+
+    this.ss.getEmittedValue()
+      .subscribe(item => {
+          this.filterValues.speciality = item.speciality;
+          this.staffList.filter = JSON.stringify(this.filterValues);
+          console.log(this.filterValues.speciality);
+        }
+      );
+
+    this.ss.getEmittedValue()
+      .subscribe(item => {
+          this.filterValues.active = item.active;
+          this.staffList.filter = JSON.stringify(this.filterValues);
+          console.log(this.filterValues.active);
+        }
+      );
+  /*
     this.emailFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         email => {
@@ -94,7 +143,7 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
           this.filterValues.active = active;
           this.staffList.filter = JSON.stringify(this.filterValues);
         }
-      );
+      );*/
   }
 
   ngAfterViewInit(): void {
@@ -112,14 +161,14 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
     // tslint:disable-next-line:only-arrow-functions
     let filterFunction = function(data, filter): boolean {
       let searchTerms = JSON.parse(filter);
-      return data.user.lastname.toLowerCase().indexOf(searchTerms.lastname) !== -1
-        && data.user.email.toLowerCase().indexOf(searchTerms.email) !== -1
-        && data.user.firstname.toLowerCase().indexOf(searchTerms.firstname) !== -1
-        && data.user.phoneNumber.toLowerCase().indexOf(searchTerms.phone) !== -1
-        && data.user.login.toLowerCase().indexOf(searchTerms.login) !== -1
-        && data.id.toString().toLowerCase().indexOf(searchTerms.id) !== -1
-        && data.speciality.toLowerCase().indexOf(searchTerms.speciality) !== -1
-        && data.active.toString().toLowerCase().indexOf(searchTerms.active) !== -1;
+      return data.user.lastname.toLowerCase().indexOf(searchTerms.lastname.toLocaleLowerCase()) !== -1
+        && data.user.email.toLowerCase().indexOf(searchTerms.email.toLowerCase()) !== -1
+        && data.user.firstname.toLowerCase().indexOf(searchTerms.firstname.toLowerCase()) !== -1
+        && data.user.phoneNumber.toLowerCase().indexOf(searchTerms.phone.toLowerCase()) !== -1
+        && data.user.login.toLowerCase().indexOf(searchTerms.login.toLowerCase()) !== -1
+        && data.id.toString().toLowerCase().indexOf(searchTerms.id.toLowerCase()) !== -1
+        && data.speciality.toLowerCase().indexOf(searchTerms.speciality.toLowerCase()) !== -1
+        && data.active.toString().toLowerCase().indexOf(searchTerms.active.toLowerCase()) !== -1;
     };
     return filterFunction;
   }
