@@ -1,0 +1,87 @@
+<div class="table-component">
+
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+  <table mat-table [dataSource]="dataSource">
+
+    <ng-container class="column" matColumnDef="startDate">
+      <th class="header" mat-header-cell *matHeaderCellDef>
+        startDate:
+      </th>
+      <td mat-cell *matCellDef="let booking"> {{booking?.startDate}} </td>
+    </ng-container>
+
+    <ng-container class="column" matColumnDef="endDate">
+      <th class="header" mat-header-cell *matHeaderCellDef>
+        endDate:
+      </th>
+      <td mat-cell *matCellDef="let booking"> {{booking?.endDate}} </td>
+    </ng-container>
+
+    <ng-container class="column" matColumnDef="totalPrice">
+      <th class="header" mat-header-cell *matHeaderCellDef>
+        totalPrice:
+      </th>
+      <td mat-cell *matCellDef="let booking"> {{booking?.totalPrice}} </td>
+    </ng-container>
+
+    <ng-container class="column" matColumnDef="comments">
+      <th class="header" mat-header-cell *matHeaderCellDef>
+        comments:
+      </th>
+      <td mat-cell *matCellDef="let booking"> {{booking?.comment}} </td>
+    </ng-container>
+
+    <ng-container class="column" matColumnDef="createdDate">
+      <th class="header" mat-header-cell *matHeaderCellDef>
+        createdDate:
+      </th>
+      <td mat-cell *matCellDef="let booking"> {{booking?.createdDate}} </td>
+    </ng-container>
+
+    <ng-container class="column" matColumnDef="review">
+      <th class="header" mat-header-cell *matHeaderCellDef>
+        review:
+      </th>
+      <td mat-cell *matCellDef="let booking"> {{booking?.review}} </td>
+    </ng-container>
+
+    <ng-container class="column" matColumnDef="bookingStatus">
+      <th class="header" mat-header-cell *matHeaderCellDef>
+        bookingStatus:
+      </th>
+      <td mat-cell *matCellDef="let booking"> {{booking?.bookingStatus}} </td>
+    </ng-container>
+
+    <ng-container class="column" matColumnDef="bookedBy">
+      <th class="header" mat-header-cell *matHeaderCellDef>
+        bookedBy:
+      </th>
+      <td mat-cell *matCellDef="let booking"> {{booking?.user.lastname}} </td>
+    </ng-container>
+
+    <ng-container class="column" matColumnDef="apartmentClass">
+      <th class="header" mat-header-cell *matHeaderCellDef>
+        apartmentClass:
+      </th>
+      <td mat-cell *matCellDef="let booking"> {{booking?.apartmentClass.nameClass}} </td>
+    </ng-container>
+
+    <ng-container class="column" matColumnDef="apartment">
+      <th class="header" mat-header-cell *matHeaderCellDef>
+        apartment:
+      </th>
+      <td mat-cell *matCellDef="let booking"> {{booking.apartment?.id || ''}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let booking; columns: displayedColumns;"></tr>
+
+
+  </table>
+</div>
+
+<!-- Copyright 2019 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

@@ -1,0 +1,28 @@
+<section class="apartment-list">
+  Apartments list
+  <div class="wrap">
+    <div class="table">
+      <apartments-table-component></apartments-table-component>
+    </div>
+    <div class="tools">
+      <div class="buttons">
+        <button class="mat-button" mat-raised-button (click)="addApartmentDialog()">Add</button>
+      </div>
+      <div class="buttons">
+        <button class="mat-button" mat-raised-button (click)="openDialog()">Change</button>
+      </div>
+      <div class="buttons">
+        <mat-form-field>
+          <mat-label>Status</mat-label>
+          <mat-select>
+            <mat-option value="All">All</mat-option>
+            <mat-option value="On repair">On repair</mat-option>
+            <mat-option value="Need cleaning">Need cleaning</mat-option>
+            <mat-option value="Occupied">Occupied</mat-option>
+            <mat-option value="Ready to check in">Ready to check in</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</section>
