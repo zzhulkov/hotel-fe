@@ -13,7 +13,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 export class AddApartmentsDialogComponent {
   addApartmentForm = new FormGroup({
     roomNumber: new FormControl('', Validators.required),
-    photo: new FormControl(null, Validators.required),
+    photo: new FormControl(null, Validators.pattern('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')),
     description: new FormControl('', Validators.required),
     status:  new FormControl('', Validators.required),
     className: new FormControl('', Validators.required),
