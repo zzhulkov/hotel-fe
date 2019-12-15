@@ -58,6 +58,7 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
     this.selectedApartments = apartments;
   }
 
+  // tslint:disable-next-line:max-line-length
   // TODO form control, закрывать форму после успешного подтверждеия транзакции, отправлять запросы, пофиксить верстку, прикрутить bootstrap css
   ngOnInit() {
 
