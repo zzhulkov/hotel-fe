@@ -22,13 +22,6 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
 
   displayedColumns = ['user.firstname', 'user.lastname', 'user.email', 'user.phone', 'user.login', 'speciality', 'active'];
   staffList = new MatTableDataSource<Staff>();
-  firstNameFilter = new FormControl('');
-  lastNameFilter = new FormControl('');
-  emailFilter = new FormControl('');
-  phoneFilter = new FormControl('');
-  loginFilter = new FormControl('');
-  specialityFilter = new FormControl('');
-  activeFilter = new FormControl('');
   filterValues = {
     id: '',
     firstname: '',
@@ -39,24 +32,18 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
     speciality: '',
     active: ''
   };
-  private ss: ShareService;
+  private shareService: ShareService;
 
-  constructor(private http: HttpClient, ss: ShareService) {
+  constructor(private http: HttpClient, shareService: ShareService) {
     super();
     this.getAllStaff();
     this.staffList.filterPredicate = this.createFilter();
-    this.ss = ss;
+    this.shareService = shareService;
   }
 
-// вынести input
+
   ngOnInit() {
-/*    this.ss.getEmittedValue()
-      .subscribe(item => {
-        this.filterValues.firstname = item;
-        this.staffList.filter = JSON.stringify(this.filterValues);
-      }
-      );*/
-    this.ss.getEmittedValue()
+    this.shareService.getEmittedValue()
       .subscribe(item => {
           this.filterValues.firstname = item.firstName;
           this.staffList.filter = JSON.stringify(this.filterValues);
@@ -64,28 +51,28 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
         }
       );
 
-    this.ss.getEmittedValue()
+    this.shareService.getEmittedValue()
       .subscribe(item => {
           this.filterValues.lastname = item.lastName;
           this.staffList.filter = JSON.stringify(this.filterValues);
           console.log(this.filterValues.lastname);
         }
       );
-    this.ss.getEmittedValue()
+    this.shareService.getEmittedValue()
       .subscribe(item => {
           this.filterValues.email = item.email;
           this.staffList.filter = JSON.stringify(this.filterValues);
           console.log(this.filterValues.email);
         }
       );
-    this.ss.getEmittedValue()
+    this.shareService.getEmittedValue()
       .subscribe(item => {
           this.filterValues.phone = item.phone;
           this.staffList.filter = JSON.stringify(this.filterValues);
           console.log(this.filterValues.phone);
         }
       );
-    this.ss.getEmittedValue()
+    this.shareService.getEmittedValue()
       .subscribe(item => {
           this.filterValues.login = item.login;
           this.staffList.filter = JSON.stringify(this.filterValues);
@@ -93,7 +80,7 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
         }
       );
 
-    this.ss.getEmittedValue()
+    this.shareService.getEmittedValue()
       .subscribe(item => {
           this.filterValues.speciality = item.speciality;
           this.staffList.filter = JSON.stringify(this.filterValues);
@@ -101,49 +88,13 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
         }
       );
 
-    this.ss.getEmittedValue()
+    this.shareService.getEmittedValue()
       .subscribe(item => {
           this.filterValues.active = item.active;
           this.staffList.filter = JSON.stringify(this.filterValues);
           console.log(this.filterValues.active);
         }
       );
-  /*
-    this.emailFilter.valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe(
-        email => {
-          this.filterValues.email = email;
-          this.staffList.filter = JSON.stringify(this.filterValues);
-        }
-      );
-    this.phoneFilter.valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe(
-        phone => {
-          this.filterValues.phone = phone;
-          this.staffList.filter = JSON.stringify(this.filterValues);
-        }
-      );
-    this.loginFilter.valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe(
-        login => {
-          this.filterValues.login = login;
-          this.staffList.filter = JSON.stringify(this.filterValues);
-        }
-      );
-    this.specialityFilter.valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe(
-        speciality => {
-          this.filterValues.speciality = speciality;
-          this.staffList.filter = JSON.stringify(this.filterValues);
-        }
-      );
-    this.activeFilter.valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe(
-        active => {
-          this.filterValues.active = active;
-          this.staffList.filter = JSON.stringify(this.filterValues);
-        }
-      );*/
   }
 
   ngAfterViewInit(): void {
@@ -161,12 +112,11 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
     // tslint:disable-next-line:only-arrow-functions
     let filterFunction = function(data, filter): boolean {
       let searchTerms = JSON.parse(filter);
-      return data.user.lastname.toLowerCase().indexOf(searchTerms.lastname.toLocaleLowerCase()) !== -1
+      return data.user.lastname.toLowerCase().indexOf(searchTerms.lastname.toLowerCase()) !== -1
         && data.user.email.toLowerCase().indexOf(searchTerms.email.toLowerCase()) !== -1
         && data.user.firstname.toLowerCase().indexOf(searchTerms.firstname.toLowerCase()) !== -1
         && data.user.phoneNumber.toLowerCase().indexOf(searchTerms.phone.toLowerCase()) !== -1
         && data.user.login.toLowerCase().indexOf(searchTerms.login.toLowerCase()) !== -1
-        && data.id.toString().toLowerCase().indexOf(searchTerms.id.toLowerCase()) !== -1
         && data.speciality.toLowerCase().indexOf(searchTerms.speciality.toLowerCase()) !== -1
         && data.active.toString().toLowerCase().indexOf(searchTerms.active.toLowerCase()) !== -1;
     };

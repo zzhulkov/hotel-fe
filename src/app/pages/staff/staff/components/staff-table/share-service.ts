@@ -9,7 +9,7 @@ export class ShareService {
 
   @Output() share: EventEmitter<any> = new EventEmitter();
 
-  change(item: any) {
+  setEmittedValue(item: any) {
     console.log('selected item ' + item);
     this.share.emit(item);
   }
