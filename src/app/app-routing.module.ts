@@ -5,7 +5,7 @@ import {HomeComponent} from './pages/user/home/home.component';
 import {ServicesComponent} from './pages/user/services/services.component';
 import {ReviewsComponent} from './pages/user/reviews/reviews.component';
 import {ApartmentsManagerComponent} from './pages/staff/apartments/apartments-manager.component';
-import {BookingManagerComponent} from './pages/staff/booking/booking.manager.component';
+import {BookingManagerComponent} from './pages/staff/booking/booking-manager.component';
 import {ServicesManagerComponent} from './pages/staff/services/services.manager.component';
 import {TaskManagerComponent} from './pages/staff/tasks/task.manager.component';
 import {StaffManagerComponent} from './pages/staff/staff/staff-manager.component';
@@ -24,19 +24,19 @@ const routes: Routes = [
     path: 'reviews', component: ReviewsComponent
   },
   {
-    path: 'staff/apartments', component: ApartmentsManagerComponent
+    path: 'manager/apartments', component: ApartmentsManagerComponent
   },
   {
-    path: 'staff/booking', component: BookingManagerComponent
+    path: 'manager/booking', component: BookingManagerComponent
   },
   {
-    path: 'staff/services', component: ServicesManagerComponent
+    path: 'manager/services', component: ServicesManagerComponent
   },
   {
-    path: 'staff/staff', component: StaffManagerComponent
+    path: 'manager/staff', component: StaffManagerComponent
   },
   {
-    path: 'staff/tasks', component: TaskManagerComponent
+    path: 'manager/tasks', component: TaskManagerComponent
   }
 ];
 

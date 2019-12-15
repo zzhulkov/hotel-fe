@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {MatButtonModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {MatAutocompleteModule, MatButtonModule, MatFormFieldModule, MatInputModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from '../../../http.service';
 import {StaffManagerComponent} from './staff-manager.component';
@@ -10,6 +10,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import {StaffTableComponent} from './components/staff-table/staff-table.component';
 import {MatPaginatorModule} from '@angular/material';
+import {ReactiveFormsModule} from '@angular/forms';
+import {StaffFilterComponent} from './components/filter-staff/staff-filter.component';
+
 
 
 @NgModule({
@@ -22,7 +25,9 @@ import {MatPaginatorModule} from '@angular/material';
     MatInputModule,
     MatSelectModule,
     MatTableModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatButtonModule,
@@ -33,7 +38,7 @@ import {MatPaginatorModule} from '@angular/material';
     MatTableModule
   ],
   declarations: [
-    StaffManagerComponent, ChangeStaffDialogComponent , StaffTableComponent
+    StaffManagerComponent, ChangeStaffDialogComponent, StaffTableComponent, StaffFilterComponent
   ],
   providers: [HttpService],
   entryComponents: [ ChangeStaffDialogComponent],
