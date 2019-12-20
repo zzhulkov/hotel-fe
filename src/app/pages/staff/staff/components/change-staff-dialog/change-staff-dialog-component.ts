@@ -19,7 +19,7 @@ export class ChangeStaffDialogComponent implements OnInit {
       firstName: ['', Validators.pattern('^([A-Z]){1}([a-z]+)$')],
       lastName: ['', Validators.pattern('^([A-Z]){1}([a-z]+)$')],
       email: ['', Validators.pattern('^[a-zA-Z0-9.!#$%&’*+=?^_`{|}~-]+\\@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+$')],
-      phone: ['', [Validators.pattern('(^\\+{1}\\d{7,13}$)|(^\\d{7,13}$)')]],
+      phone: ['', Validators.pattern('(^\\+{1}\\d{7,13}$)|(^\\d{7,13}$)')],
       login: ['', Validators.pattern('^([a-zA-Z])\\S+$')],
     });
   }
