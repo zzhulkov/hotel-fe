@@ -12,6 +12,7 @@ import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/ad
 import {ApartmentsTableComponent} from './components/apartments-table/apartments-table.component';
 import {MatPaginatorModule} from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
+import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dialog/delete-apartments-dialog-component';
 
 @NgModule({
   imports: [
@@ -35,10 +36,11 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatTableModule
   ],
   declarations: [
-    ApartmentsManagerComponent, ApartmentsTableComponent, ChangeApartmentsDialogComponent, AddApartmentsDialogComponent
+    ApartmentsManagerComponent, ApartmentsTableComponent, ChangeApartmentsDialogComponent,
+    AddApartmentsDialogComponent, DeleteApartmentsDialogComponent
   ],
   providers: [HttpService],
-  entryComponents: [ ChangeApartmentsDialogComponent, AddApartmentsDialogComponent],
+  entryComponents: [ ChangeApartmentsDialogComponent, AddApartmentsDialogComponent, DeleteApartmentsDialogComponent],
 })
 export class ApartmentsManagerModule {
 }
