@@ -3,6 +3,7 @@ import {HttpService} from '../../../http.service';
 import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog-component';
 import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog-component';
 import {MatDialog} from '@angular/material/dialog';
+import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dialog/delete-apartments-dialog-component';
 
 
 @Component({
@@ -24,6 +25,14 @@ export class ApartmentsManagerComponent {
   }
   addApartmentDialog() {
     const dialogRef = this.dialog.open(AddApartmentsDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  deleteApartment() {
+    const dialogRef = this.dialog.open(DeleteApartmentsDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
