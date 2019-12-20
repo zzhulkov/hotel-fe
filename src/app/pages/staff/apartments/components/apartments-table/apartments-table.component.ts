@@ -58,6 +58,7 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
     this.selectedApartments = apartments;
   }
 
+  // tslint:disable-next-line:max-line-length
   // TODO form control, закрывать форму после успешного подтверждеия транзакции, отправлять запросы, пофиксить верстку, прикрутить bootstrap css
   ngOnInit() {
 
@@ -132,7 +133,7 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
 
   createFilter(): (data: any, filter: string) => boolean {
     // tslint:disable-next-line:only-arrow-functions
-    let filterFunction = function (data, filter): boolean {
+    let filterFunction = function(data, filter): boolean {
       let searchTerms = JSON.parse(filter);
       return data.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1
         && data.photo.toLowerCase().indexOf(searchTerms.photo) !== -1
