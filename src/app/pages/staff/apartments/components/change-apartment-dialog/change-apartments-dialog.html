@@ -2,6 +2,10 @@
   <h2 mat-dialog-title>Edit Apartment</h2>
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
+      <input matInput formControlName="id" class="full-width" placeholder="ID">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
       <input matInput formControlName="roomNumber" class="full-width" placeholder="Room number">
     </mat-form-field>
     <br/>
@@ -15,6 +19,13 @@
     <br/>
     <mat-form-field>
       <input matInput formControlName="status" class="full-width" placeholder="Status">
+    </mat-form-field>
+    <br/>
+
+    <!--    Will be replace on drop-down list box-->
+
+    <mat-form-field>
+      <input matInput formControlName="classId" class="full-width" placeholder="Class ID">
     </mat-form-field>
     <br/>
     <mat-form-field>

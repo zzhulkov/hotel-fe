@@ -1,0 +1,15 @@
+<form [formGroup]="deleteApartmentForm" (ngSubmit)="onSubmit()" class="change-apartment">
+  <h2 mat-dialog-title>Delete Apartment</h2>
+  <mat-dialog-content class="mat-typography">
+    <mat-form-field>
+      <input matInput formControlName="id" class="full-width" placeholder="ID">
+    </mat-form-field>
+    <br/>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]
+      ="true" mat-dialog-close>Cancel</button>
+    <button mat-button type="submit" cdkFocusInitial>Delete</button>
+  </mat-dialog-actions>
+</form>
+
