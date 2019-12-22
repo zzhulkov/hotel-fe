@@ -4,8 +4,9 @@ import {HttpService} from '../../../../../http.service';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {takeUntil} from 'rxjs/operators';
+import {ConstantsService} from '../../../../../services/constants.service';
 
-const URL = 'http://localhost:8080';
+const URL = new ConstantsService().BASE_URL;
 
 @Component({
   selector: 'app-apartment-class-list',

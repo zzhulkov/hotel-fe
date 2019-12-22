@@ -3,10 +3,10 @@ import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {ShareService} from '../staff-table/share-service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {takeUntil} from 'rxjs/operators';
+import {ConstantsService} from '../../../../../services/constants.service';
 
 
-
-const URL = 'http://localhost:8080';
+const URL = new ConstantsService().BASE_URL;
 
 @Component({
   // tslint:disable-next-line:component-selector
