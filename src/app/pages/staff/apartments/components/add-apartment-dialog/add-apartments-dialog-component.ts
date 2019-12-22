@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {HttpClient} from '@angular/common/http';
@@ -17,21 +17,27 @@ const URL = 'http://localhost:8099';
 })
 export class AddApartmentsDialogComponent {
 
+  constructor(private http: HttpClient) {
+    // super();
+    this.getAllApartmentsClasses();
+
+  }
+
   addApartmentForm = new FormGroup({
     roomNumber: new FormControl('', Validators.required),
     photo: new FormControl(null, Validators.required),
     description: new FormControl('', Validators.required),
     status: new FormControl('', Validators.required),
-    className: new FormControl('', Validators.required),
-    numberOfRooms: new FormControl('', Validators.required),
-    numberOfCouchette: new FormControl('', Validators.required)
+    className: new FormControl(''),
+    numberOfRooms: new FormControl(''),
+    numberOfCouchette: new FormControl('')
   });
 
   apartment = new Apartments();
   apartmentClass = new ApartmentsClass();
 
-  constructor(private http: HttpClient) {
-  }
+  apartmentsClassesList: ApartmentsClass[];
+  selectedApartmentsClass: ApartmentsClass;
 
   onSubmit() {
     if (this.addApartmentForm.valid) {
@@ -49,19 +55,37 @@ export class AddApartmentsDialogComponent {
   }
 
   setApartment() {
-    this.apartmentClass.nameClass = 'Lux';
-      // this.addApartmentForm.value.className;
-    this.apartmentClass.numberOfCouchette = 2;
-      // this.addApartmentForm.value.numberOfCouchette;
-    this.apartmentClass.numberOfRooms = 2;
-      // this.addApartmentForm.value.numberOfRooms;
-    this.apartmentClass.id = 2;
-    this.apartment.apartmentClass = this.apartmentClass;
+    // this.apartmentClass.nameClass = 'Lux';
+    //   // this.addApartmentForm.value.className;
+    // this.apartmentClass.numberOfCouchette = 2;
+    //   // this.addApartmentForm.value.numberOfCouchette;
+    // this.apartmentClass.numberOfRooms = 2;
+    //   // this.addApartmentForm.value.numberOfRooms;
+    // this.apartmentClass.id = 2;
+    this.apartment.apartmentClass = this.selectedApartmentsClass;
     this.apartment.description = this.addApartmentForm.value.description;
     this.apartment.status = this.addApartmentForm.value.status;
     this.apartment.photo = this.addApartmentForm.value.photo;
     this.apartment.roomNumber = this.addApartmentForm.value.roomNumber;
     console.log(this.apartment);
+  }
+
+  onSelect(apartmentsClass: ApartmentsClass): void {
+    this.selectedApartmentsClass = apartmentsClass;
+  }
+
+  getAllApartmentsClasses() {
+    // this.testApartments.id = 2;
+    // this.testApartments.nameClass = 'LuxTest';
+    // this.testApartments.numberOfRooms = 2;;
+    // this.testApartments.numberOfCouchette = 2;
+    //
+    // this.apartmentsClassesList.push(this.testApartments);
+
+    this.http.get(URL + '/apartmentsClasses').subscribe(res => {
+      console.log(res);
+      this.apartmentsClassesList = (res as ApartmentsClass[]);
+    });
   }
 }
 
