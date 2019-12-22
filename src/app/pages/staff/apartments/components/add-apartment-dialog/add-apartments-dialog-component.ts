@@ -1,14 +1,15 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
+import {ConstantsService} from '../../../../../services/constants.service';
 
 /**
  * @title Dialog with header, scrollable content and actions
  */
 
-const URL = 'http://localhost:8099';
+const URL = new ConstantsService().BASE_URL;
 
 @Component({
   selector: 'app-add-apartments-dialog',
@@ -24,13 +25,13 @@ export class AddApartmentsDialogComponent {
   }
 
   addApartmentForm = new FormGroup({
-    roomNumber: new FormControl('', Validators.required),
-    photo: new FormControl(null, Validators.required),
+    roomNumber: new FormControl('', Validators.pattern('^\\d{1,3}$')),
+    photo: new FormControl(null, Validators.pattern('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')),
     description: new FormControl('', Validators.required),
     status: new FormControl('', Validators.required),
-    className: new FormControl(''),
-    numberOfRooms: new FormControl(''),
-    numberOfCouchette: new FormControl('')
+    className: new FormControl('', Validators.required),
+    numberOfRooms: new FormControl('', Validators.pattern('^\\d{1}$')),
+    numberOfCouchette: new FormControl('', Validators.pattern('^\\d{1}$'))
   });
 
   apartment = new Apartments();

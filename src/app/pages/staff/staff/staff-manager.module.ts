@@ -12,23 +12,25 @@ import {StaffTableComponent} from './components/staff-table/staff-table.componen
 import {MatPaginatorModule} from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
 import {StaffFilterComponent} from './components/filter-staff/staff-filter.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 
 @NgModule({
-  imports: [
-    MatPaginatorModule,
-    BrowserModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTableModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatAutocompleteModule
-  ],
+    imports: [
+        MatPaginatorModule,
+        BrowserModule,
+        HttpClientModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatInputModule,
+        MatSelectModule,
+        MatTableModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatCheckboxModule
+    ],
   exports: [
     MatButtonModule,
     MatDialogModule,

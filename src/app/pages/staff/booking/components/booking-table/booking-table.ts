@@ -4,10 +4,10 @@ import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {HttpClient} from '@angular/common/http';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {Booking} from '../../../../../component/booking';
+import {ConstantsService} from '../../../../../services/constants.service';
 
 
-
-const URL = 'http://localhost:8080';
+const URL = new ConstantsService().BASE_URL;
 /**
  * @title Table with sticky header
  */

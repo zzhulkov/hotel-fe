@@ -6,9 +6,9 @@ import {HttpClient} from '@angular/common/http';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {FormControl} from '@angular/forms';
 import {ShareService} from './share-service';
+import {ConstantsService} from '../../../../../services/constants.service';
 
-
-const URL = 'http://localhost:8080';
+const URL = new ConstantsService().BASE_URL;
 
 @Component({
   // tslint:disable-next-line:component-selector
