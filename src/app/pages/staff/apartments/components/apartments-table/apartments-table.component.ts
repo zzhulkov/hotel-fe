@@ -5,8 +5,9 @@ import {HttpClient} from '@angular/common/http';
 import {Apartments} from '../../../../../component/apartments';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {FormControl} from '@angular/forms';
+import {ConstantsService} from '../../../../../services/constants.service';
 
-const URL = 'http://localhost:8099';
+const URL = new ConstantsService().BASE_URL;
 
 /**
  * @title Table with sticky header

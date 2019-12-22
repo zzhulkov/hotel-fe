@@ -3,12 +3,13 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
+import {ConstantsService} from '../../../../../services/constants.service';
 
 /**
  * @title Dialog with header, scrollable content and actions
  */
 
-const URL = 'http://localhost:8099';
+const URL = new ConstantsService().BASE_URL;
 
 @Component({
   selector: 'app-add-apartments-dialog',
