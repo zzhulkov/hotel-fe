@@ -24,7 +24,6 @@ export class AddApartmentsDialogComponent implements OnInit {
 
   addApartmentForm: FormGroup;
 
-
   apartment = new Apartments();
   apartmentClass = new ApartmentsClass();
 
@@ -36,10 +35,16 @@ export class AddApartmentsDialogComponent implements OnInit {
       roomNumber: ['', Validators.pattern('^\\d{1,3}$')],
       photo: ['', Validators.pattern('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')],
       description: [''],
-      status: ['', Validators.required],
+      status: [''
+        // , Validators.required
+      ],
       // className: ['', Validators.required],
-      // numberOfRooms: ['', Validators.pattern('^\\d{1}$')],
-      // numberOfCouchette: ['', Validators.pattern('^\\d{1}$')]
+      numberOfRooms: [''
+        // , Validators.pattern('^\\d{1}$')
+      ],
+      numberOfCouchette: [''
+        // , Validators.pattern('^\\d{1}$')
+      ]
     });
   }
 
@@ -60,7 +65,7 @@ export class AddApartmentsDialogComponent implements OnInit {
   }
 
   createApartment() {
-    this.http.post(URL + '/apartments', this.apartment).subscribe(
+    this.http.post(URL + 'apartments', this.apartment).subscribe(
       res => {
         console.log(res);
         this.apartment = (res as Apartments);
@@ -74,6 +79,10 @@ export class AddApartmentsDialogComponent implements OnInit {
     this.apartment.photo = this.addApartmentForm.value.photo;
     this.apartment.roomNumber = this.addApartmentForm.value.roomNumber;
     console.log(this.apartment);
+  }
+
+  changeStatus(value) {
+    this.addApartmentForm.value.status = value;
   }
 
   onSelect(apartmentsClass: ApartmentsClass): void {
