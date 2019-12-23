@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
@@ -16,37 +16,27 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './add-apartments-dialog.html',
 })
-export class AddApartmentsDialogComponent implements OnInit {
+export class AddApartmentsDialogComponent {
 
-
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private http: HttpClient) {
+    this.getAllApartmentsClasses();
   }
 
-  addApartmentForm: FormGroup;
+  addApartmentForm = new FormGroup({
+    roomNumber: new FormControl('', Validators.pattern('^\\d{1,3}$')),
+    photo: new FormControl(null, Validators.pattern('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')),
+    description: new FormControl('', Validators.required),
+    status: new FormControl('', Validators.required),
+    className: new FormControl('', Validators.required),
+    numberOfRooms: new FormControl('', Validators.pattern('^\\d{1}$')),
+    numberOfCouchette: new FormControl('', Validators.pattern('^\\d{1}$'))
+  });
 
   apartment = new Apartments();
   apartmentClass = new ApartmentsClass();
 
-  ngOnInit(): void {
-    this.addApartmentForm = this.formBuilder.group({
-      roomNumber: ['', Validators.pattern('^\\d{1,3}$')],
-      photo: ['', Validators.pattern('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')],
-      description: [''],
-      status: ['', Validators.required],
-      // className: ['', Validators.required],
-      // numberOfRooms: ['', Validators.pattern('^\\d{1}$')],
-      // numberOfCouchette: ['', Validators.pattern('^\\d{1}$')]
-    });
-  }
-
-  checkValid() {
-    this.addApartmentForm.markAllAsTouched();
-    console.log('FormGroup: ', this.addApartmentForm.valid);
-  }
-
-  isSubmitDisabled(): boolean {
-    return !this.addApartmentForm.valid ;
-  }
+  apartmentsClassesList: ApartmentsClass[];
+  selectedApartmentsClass: ApartmentsClass;
 
   onSubmit() {
     if (this.addApartmentForm.valid) {
@@ -64,19 +54,23 @@ export class AddApartmentsDialogComponent implements OnInit {
   }
 
   setApartment() {
-    this.apartmentClass.nameClass = 'Lux';
-      // this.addApartmentForm.value.className;
-    this.apartmentClass.numberOfCouchette = 2;
-      // this.addApartmentForm.value.numberOfCouchette;
-    this.apartmentClass.numberOfRooms = 2;
-      // this.addApartmentForm.value.numberOfRooms;
-    this.apartmentClass.id = 2;
-    this.apartment.apartmentClass = this.apartmentClass;
+    this.apartment.apartmentClass = this.selectedApartmentsClass;
     this.apartment.description = this.addApartmentForm.value.description;
     this.apartment.status = this.addApartmentForm.value.status;
     this.apartment.photo = this.addApartmentForm.value.photo;
     this.apartment.roomNumber = this.addApartmentForm.value.roomNumber;
     console.log(this.apartment);
+  }
+
+  onSelect(apartmentsClass: ApartmentsClass): void {
+    this.selectedApartmentsClass = apartmentsClass;
+  }
+
+  getAllApartmentsClasses() {
+    this.http.get(URL + '/apartmentsClasses').subscribe(res => {
+      console.log(res);
+      this.apartmentsClassesList = (res as ApartmentsClass[]);
+    });
   }
 }
 
