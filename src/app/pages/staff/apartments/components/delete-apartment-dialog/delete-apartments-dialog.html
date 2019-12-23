@@ -2,14 +2,14 @@
   <h2 mat-dialog-title>Delete Apartment</h2>
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
-      <input matInput formControlName="id" class="full-width" placeholder="ID">
+      <input matInput required="required" formControlName="id" class="full-width" placeholder="ID">
     </mat-form-field>
     <br/>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]
       ="true" mat-dialog-close>Cancel</button>
-    <button mat-button type="submit" cdkFocusInitial>Delete</button>
+    <button type="submit" (click)="checkValid()" mat-dialog-close [disabled]="isSubmitDisabled()" mat-button>Delete</button>
   </mat-dialog-actions>
 </form>
 

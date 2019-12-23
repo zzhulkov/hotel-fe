@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
@@ -17,16 +17,29 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './delete-apartments-dialog.html',
 })
-export class DeleteApartmentsDialogComponent {
-
-  deleteApartmentForm = new FormGroup({
-    id: new FormControl('', Validators.required)
-  });
+export class DeleteApartmentsDialogComponent implements OnInit {
 
   apartment = new Apartments();
   apartmentClass = new ApartmentsClass();
 
-  constructor(private http: HttpClient) {
+  deleteApartmentForm: FormGroup;
+
+  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  }
+
+  ngOnInit(): void {
+    this.deleteApartmentForm = this.formBuilder.group({
+      id: ['', Validators.pattern('^\\d{1,3}$')]
+    });
+  }
+
+  checkValid() {
+    this.deleteApartmentForm.markAllAsTouched();
+    console.log('FormGroup: ', this.deleteApartmentForm.valid);
+  }
+
+  isSubmitDisabled(): boolean {
+    return !this.deleteApartmentForm.valid ;
   }
 
   onSubmit() {
