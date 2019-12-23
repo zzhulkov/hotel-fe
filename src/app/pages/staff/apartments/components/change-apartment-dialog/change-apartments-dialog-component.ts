@@ -19,6 +19,7 @@ const URL = new ConstantsService().BASE_URL;
 export class ChangeApartmentsDialogComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private  http: HttpClient) {
+    this.getAllApartmentsClasses();
   }
 
   profileForm: FormGroup;
@@ -27,6 +28,9 @@ export class ChangeApartmentsDialogComponent implements OnInit {
   apartment = new Apartments();
   apartmentClass = new ApartmentsClass();
 
+  apartmentsClassesList: ApartmentsClass[];
+  selectedApartmentsClass: ApartmentsClass;
+
   ngOnInit(): void {
     this.profileForm = this.formBuilder.group({
       id: ['', Validators.pattern('^\\d{1,4}$')],
@@ -34,10 +38,14 @@ export class ChangeApartmentsDialogComponent implements OnInit {
       photo: ['', Validators.pattern('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')],
       description: [''],
       status:  [''],
-      classId: ['', Validators.pattern('^\\d{1,4}$')],
-      className: ['', Validators.pattern('^([a-zA-Z])\\S+$')],
-      numberOfRooms: ['', Validators.pattern('^\\d{1}$')],
-      numberOfCouchette: ['', Validators.pattern('^\\d{1}$')]
+      // classId: ['', Validators.pattern('^\\d{1,4}$')],
+      // className: ['', Validators.pattern('^([a-zA-Z])\\S+$')],
+      numberOfRooms: [''
+        //, Validators.pattern('^\\d{1}$')
+        ],
+      numberOfCouchette: [''
+        //, Validators.pattern('^\\d{1}$')
+        ]
     });
   }
 
@@ -58,7 +66,7 @@ export class ChangeApartmentsDialogComponent implements OnInit {
   }
 
   createApartment() {
-    this.http.put(URL + '/apartments/' + this.apartment.id, this.apartment).subscribe(
+    this.http.put(URL + 'apartments/' + this.apartment.id, this.apartment).subscribe(
     res => {
     console.log(res);
     this.apartment = (res as Apartments);
@@ -66,17 +74,28 @@ export class ChangeApartmentsDialogComponent implements OnInit {
   }
 
   setApartment() {
-    this.apartmentClass.nameClass = this.profileForm.value.className;
-    this.apartmentClass.numberOfCouchette = this.profileForm.value.numberOfCouchette;
-    this.apartmentClass.numberOfRooms = this.profileForm.value.numberOfRooms;
-    this.apartmentClass.id = this.profileForm.value.classId;
-    this.apartment.apartmentClass = this.apartmentClass;
+    this.apartment.apartmentClass = this.selectedApartmentsClass;
     this.apartment.description = this.profileForm.value.description;
     this.apartment.status = this.profileForm.value.status;
     this.apartment.photo = this.profileForm.value.photo;
     this.apartment.roomNumber = this.profileForm.value.roomNumber;
     this.apartment.id = this.profileForm.value.id;
     console.log(this.apartment);
+  }
+
+  changeStatus(value) {
+    this.profileForm.value.status = value;
+  }
+
+  onSelect(apartmentsClass: ApartmentsClass): void {
+    this.selectedApartmentsClass = apartmentsClass;
+  }
+
+  getAllApartmentsClasses() {
+    this.http.get(URL + '/apartmentsClasses').subscribe(res => {
+      console.log(res);
+      this.apartmentsClassesList = (res as ApartmentsClass[]);
+    });
   }
 }
 
