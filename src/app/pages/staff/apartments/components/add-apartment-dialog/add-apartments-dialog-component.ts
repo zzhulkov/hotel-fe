@@ -19,9 +19,7 @@ const URL = new ConstantsService().BASE_URL;
 export class AddApartmentsDialogComponent {
 
   constructor(private http: HttpClient) {
-    // super();
     this.getAllApartmentsClasses();
-
   }
 
   addApartmentForm = new FormGroup({
@@ -56,13 +54,6 @@ export class AddApartmentsDialogComponent {
   }
 
   setApartment() {
-    // this.apartmentClass.nameClass = 'Lux';
-    //   // this.addApartmentForm.value.className;
-    // this.apartmentClass.numberOfCouchette = 2;
-    //   // this.addApartmentForm.value.numberOfCouchette;
-    // this.apartmentClass.numberOfRooms = 2;
-    //   // this.addApartmentForm.value.numberOfRooms;
-    // this.apartmentClass.id = 2;
     this.apartment.apartmentClass = this.selectedApartmentsClass;
     this.apartment.description = this.addApartmentForm.value.description;
     this.apartment.status = this.addApartmentForm.value.status;
@@ -76,13 +67,6 @@ export class AddApartmentsDialogComponent {
   }
 
   getAllApartmentsClasses() {
-    // this.testApartments.id = 2;
-    // this.testApartments.nameClass = 'LuxTest';
-    // this.testApartments.numberOfRooms = 2;;
-    // this.testApartments.numberOfCouchette = 2;
-    //
-    // this.apartmentsClassesList.push(this.testApartments);
-
     this.http.get(URL + '/apartmentsClasses').subscribe(res => {
       console.log(res);
       this.apartmentsClassesList = (res as ApartmentsClass[]);
