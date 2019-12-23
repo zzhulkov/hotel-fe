@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
@@ -16,22 +16,36 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './add-apartments-dialog.html',
 })
-export class AddApartmentsDialogComponent {
+export class AddApartmentsDialogComponent implements OnInit {
 
-  addApartmentForm = new FormGroup({
-    roomNumber: new FormControl('', Validators.pattern('^\\d{1,3}$')),
-    photo: new FormControl(null, Validators.pattern('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')),
-    description: new FormControl('', Validators.required),
-    status: new FormControl('', Validators.required),
-    className: new FormControl('', Validators.required),
-    numberOfRooms: new FormControl('', Validators.pattern('^\\d{1}$')),
-    numberOfCouchette: new FormControl('', Validators.pattern('^\\d{1}$'))
-  });
+
+  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  }
+
+  addApartmentForm: FormGroup;
 
   apartment = new Apartments();
   apartmentClass = new ApartmentsClass();
 
-  constructor(private http: HttpClient) {
+  ngOnInit(): void {
+    this.addApartmentForm = this.formBuilder.group({
+      roomNumber: ['', Validators.pattern('^\\d{1,3}$')],
+      photo: ['', Validators.pattern('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')],
+      description: [''],
+      status: ['', Validators.required],
+      // className: ['', Validators.required],
+      // numberOfRooms: ['', Validators.pattern('^\\d{1}$')],
+      // numberOfCouchette: ['', Validators.pattern('^\\d{1}$')]
+    });
+  }
+
+  checkValid() {
+    this.addApartmentForm.markAllAsTouched();
+    console.log('FormGroup: ', this.addApartmentForm.valid);
+  }
+
+  isSubmitDisabled(): boolean {
+    return !this.addApartmentForm.valid ;
   }
 
   onSubmit() {

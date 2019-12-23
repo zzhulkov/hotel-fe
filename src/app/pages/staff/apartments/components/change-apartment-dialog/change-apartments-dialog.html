@@ -2,15 +2,15 @@
   <h2 mat-dialog-title>Edit Apartment</h2>
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
-      <input matInput formControlName="id" class="full-width" placeholder="ID">
+      <input matInput required="required" formControlName="id" class="full-width" placeholder="ID">
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput formControlName="roomNumber" class="full-width" placeholder="Room number">
+      <input matInput required="required" formControlName="roomNumber" class="full-width" placeholder="Room number">
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput formControlName="photo" class="full-width" placeholder="Photo">
+      <input matInput required="required" formControlName="photo" class="full-width" placeholder="Photo">
     </mat-form-field>
     <br/>
     <mat-form-field>
@@ -18,33 +18,33 @@
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput formControlName="status" class="full-width" placeholder="Status">
+      <input matInput required="required" formControlName="status" class="full-width" placeholder="Status">
     </mat-form-field>
     <br/>
 
     <!--    Will be replace on drop-down list box-->
 
     <mat-form-field>
-      <input matInput formControlName="classId" class="full-width" placeholder="Class ID">
+      <input matInput required="required" formControlName="classId" class="full-width" placeholder="Class ID">
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput formControlName="className" class="full-width" placeholder="Class name">
+      <input matInput required="required" formControlName="className" class="full-width" placeholder="Class name">
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput formControlName="numberOfRooms" class="full-width" placeholder="Number of rooms">
+      <input matInput required="required" formControlName="numberOfRooms" class="full-width" placeholder="Number of rooms">
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput formControlName="numberOfCouchette" class="full-width" placeholder="Number of couchette">
+      <input matInput required="required" formControlName="numberOfCouchette" class="full-width" placeholder="Number of couchette">
     </mat-form-field>
     <br/>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]
       ="true" mat-dialog-close>Cancel</button>
-    <button mat-button type="submit" cdkFocusInitial>Change</button>
+    <button type="submit" (click)="checkValid()" mat-dialog-close [disabled]="isSubmitDisabled()" mat-button>Change</button>
   </mat-dialog-actions>
 </form>
 
