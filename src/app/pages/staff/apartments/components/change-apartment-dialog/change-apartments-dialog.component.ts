@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
+import {Unsubscribable} from '../../../../../component/Unsubscribable';
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -16,14 +17,10 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './change-apartments-dialog.html',
 })
-export class ChangeApartmentsDialogComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private  http: HttpClient) {
-    this.getAllApartmentsClasses();
-  }
+export class ChangeApartmentsDialogComponent extends Unsubscribable implements OnInit {
 
   profileForm: FormGroup;
-
 
   apartment = new Apartments();
   apartmentClass = new ApartmentsClass();
@@ -31,11 +28,17 @@ export class ChangeApartmentsDialogComponent implements OnInit {
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
 
+  constructor(private formBuilder: FormBuilder, private  http: HttpClient) {
+    super();
+    this.getAllApartmentsClasses();
+  }
+
   ngOnInit(): void {
     this.profileForm = this.formBuilder.group({
       id: ['', Validators.pattern('^\\d{1,4}$')],
       roomNumber: ['', Validators.pattern('^\\d{1,3}$')],
-      photo: ['', Validators.pattern('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')],
+      photo: ['', Validators.pattern(
+        '^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')],
       description: [''],
       status:  [''],
       // classId: ['', Validators.pattern('^\\d{1,4}$')],
@@ -83,16 +86,12 @@ export class ChangeApartmentsDialogComponent implements OnInit {
     console.log(this.apartment);
   }
 
-  changeStatus(value) {
-    this.profileForm.value.status = value;
-  }
-
   onSelect(apartmentsClass: ApartmentsClass): void {
     this.selectedApartmentsClass = apartmentsClass;
   }
 
   getAllApartmentsClasses() {
-    this.http.get(URL + '/apartmentsClasses').subscribe(res => {
+    this.http.get(URL + 'apartmentsClasses/').subscribe(res => {
       console.log(res);
       this.apartmentsClassesList = (res as ApartmentsClass[]);
     });

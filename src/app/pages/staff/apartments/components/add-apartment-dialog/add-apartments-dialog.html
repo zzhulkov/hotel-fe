@@ -1,5 +1,5 @@
 <form [formGroup]="addApartmentForm" (ngSubmit)="onSubmit()" class="change-apartment">
-  <h2 mat-dialog-title>Edit Apartment</h2>
+  <h2 mat-dialog-title>Add Apartment</h2>
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
       <input matInput required="required" formControlName="roomNumber" class="full-width" placeholder="Room number">
@@ -15,7 +15,7 @@
     <br/>
     <mat-form-field>
       <mat-label>Status</mat-label>
-      <mat-select placeholder="Status" (selectionChange)="changeStatus($event.value)">
+      <mat-select placeholder="Status" formControlName="status">
         <mat-option value="OnRepair">On repair</mat-option>
         <mat-option value="NeedCleaning">Need cleaning</mat-option>
         <mat-option value="Occupied">Occupied</mat-option>

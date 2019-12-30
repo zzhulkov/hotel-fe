@@ -50,7 +50,7 @@ export class DeleteApartmentsDialogComponent implements OnInit {
   }
 
   deleteApartment() {
-    this.http.delete(URL + '/apartments/' + this.deleteApartmentForm.value.id, this.deleteApartmentForm.value).subscribe(
+    this.http.delete(URL + 'apartments/' + this.deleteApartmentForm.value.id, this.deleteApartmentForm.value).subscribe(
       res => {
         console.log(res);
       });

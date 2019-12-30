@@ -6,6 +6,7 @@ import {Apartments} from '../../../../../component/apartments';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {FormControl} from '@angular/forms';
 import {ConstantsService} from '../../../../../services/constants.service';
+import {ShareService} from "../../../../../services/share.service";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -22,6 +23,7 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  private shareService: ShareService;
   apartmentsList = new MatTableDataSource<Apartments>();
   selectedApartments: Apartments;
   displayedColumns = ['roomNumber', 'photo', 'description', 'status', 'apartmentClass.id',
@@ -49,19 +51,26 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
   };
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, shareService: ShareService) {
     super();
+    this.shareService = shareService;
     this.getAllApartments();
     this.apartmentsList.filterPredicate = this.createFilter();
   }
 
   onSelect(apartments: Apartments): void {
     this.selectedApartments = apartments;
+    console.log(this.selectedApartments);
   }
 
-  // tslint:disable-next-line:max-line-length
-  // TODO form control, закрывать форму после успешного подтверждеия транзакции, отправлять запросы, пофиксить верстку, прикрутить bootstrap css
   ngOnInit() {
+    this.shareService.getEmittedValue()
+      .subscribe(item => {
+          this.filterValues.roomNumber = item.roomNumber;
+          this.apartmentsList.filter = JSON.stringify(this.filterValues);
+          console.log(this.filterValues.roomNumber);
+        }
+      );
 
     this.roomNumberFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
@@ -126,7 +135,7 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
   }
 
   public getAllApartments = () => {
-    this.http.get(URL + '/apartments').subscribe(res => {
+    this.http.get(URL + 'apartments').subscribe(res => {
       console.log(res);
       this.apartmentsList.data = (res as Apartments[]);
     });

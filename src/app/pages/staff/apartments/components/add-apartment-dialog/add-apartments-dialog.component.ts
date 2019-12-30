@@ -33,7 +33,8 @@ export class AddApartmentsDialogComponent implements OnInit {
   ngOnInit(): void {
     this.addApartmentForm = this.formBuilder.group({
       roomNumber: ['', Validators.pattern('^\\d{1,3}$')],
-      photo: ['', Validators.pattern('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')],
+      photo: ['', Validators.pattern(
+        '^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')],
       description: [''],
       status: [''
         // , Validators.required
@@ -81,16 +82,12 @@ export class AddApartmentsDialogComponent implements OnInit {
     console.log(this.apartment);
   }
 
-  changeStatus(value) {
-    this.addApartmentForm.value.status = value;
-  }
-
   onSelect(apartmentsClass: ApartmentsClass): void {
     this.selectedApartmentsClass = apartmentsClass;
   }
 
   getAllApartmentsClasses() {
-    this.http.get(URL + '/apartmentsClasses').subscribe(res => {
+    this.http.get(URL + 'apartmentsClasses').subscribe(res => {
       console.log(res);
       this.apartmentsClassesList = (res as ApartmentsClass[]);
     });

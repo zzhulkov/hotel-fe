@@ -19,7 +19,7 @@
     <br/>
     <mat-form-field>
       <mat-label>Status</mat-label>
-      <mat-select placeholder="Status" (selectionChange)="changeStatus($event.value)">
+      <mat-select placeholder="Status" formControlName="status">
         <mat-option value="OnRepair">On repair</mat-option>
         <mat-option value="NeedCleaning">Need cleaning</mat-option>
         <mat-option value="Occupied">Occupied</mat-option>
@@ -53,10 +53,16 @@
     <br/>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]
-      ="true" mat-dialog-close>Cancel
+    <button mat-button
+            mat-dialog-close
+            [mat-dialog-close]="true">
+      Cancel
     </button>
-    <button type="submit" (click)="checkValid()" mat-dialog-close [disabled]="isSubmitDisabled()" mat-button>Change
+    <button mat-dialog-close
+            type="submit"
+            (click)="checkValid()"
+            [disabled]="isSubmitDisabled()" mat-button>
+      Change
     </button>
   </mat-dialog-actions>
 </form>
