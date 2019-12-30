@@ -19,7 +19,7 @@
     <br/>
     <mat-form-field>
       <mat-label>Status</mat-label>
-      <mat-select placeholder="Status" (selectionChange)="changeStatus($event.value)">
+      <mat-select formControlName="status" placeholder="Status" (selectionChange)="changeStatus($event.value)" required>
         <mat-option value="OnRepair">On repair</mat-option>
         <mat-option value="NeedCleaning">Need cleaning</mat-option>
         <mat-option value="Occupied">Occupied</mat-option>
@@ -29,7 +29,7 @@
     <br/>
     <mat-form-field>
       <mat-label>Apartments Class</mat-label>
-      <mat-select>
+      <mat-select formControlName="apartmentClass" required>
         <mat-option *ngFor="let apartmentClass of apartmentsClassesList"
                     (click)="onSelect(apartmentClass)"
                     value={{apartmentClass?.nameClass}}>

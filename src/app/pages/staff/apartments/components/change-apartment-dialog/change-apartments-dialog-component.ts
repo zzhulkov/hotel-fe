@@ -37,15 +37,10 @@ export class ChangeApartmentsDialogComponent implements OnInit {
       roomNumber: ['', Validators.pattern('^\\d{1,3}$')],
       photo: ['', Validators.pattern('^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')],
       description: [''],
-      status:  [''],
-      // classId: ['', Validators.pattern('^\\d{1,4}$')],
-      // className: ['', Validators.pattern('^([a-zA-Z])\\S+$')],
-      numberOfRooms: [''
-        //, Validators.pattern('^\\d{1}$')
-        ],
-      numberOfCouchette: [''
-        //, Validators.pattern('^\\d{1}$')
-        ]
+      status: [''],
+      apartmentClass: [''],
+      numberOfRooms: [{value: '', disabled: true}],
+      numberOfCouchette: [{value: '', disabled: true}]
     });
   }
 
