@@ -1,6 +1,6 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
-import {ShareService} from '../staff-table/share-service';
+import {ShareService} from '../../../../../services/share.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {takeUntil} from 'rxjs/operators';
 import {ConstantsService} from '../../../../../services/constants.service';

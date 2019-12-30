@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
 import {HttpService} from '../../../http.service';
-import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog-component';
-import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog-component';
+import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog.component';
+import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
-import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dialog/delete-apartments-dialog-component';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dialog/delete-apartments-dialog.component';
+import {ApartmentsTableComponent} from "./components/apartments-table/apartments-table.component";
 
 
 @Component({

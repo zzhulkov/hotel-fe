@@ -4,7 +4,7 @@ import {MatAutocompleteModule, MatButtonModule, MatFormFieldModule, MatInputModu
 import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from '../../../http.service';
 import {StaffManagerComponent} from './staff-manager.component';
-import {ChangeStaffDialogComponent} from './components/change-staff-dialog/change-staff-dialog-component';
+import {ChangeStaffDialogComponent} from './components/change-staff-dialog/change-staff-dialog.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
@@ -12,7 +12,8 @@ import {StaffTableComponent} from './components/staff-table/staff-table.componen
 import {MatPaginatorModule} from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
 import {StaffFilterComponent} from './components/filter-staff/staff-filter.component';
-import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {AddStaffDialogComponent} from './components/add-staff-dialog/add-staff-dialog.component';
 
 
 
@@ -40,10 +41,10 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatTableModule
   ],
   declarations: [
-    StaffManagerComponent, ChangeStaffDialogComponent, StaffTableComponent, StaffFilterComponent
+    StaffManagerComponent, ChangeStaffDialogComponent, AddStaffDialogComponent, StaffTableComponent, StaffFilterComponent
   ],
   providers: [HttpService],
-  entryComponents: [ ChangeStaffDialogComponent],
+  entryComponents: [ ChangeStaffDialogComponent, AddStaffDialogComponent],
 })
 export class StaffManagerModule {
 }

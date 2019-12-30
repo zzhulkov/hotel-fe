@@ -5,3 +5,7 @@
 .table-component {
   width: 100%;
 }
+
+.highlightRow {
+  background-color: #ffbd88;
+}
