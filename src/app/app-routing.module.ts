@@ -9,6 +9,7 @@ import {BookingManagerComponent} from './pages/staff/booking/booking-manager.com
 import {ServicesManagerComponent} from './pages/staff/services/services.manager.component';
 import {TaskManagerComponent} from './pages/staff/tasks/task.manager.component';
 import {StaffManagerComponent} from './pages/staff/staff/staff-manager.component';
+import {ApartmentsClassesManagerComponent} from './pages/staff/apartments-classes/apartments-classes-manager.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,9 @@ const routes: Routes = [
   },
   {
     path: 'manager/apartments', component: ApartmentsManagerComponent
+  },
+  {
+    path: 'manager/apartments-classes', component: ApartmentsClassesManagerComponent
   },
   {
     path: 'manager/booking', component: BookingManagerComponent

@@ -10,6 +10,7 @@ import {HttpService} from '../../http.service';
 import {RouterModule} from '@angular/router';
 import {ApartmentsManagerModule} from './apartments/apartments-manager.module';
 import {StaffManagerModule} from './staff/staff-manager.module';
+import {ApartmentsClassesManagerModule} from './apartments-classes/apartments-classes-manager.module';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import {StaffManagerModule} from './staff/staff-manager.module';
     HttpClientModule,
     MatButtonModule,
     ApartmentsManagerModule,
+    ApartmentsClassesManagerModule,
     BookingManagerModule,
     ServicesManagerModule,
     StaffManagerModule,

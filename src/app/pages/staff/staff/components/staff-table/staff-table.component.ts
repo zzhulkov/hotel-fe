@@ -1,12 +1,11 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {takeUntil} from 'rxjs/operators';
 import {Staff} from '../../../../../component/staff';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {HttpClient} from '@angular/common/http';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
-import {FormControl} from '@angular/forms';
-import {ShareService} from './share-service';
+import {ShareService} from '../../../../../services/share.service';
 import {ConstantsService} from '../../../../../services/constants.service';
+import {DataTransferService} from '../../../../../services/data-transfer.service';
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -20,6 +19,9 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  private dataTransfer: DataTransferService;
+  selectedRow: any;
+  
   displayedColumns = ['user.firstname', 'user.lastname', 'user.email', 'user.phone', 'user.login', 'speciality', 'active'];
   staffList = new MatTableDataSource<Staff>();
   filterValues = {
@@ -34,18 +36,24 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
   };
   private shareService: ShareService;
 
-  constructor(private http: HttpClient, shareService: ShareService) {
+  constructor(private http: HttpClient, shareService: ShareService, dataTransfer: DataTransferService) {
     super();
     this.getAllStaff();
     this.staffList.filterPredicate = this.createFilter();
     this.shareService = shareService;
+    this.dataTransfer = dataTransfer;
   }
 
+  selectRow(row: any): void {
+    this.selectedRow = row.active;
+    console.log(row);
+    this.dataTransfer.setData(row);
+  }
 
   ngOnInit() {
     this.shareService.getEmittedValue()
       .subscribe(item => {
-          this.filterValues.firstname = item.firstName;
+          this.filterValues.firstname = item.firstname;
           this.staffList.filter = JSON.stringify(this.filterValues);
           console.log(this.filterValues.firstname);
         }
@@ -53,7 +61,7 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
 
     this.shareService.getEmittedValue()
       .subscribe(item => {
-          this.filterValues.lastname = item.lastName;
+          this.filterValues.lastname = item.lastname;
           this.staffList.filter = JSON.stringify(this.filterValues);
           console.log(this.filterValues.lastname);
         }

@@ -55,12 +55,6 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let selectedStaff; columns: displayedColumns;"></tr>
-
-
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'highlightRow': selectedRow == row.active}"></tr>
   </table>
 </div>
-
-<!-- Copyright 2019 Google LLC. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license -->

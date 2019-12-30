@@ -1,12 +1,12 @@
-<form [formGroup]="changeStaffFrom" (ngSubmit)="onSubmit()" class="change-apartment">
+<form [formGroup]="addStaffFrom" (ngSubmit)="onSubmit()" class="change-apartment">
 <section class="change-staff">
-<h2 mat-dialog-title>Edit Staff</h2>
+<h2 mat-dialog-title>Add Staff</h2>
 <mat-dialog-content class="mat-typography">
   <mat-form-field>
-    <input required="required" matInput formControlName="firstName" class="full-width" placeholder="First name">
+    <input required="required" matInput formControlName="firstname" class="full-width" placeholder="First name">
   </mat-form-field>
   <br/><mat-form-field>
-    <input required="required" matInput formControlName="lastName" class="full-width" placeholder="Last name">
+    <input required="required" matInput formControlName="lastname" class="full-width" placeholder="Last name">
   </mat-form-field>
   <br/> <mat-form-field>
     <input required="required" matInput formControlName="email" class="full-width" placeholder="Email">
@@ -20,7 +20,10 @@
   <br/>
   <mat-label>is Active?  </mat-label>
   <mat-checkbox class="full-width" formControlName="active" aria-placeholder="isActive" checked></mat-checkbox>
-  <br/><mat-form-field>
+  <br/>
+  <mat-label>Only Manager</mat-label>
+  <br/>
+  <mat-form-field>
     <mat-select required="required"  formControlName="speciality" placeholder="Speciality">
       <mat-option value="Manager">Manager</mat-option>
     </mat-select>
@@ -28,7 +31,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button type="submit" (click)="checkValid()" mat-dialog-close [disabled]="isSubmitDisabled()" mat-button>Change</button>
+  <button type="submit" (click)="checkValid()" mat-dialog-close [disabled]="isSubmitDisabled()" mat-button>Add</button>
 </mat-dialog-actions>
 </section>
 </form>
