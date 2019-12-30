@@ -21,7 +21,7 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
 
   private dataTransfer: DataTransferService;
   selectedRow: any;
-  
+
   displayedColumns = ['user.firstname', 'user.lastname', 'user.email', 'user.phone', 'user.login', 'speciality', 'active'];
   staffList = new MatTableDataSource<Staff>();
   filterValues = {

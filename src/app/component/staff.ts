@@ -1,8 +1,10 @@
 import {User} from './user';
+import {Roles} from './roles.type';
 
+/*TODO change class to interface
+ */
 export class Staff extends User {
   id: number;
-  user: User;
   speciality: string;
   active: boolean;
 }

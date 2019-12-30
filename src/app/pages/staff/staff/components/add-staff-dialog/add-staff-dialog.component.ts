@@ -20,6 +20,12 @@ export class AddStaffDialogComponent implements OnInit {
   addStaffFrom: FormGroup;
   staff = new Staff();
   user = new User();
+  roles = [
+    'MANAGER',
+    'ADMIN',
+    'USER',
+    'WORKER'
+  ]
 
   ngOnInit(): void {
     this.addStaffFrom = this.formBuilder.group({
@@ -83,7 +89,7 @@ export class AddStaffDialogComponent implements OnInit {
 
     this.user.points = 0;
     this.user.password = '123456';
-    this.user.userRole = 'Manager';
+    this.user.userRole = this.addStaffFrom.value.roles;
     this.user.firstname = this.addStaffFrom.value.firstname;
     this.user.lastname = this.addStaffFrom.value.lastname;
     this.user.email = this.addStaffFrom.value.email;
