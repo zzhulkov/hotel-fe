@@ -6,10 +6,13 @@
     </div>
     <div class="tools">
       <div class="buttons">
-        <button class="mat-button" mat-raised-button>Add</button>
+        <button class="mat-button" mat-raised-button (click)="addApartmentDialog()">Add</button>
       </div>
       <div class="buttons">
-        <button class="mat-button" mat-raised-button>Change</button>
+        <button class="mat-button" mat-raised-button (click)="openDialog()">Change</button>
+      </div>
+      <div class="buttons">
+        <button class="mat-button" mat-raised-button (click)="deleteApartment()">Delete</button>
       </div>
       <div class="buttons">
         <mat-form-field>
