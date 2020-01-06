@@ -1,6 +1,6 @@
 import {ApartmentsClass} from './apartments-class';
 
-export class Apartments {
+export interface Apartments {
   id: number;
   roomNumber: number;
   photo: string;
