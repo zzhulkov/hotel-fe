@@ -1,14 +1,16 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
-import {MatButtonModule} from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {UserComponent} from './user.component';
 import {HttpService} from '../../http.service';
-import {BookingModule} from './booking/booking.module';
-import {ServicesModule} from './services/services.module';
-import {ReviewsModule} from './reviews/reviews.module';
 import {NgModule} from '@angular/core';
-import {HomeModule} from './home/home.module';
+import {MatButtonModule, MatNativeDateModule, MatInputModule} from '@angular/material';
+import {MatCarouselModule} from '@ngmodule/material-carousel';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCardModule} from '@angular/material/card';
+import {NgxTweetModule} from 'ngx-tweet';
+import {AuthenticationFormsModule} from '../../modules/authentication-forms.module';
 
 
 @NgModule({
@@ -16,11 +18,16 @@ import {HomeModule} from './home/home.module';
     BrowserModule,
     HttpClientModule,
     MatButtonModule,
-    HomeModule,
-    BookingModule,
-    ServicesModule,
-    ReviewsModule,
-    RouterModule
+    RouterModule,
+    MatButtonModule,
+    MatCarouselModule.forRoot(),
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    NgxTweetModule,
+    AuthenticationFormsModule
   ],
   declarations: [
     UserComponent

@@ -8,4 +8,5 @@ export class User {
   email: string;
   phoneNumber: string;
   points: number;
+  token?: string;
 }

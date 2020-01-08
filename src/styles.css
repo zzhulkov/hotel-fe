@@ -5,3 +5,16 @@ body {
   font-family: Roboto, Arial, sans-serif;
   margin: 0;
 }
+.container{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr minmax(auto, 1000px) 1fr;
+  grid-template-areas: ". container-content .";
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+footer{
+  background-color: #5591bc;
+  color: white;
+}
