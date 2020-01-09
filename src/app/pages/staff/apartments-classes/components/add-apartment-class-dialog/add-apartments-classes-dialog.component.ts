@@ -18,7 +18,7 @@ const URL = new ConstantsService().BASE_URL;
 export class AddApartmentsClassesDialogComponent implements OnInit {
 
   addApartmentClassForm: FormGroup;
-  apartmentClass = new ApartmentsClass();
+  apartmentClass = {} as ApartmentsClass;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) {
   }

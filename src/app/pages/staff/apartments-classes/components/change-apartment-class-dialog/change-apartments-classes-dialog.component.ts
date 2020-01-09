@@ -23,7 +23,7 @@ const URL = new ConstantsService().BASE_URL;
 export class ChangeApartmentsClassesDialogComponent implements OnInit {
 
   changeForm: FormGroup;
-  apartmentClass = new ApartmentsClass();
+  apartmentClass = {} as ApartmentsClass;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, dataTransfer: DataTransferService) {
     this.apartmentClass = dataTransfer.getData();

@@ -4,7 +4,7 @@ import {Apartments} from '../../../../../component/apartments';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
-import {Booking} from "../../../../../component/booking";
+import {Booking} from '../../../../../component/booking';
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -25,8 +25,8 @@ export class ChangeBookingDialogComponent implements OnInit {
 
   addForm: FormGroup;
 
-  booking = new Booking();
-  apartmentClass = new ApartmentsClass();
+  booking = {} as Booking;
+  apartmentClass = {} as ApartmentsClass;
 
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
@@ -80,7 +80,7 @@ export class ChangeBookingDialogComponent implements OnInit {
     this.booking.createdDate = this.addForm.value.createdDate;
     this.booking.review = this.addForm.value.review;
     this.booking.bookingStatus = this.addForm.value.bookingStatus;
-    this.booking.user.firstname = this.addForm.value.userName;
+    this.booking.user.firstName = this.addForm.value.userName;
     console.log(this.booking);
   }
 

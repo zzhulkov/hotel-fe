@@ -25,8 +25,8 @@ export class AddBookingDialogComponent implements OnInit {
 
   addForm: FormGroup;
 
-  booking = new Booking();
-  apartmentClass = new ApartmentsClass();
+  booking = {} as Booking;
+  apartmentClass = {} as ApartmentsClass;
 
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
@@ -80,7 +80,7 @@ export class AddBookingDialogComponent implements OnInit {
     this.booking.createdDate = this.addForm.value.createdDate;
     this.booking.review = this.addForm.value.review;
     this.booking.bookingStatus = this.addForm.value.bookingStatus;
-    this.booking.user.firstname = this.addForm.value.userName;
+    this.booking.user.firstName = this.addForm.value.userName;
     console.log(this.booking);
   }
 

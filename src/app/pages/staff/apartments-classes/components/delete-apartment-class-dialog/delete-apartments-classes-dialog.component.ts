@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Apartments} from '../../../../../component/apartments';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {ConstantsService} from '../../../../../services/constants.service';
@@ -20,7 +19,7 @@ const URL = new ConstantsService().BASE_URL;
 })
 export class DeleteApartmentsClassesDialogComponent implements OnInit {
 
-  apartmentClass = new ApartmentsClass();
+  apartmentClass = {} as ApartmentsClass;
 
   deleteForm: FormGroup;
 

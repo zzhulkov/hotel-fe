@@ -22,8 +22,8 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
 
   profileForm: FormGroup;
 
-  apartment = new Apartments();
-  apartmentClass = new ApartmentsClass();
+  apartment = {} as Apartments;
+  apartmentClass = {} as ApartmentsClass;
 
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
