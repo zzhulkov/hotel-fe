@@ -19,8 +19,8 @@ const URL = new ConstantsService().BASE_URL;
 })
 export class DeleteApartmentsDialogComponent implements OnInit {
 
-  apartment = new Apartments();
-  apartmentClass = new ApartmentsClass();
+  apartment = {} as Apartments;
+  apartmentClass = {} as ApartmentsClass;
 
   deleteApartmentForm: FormGroup;
 

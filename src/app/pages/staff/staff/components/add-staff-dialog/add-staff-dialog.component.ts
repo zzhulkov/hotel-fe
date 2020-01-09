@@ -18,13 +18,19 @@ const URL = new ConstantsService().BASE_URL;
 export class AddStaffDialogComponent implements OnInit {
 
   addStaffFrom: FormGroup;
-  staff = new Staff();
-  user = new User();
+  staff = {} as Staff;
+  user = {} as User;
+  roles = [
+    'MANAGER',
+    'ADMIN',
+    'USER',
+    'WORKER'
+  ];
 
   ngOnInit(): void {
     this.addStaffFrom = this.formBuilder.group({
-      firstname: ['', Validators.pattern('^([A-Z]){1}([a-z]+)$')],
-      lastname: ['', Validators.pattern('^([A-Z]){1}([a-z]+)$')],
+      firstName: ['', Validators.pattern('^([A-Z]){1}([a-z]+)$')],
+      lastName: ['', Validators.pattern('^([A-Z]){1}([a-z]+)$')],
       email: ['', Validators.pattern('^[a-zA-Z0-9.!#$%&’*+=?^_`{|}~-]+\\@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+$')],
       phone: ['', Validators.pattern('(^\\+{1}\\d{7,13}$)|(^\\d{7,13}$)')],
       login: ['', Validators.pattern('^([a-zA-Z])\\S+$')],
@@ -73,22 +79,22 @@ export class AddStaffDialogComponent implements OnInit {
   }
 
   setStaff() {
-    this.staff.user = this.user;
+    this.staff = this.user as Staff;
     this.staff.active = this.addStaffFrom.value.active;
     this.staff.speciality = this.addStaffFrom.value.speciality;
     console.log(this.staff);
   }
 
   setUser() {
-
     this.user.points = 0;
     this.user.password = '123456';
-    this.user.userRole = 'Manager';
-    this.user.firstname = this.addStaffFrom.value.firstname;
-    this.user.lastname = this.addStaffFrom.value.lastname;
+    this.user.userRole = this.roles.values()[1];
+    this.user.firstName = this.addStaffFrom.value.firstName;
+    this.user.lastName = this.addStaffFrom.value.lastName;
     this.user.email = this.addStaffFrom.value.email;
     this.user.phoneNumber = this.addStaffFrom.value.phone;
     this.user.login = this.addStaffFrom.value.login;
+    console.log(this.user);
   }
 }
 
