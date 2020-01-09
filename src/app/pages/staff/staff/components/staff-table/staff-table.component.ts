@@ -21,13 +21,13 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
 
   private dataTransfer: DataTransferService;
   selectedRow: any;
-  
-  displayedColumns = ['user.firstname', 'user.lastname', 'user.email', 'user.phone', 'user.login', 'speciality', 'active'];
+
+  displayedColumns = ['firstName', 'lastName', 'email', 'phone', 'login', 'speciality', 'active'];
   staffList = new MatTableDataSource<Staff>();
   filterValues = {
     id: '',
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
     login: '',
@@ -45,7 +45,7 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
   }
 
   selectRow(row: any): void {
-    this.selectedRow = row.active;
+    this.selectedRow = row.firstName;
     console.log(row);
     this.dataTransfer.setData(row);
   }
@@ -53,17 +53,17 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
   ngOnInit() {
     this.shareService.getEmittedValue()
       .subscribe(item => {
-          this.filterValues.firstname = item.firstname;
+          this.filterValues.firstName = item.firstName;
           this.staffList.filter = JSON.stringify(this.filterValues);
-          console.log(this.filterValues.firstname);
+          console.log(this.filterValues.firstName);
         }
       );
 
     this.shareService.getEmittedValue()
       .subscribe(item => {
-          this.filterValues.lastname = item.lastname;
+          this.filterValues.lastName = item.lastName;
           this.staffList.filter = JSON.stringify(this.filterValues);
-          console.log(this.filterValues.lastname);
+          console.log(this.filterValues.lastName);
         }
       );
     this.shareService.getEmittedValue()
@@ -120,11 +120,11 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
     // tslint:disable-next-line:only-arrow-functions
     let filterFunction = function(data, filter): boolean {
       let searchTerms = JSON.parse(filter);
-      return data.user.lastname.toLowerCase().indexOf(searchTerms.lastname.toLowerCase()) !== -1
-        && data.user.email.toLowerCase().indexOf(searchTerms.email.toLowerCase()) !== -1
-        && data.user.firstname.toLowerCase().indexOf(searchTerms.firstname.toLowerCase()) !== -1
-        && data.user.phoneNumber.toLowerCase().indexOf(searchTerms.phone.toLowerCase()) !== -1
-        && data.user.login.toLowerCase().indexOf(searchTerms.login.toLowerCase()) !== -1
+      return data.lastName.toLowerCase().indexOf(searchTerms.lastName.toLowerCase()) !== -1
+        && data.email.toLowerCase().indexOf(searchTerms.email.toLowerCase()) !== -1
+        && data.firstName.toLowerCase().indexOf(searchTerms.firstName.toLowerCase()) !== -1
+        && data.phoneNumber.toLowerCase().indexOf(searchTerms.phone.toLowerCase()) !== -1
+        && data.login.toLowerCase().indexOf(searchTerms.login.toLowerCase()) !== -1
         && data.speciality.toLowerCase().indexOf(searchTerms.speciality.toLowerCase()) !== -1
         && data.active.toString().toLowerCase().indexOf(searchTerms.active.toLowerCase()) !== -1;
     };
