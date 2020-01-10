@@ -156,7 +156,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
         && data.createdDate.toString().toLowerCase().indexOf(searchTerms.createdDate) !== -1
         && data.review.toLowerCase().indexOf(searchTerms.review) !== -1
         && data.bookingStatus.toString().toLowerCase().indexOf(searchTerms.bookingStatus) !== -1
-        && data.user.firstname.toLowerCase().indexOf(searchTerms.userName) !== -1
+        && data.user.firstName.toLowerCase().indexOf(searchTerms.userName) !== -1
         && data.apartmentClass.nameClass.toLowerCase().indexOf(searchTerms.apartmentsClassName) !== -1
         && data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.apartmentsRoomNumber) !== -1;
     };

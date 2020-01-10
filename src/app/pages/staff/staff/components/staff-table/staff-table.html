@@ -5,35 +5,35 @@
 
   <table mat-table [dataSource]="staffList">
 
-    <ng-container class="column" matColumnDef="user.firstname">
+    <ng-container class="column" matColumnDef="firstName">
       <th class="header" mat-header-cell *matHeaderCellDef>
         First name:
       </th>
-      <td mat-cell *matCellDef="let selectedStaff"> {{selectedStaff.user.firstname}} </td>
+      <td mat-cell *matCellDef="let selectedStaff"> {{selectedStaff.user.firstName}} </td>
     </ng-container>
 
-    <ng-container class="column" matColumnDef="user.lastname">
+    <ng-container class="column" matColumnDef="lastName">
       <th class="header" mat-header-cell *matHeaderCellDef>
         Last name:
       </th>
       <td mat-cell *matCellDef="let selectedStaff"> {{selectedStaff?.user.lastname}} </td>
     </ng-container>
 
-    <ng-container class="column" matColumnDef="user.email">
+    <ng-container class="column" matColumnDef="email">
       <th class="header" mat-header-cell *matHeaderCellDef>
         Email:
       </th>
       <td mat-cell *matCellDef="let selectedStaff"> {{selectedStaff?.user.email}} </td>
     </ng-container>
 
-    <ng-container class="column" matColumnDef="user.phone">
+    <ng-container class="column" matColumnDef="phone">
       <th class="header" mat-header-cell *matHeaderCellDef>
         Phone number:
       </th>
       <td mat-cell *matCellDef="let selectedStaff"> {{selectedStaff?.user.phoneNumber}} </td>
     </ng-container>
 
-    <ng-container class="column" matColumnDef="user.login">
+    <ng-container class="column" matColumnDef="login">
       <th class="header" mat-header-cell *matHeaderCellDef>
         Login:
       </th>
@@ -55,6 +55,6 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'highlightRow': selectedRow == row.active}"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'highlightRow': selectedRow == row.firstName}"></tr>
   </table>
 </div>

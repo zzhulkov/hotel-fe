@@ -24,8 +24,8 @@ export class AddApartmentsDialogComponent implements OnInit {
 
   addApartmentForm: FormGroup;
 
-  apartment = new Apartments();
-  apartmentClass = new ApartmentsClass();
+  apartment = {} as Apartments;
+  apartmentClass = {} as ApartmentsClass;
 
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;

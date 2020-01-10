@@ -2,7 +2,7 @@ import {ApartmentsClass} from './apartments-class';
 import {User} from './user';
 import {Apartments} from './apartments';
 
-export class Booking {
+export interface Booking {
   id: number;
   startDate: Date;
   endDate: Date;
@@ -12,6 +12,6 @@ export class Booking {
   review: string;
   bookingStatus: string;
   user: User;
-  apartmentsClass: ApartmentsClass
+  apartmentsClass: ApartmentsClass;
   apartments: Apartments;
 }
