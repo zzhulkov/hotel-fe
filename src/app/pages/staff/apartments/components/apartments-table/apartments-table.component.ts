@@ -6,7 +6,7 @@ import {Apartments} from '../../../../../component/apartments';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {FormControl} from '@angular/forms';
 import {ConstantsService} from '../../../../../services/constants.service';
-import {ShareService} from "../../../../../services/share.service";
+import {DataTransferService} from "../../../../../services/data-transfer.service";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -23,7 +23,8 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  private shareService: ShareService;
+  private dataTransfer: DataTransferService;
+  selectedRow: any;
   apartmentsList = new MatTableDataSource<Apartments>();
   selectedApartments: Apartments;
   displayedColumns = ['roomNumber', 'photo', 'description', 'status', 'apartmentClass.id',
@@ -51,11 +52,17 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
   };
 
 
-  constructor(private http: HttpClient, shareService: ShareService) {
+  constructor(private http: HttpClient, dataTransfer: DataTransferService) {
     super();
-    this.shareService = shareService;
     this.getAllApartments();
+    this.dataTransfer = dataTransfer;
     this.apartmentsList.filterPredicate = this.createFilter();
+  }
+
+  selectRow(row: any): void {
+    this.selectedRow = row.roomNumber;
+    console.log(row);
+    this.dataTransfer.setData(row);
   }
 
   onSelect(apartments: Apartments): void {
@@ -64,14 +71,6 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
   }
 
   ngOnInit() {
-    this.shareService.getEmittedValue()
-      .subscribe(item => {
-          this.filterValues.roomNumber = item.roomNumber;
-          this.apartmentsList.filter = JSON.stringify(this.filterValues);
-          console.log(this.filterValues.roomNumber);
-        }
-      );
-
     this.roomNumberFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         roomNumber => {

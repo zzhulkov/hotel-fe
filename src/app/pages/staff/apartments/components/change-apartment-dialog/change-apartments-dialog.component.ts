@@ -1,10 +1,11 @@
-import {Component, Injectable, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
+import {DataTransferService} from '../../../../../services/data-transfer.service';
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -28,27 +29,22 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
 
-  constructor(private formBuilder: FormBuilder, private  http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private  http: HttpClient, dataTransfer: DataTransferService) {
     super();
     this.getAllApartmentsClasses();
+    this.apartment = dataTransfer.getData();
+    this.selectedApartmentsClass = this.apartment.apartmentClass;
   }
 
   ngOnInit(): void {
     this.profileForm = this.formBuilder.group({
-      id: ['', Validators.pattern('^\\d{1,4}$')],
-      roomNumber: ['', Validators.pattern('^\\d{1,3}$')],
-      photo: ['', Validators.pattern(
+      id: [this.apartment.id, Validators.pattern('^\\d{1,4}$')],
+      roomNumber: [this.apartment.roomNumber, Validators.pattern('^\\d{1,3}$')],
+      photo: [this.apartment.photo, Validators.pattern(
         '^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')],
-      description: [''],
-      status:  [''],
-      // classId: ['', Validators.pattern('^\\d{1,4}$')],
-      // className: ['', Validators.pattern('^([a-zA-Z])\\S+$')],
-      numberOfRooms: [''
-        //, Validators.pattern('^\\d{1}$')
-        ],
-      numberOfCouchette: [''
-        //, Validators.pattern('^\\d{1}$')
-        ]
+      description: [this.apartment.description],
+      status: [this.apartment.status],
+      nameClass: [this.apartment.apartmentClass.nameClass]
     });
   }
 
