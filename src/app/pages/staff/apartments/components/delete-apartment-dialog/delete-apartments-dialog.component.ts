@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {ConstantsService} from '../../../../../services/constants.service';
+import {DataTransferService} from '../../../../../services/data-transfer.service';
 
 
 /**
@@ -24,7 +25,8 @@ export class DeleteApartmentsDialogComponent implements OnInit {
 
   deleteApartmentForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, dataTransfer: DataTransferService) {
+    this.apartment = dataTransfer.getData();
   }
 
   ngOnInit(): void {
@@ -50,7 +52,7 @@ export class DeleteApartmentsDialogComponent implements OnInit {
   }
 
   deleteApartment() {
-    this.http.delete(URL + 'apartments/' + this.deleteApartmentForm.value.id, this.deleteApartmentForm.value).subscribe(
+    this.http.delete(URL + 'apartments/' + this.apartment.id, this.deleteApartmentForm.value).subscribe(
       res => {
         console.log(res);
       });
