@@ -18,13 +18,22 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationForm = this.fb.group({
-      login: ['login'],
-      password: ['pass']
+      // TODO: delete values
+      login: ['vasja228'],
+      password: ['vasja228']
     });
   }
 
   onSubmit() {
-    console.log(this.authenticationForm);
-    this.authService.login(this.authenticationForm.value.login, this.authenticationForm.value.password);
+    this.authenticationForm.setErrors(null);
+    const login = this.authenticationForm.value.login;
+    const password = this.authenticationForm.value.password;
+    this.authService.login(login, password);
+    this.authService.currentUserObservable.subscribe(user => {
+      console.log(user);
+      if (user === null) {
+        this.authenticationForm.setErrors(  {error: 'Unknown login/password pair'});
+      }
+    });
   }
 }

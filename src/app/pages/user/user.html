@@ -25,7 +25,8 @@
 
   <ng-template #signed>
     <div class="signed" >
-      <p>Hello,<br>{{ username }}</p>
+      <p>{{ username }}</p>
+      <button mat-button (click) = "logout()">Logout</button>
     </div>
   </ng-template>
 
@@ -39,6 +40,11 @@
   </ng-template>
 </div>
 
+<!--TODO: delete when deploy-->
+<div style="width: 100%">
+  <p>{{  apartments }}</p>
+  <button mat-button (click)="getApartments()">Go-go power rangers</button>
+</div>
 <div class="carousel-container">
   <mat-carousel
     timings="1000ms ease-in"

@@ -37,6 +37,9 @@ nav a{
   margin-left: auto;
   width: 96px;
 }
+.signed p {
+  font-size: 16px;
+}
 .sign-welcome{
   align-items: center;
   display: flex;
