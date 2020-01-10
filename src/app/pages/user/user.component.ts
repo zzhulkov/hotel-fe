@@ -42,7 +42,7 @@ export class UserComponent {
   }
 
   getApartments() {
-    this.http.get('http://localhost:8181/apartments/2').subscribe(
+    this.http.get('http://localhost:8090/apartments/2').subscribe(
       data => {
         this.apartments = (data as Apartments);
       },

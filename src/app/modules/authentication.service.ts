@@ -30,7 +30,7 @@ export class AuthenticationService {
 
   login(username: string, password: string) {
     // TODO: CHANGE URLS
-    const response = this.http.get('http://localhost:8181/authenticate?'
+    const response = this.http.get('http://localhost:8090/authenticate?'
                                   + 'username=' + username
                                   + '&password=' + password);
     response.subscribe(
@@ -41,7 +41,7 @@ export class AuthenticationService {
             this.token = tok.token;
             localStorage.setItem('token', tok.token);
             if (isNotNullOrUndefined(tok)) {
-              this.http.get('http://localhost:8181/user?login=' + username)
+              this.http.get('http://localhost:8090/user?login=' + username)
                 .subscribe(
                   resp => {
                     this.currentUserSubject.next((resp as User));

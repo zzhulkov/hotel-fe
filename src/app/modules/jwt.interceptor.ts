@@ -12,9 +12,7 @@ export class JWTInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.token;
-    console.log('JWT ' + token);
     if (req.url.includes('authenticate')) {
-     console.log('include');
      return next.handle(req);
     }
     if (isNotNullOrUndefined(token)) {

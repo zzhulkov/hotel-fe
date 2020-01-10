@@ -7,6 +7,6 @@ export class HttpService {
   constructor(private http: HttpClient) { }
 
   getConfig() {
-    return this.http.get('http://localhost:8181/hello');
+    return this.http.get('http://localhost:8090/hello');
   }
 }
