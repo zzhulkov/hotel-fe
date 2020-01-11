@@ -34,7 +34,9 @@
 </div>
 
 <div [ngSwitch]="authenticationState">
-  <ng-template ngSwitchCase="register">reg</ng-template>
+  <ng-template ngSwitchCase="register">
+    <app-registration-form></app-registration-form>
+  </ng-template>
   <ng-template ngSwitchCase="login">
     <app-login-form></app-login-form>
   </ng-template>

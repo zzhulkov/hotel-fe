@@ -1,6 +1,19 @@
 <form [formGroup]="authenticationForm" (submit)="onSubmit()">
-  <input type="text" formControlName="login" id="name" placeholder="Login">
-  <input type="text" formControlName="password" id="password" placeholder="Password">
-  <button type="submit">Send</button>
-  <p style="color: red">{{authenticationForm.errors}}</p>
+  <mat-form-field appearance="standard">
+    <mat-label>Login</mat-label>
+    <input matInput type="text" formControlName="login" id="login" required (ngModelChange)="onChange()">
+    <mat-error *ngIf="login().errors">
+      <span *ngIf="login().errors.required">This field must be filled</span>
+      <span *ngIf="login().errors.loginError">Unknown login/password pair</span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput type="password" formControlName="password" id="password" required (ngModelChange)="onChange()">
+    <mat-error *ngIf="password().errors">
+      <span *ngIf="password().errors.required">This field must be filled</span>
+    </mat-error>
+  </mat-form-field>
+  <button mat-button type="submit" [disabled]="!isValid">Log in</button>
 </form>
