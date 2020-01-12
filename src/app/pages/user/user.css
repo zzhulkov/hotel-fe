@@ -48,6 +48,17 @@ nav a{
   padding: 10px 0;
 }
 /*end of styles for navigation*/
+
+.auth-reg-container{
+  display: flex;
+  justify-content: center;
+}
+
+app-registration-form, app-login-form{
+  max-width: 400px;
+  width: 100%;
+}
+
 .carousel-container{
   position: relative;
 }

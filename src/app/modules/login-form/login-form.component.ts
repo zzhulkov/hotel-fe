@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {AuthenticationService} from '../authentication.service';
+import {error} from "selenium-webdriver";
+import {combineAll} from "rxjs/operators";
 
 @Component({
   selector: 'app-login-form',
@@ -40,15 +42,13 @@ export class LoginFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.isValid);
-    this.authenticationForm.setErrors(null);
-    const login = this.authenticationForm.value.login;
-    const password = this.authenticationForm.value.password;
-    this.authService.login(login, password);
-    this.authService.currentUserObservable.subscribe(user => {
-      if (user === null) {
-        this.authenticationForm.get('login').setErrors(  {loginError: 'Unknown login/password pair'});
-      }
-    });
+    if (this.isValid) {
+      this.authService.login(this.authenticationForm.value.login, this.authenticationForm.value.password)
+          .subscribe(
+            code => {
+              if (code === 2)
+                this.login().setErrors({loginError: 'Unknown login/password combination'});
+            });
+    }
   }
 }

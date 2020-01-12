@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {User} from '../component/user';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,14 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
+  login(username: string, password: string): Observable<any> {
+    // Codes
+    // 0 - waiting
+    // 1 - correct
+    // 2 - error
+    const isRespounseCorrect = new Subject<number>();
+    isRespounseCorrect.next(0);
+
     // TODO: CHANGE URLS
     const response = this.http.get('http://localhost:8090/authenticate?'
                                   + 'username=' + username
@@ -37,7 +44,6 @@ export class AuthenticationService {
       data => {
           if (data.hasOwnProperty('token')) {
             const tok = (data as {token});
-            console.log('Curr token:' + tok.token);
             this.token = tok.token;
             localStorage.setItem('token', tok.token);
             if (isNotNullOrUndefined(tok)) {
@@ -46,16 +52,15 @@ export class AuthenticationService {
                   resp => {
                     this.currentUserSubject.next((resp as User));
                     localStorage.setItem('user', JSON.stringify(resp as User));
-                  },
-                  error => {
-                    console.log('Вот теперь нам точно жопа');
+                    isRespounseCorrect.next(1);
                   }
                 );
             }
           }
       },
-      error => console.log(error)
+      err => {isRespounseCorrect.next(2);}
       );
+    return isRespounseCorrect;
   }
 
   logout() {

@@ -33,7 +33,7 @@
 </nav>
 </div>
 
-<div [ngSwitch]="authenticationState">
+<div [ngSwitch]="authenticationState" class="auth-reg-container">
   <ng-template ngSwitchCase="register">
     <app-registration-form></app-registration-form>
   </ng-template>
