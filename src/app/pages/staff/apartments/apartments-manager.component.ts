@@ -1,30 +1,51 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component, ViewChildren} from '@angular/core';
 import {HttpService} from '../../../http.service';
 import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog.component';
 import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dialog/delete-apartments-dialog.component';
-import {ApartmentsTableComponent} from "./components/apartments-table/apartments-table.component";
+import {ApartmentsTableComponent} from './components/apartments-table/apartments-table.component';
+import {FormControl} from '@angular/forms';
+import {MatExpansionPanel} from '@angular/material/expansion';
 
 
 @Component({
   selector: 'app-apartments-manager',
   templateUrl: './apartments-manager.component.html',
   styleUrls: ['../styles/page.css'],
-  providers: [HttpService]
+  providers: [HttpService],
+  viewProviders: [MatExpansionPanel]
 })
 
 export class ApartmentsManagerComponent {
-  constructor(public dialog: MatDialog) {}
+  isClicked = false;
 
+  constructor(public dialog: MatDialog, public expansionPanel: MatExpansionPanel, private cdRef: ChangeDetectorRef) {}
   openDialog() {
-    const dialogRef = this.dialog.open(ChangeApartmentsDialogComponent);
+    // const dialogRef = this.dialog.open(ChangeApartmentsDialogComponent);
+    // if (this.checkbox.value) {
+     // this.expansionPanel.open();
+    // }
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+     // console.log(`Dialog result: ${result}`);
+    // });
   }
+
+
+
+  isClickedRow() {
+    this.isClicked = true;
+    this.cdRef.detectChanges();
+  }
+
+  reselectRow() {
+    this.isClicked = false;
+    this.cdRef.detectChanges();
+    console.log('reselect');
+  }
+
   addApartmentDialog() {
     const dialogRef = this.dialog.open(AddApartmentsDialogComponent);
 

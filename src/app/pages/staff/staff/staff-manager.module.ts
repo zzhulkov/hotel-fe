@@ -14,6 +14,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {StaffFilterComponent} from './components/filter-staff/staff-filter.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {AddStaffDialogComponent} from './components/add-staff-dialog/add-staff-dialog.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 
@@ -30,7 +31,8 @@ import {AddStaffDialogComponent} from './components/add-staff-dialog/add-staff-d
         MatFormFieldModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatExpansionModule
     ],
   exports: [
     MatButtonModule,
