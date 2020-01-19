@@ -18,7 +18,6 @@ const URL = new ConstantsService().BASE_URL;
   templateUrl: './change-staff-dialog.html',
 })
 export class ChangeStaffDialogComponent implements OnInit {
-  //checkBox = new FormControl(false);
   changeStaffFrom: FormGroup;
   staff = {} as Staff;
   user = {} as User;

@@ -1,6 +1,15 @@
-<form [formGroup]="changeForm" (ngSubmit)="onSubmit()" class="change-apartment">
-  <h2 mat-dialog-title>Edit Apartment</h2>
-  <mat-dialog-content class="mat-typography">
+<div class="change-component">
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Change
+        </mat-panel-title>
+        <mat-panel-description>
+          Apartment
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <form [formGroup]="changeForm" (ngSubmit)="onSubmit()" class="change-apartment">
     <mat-form-field>
       <input matInput required="required" formControlName="className" class="full-width" placeholder="Class name">
     </mat-form-field>
@@ -15,14 +24,16 @@
              placeholder="Number of couchette">
     </mat-form-field>
     <br/>
-  </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="true" mat-dialog-close>
+    <button mat-button [mat-dialog-close]="true">
       Cancel
     </button>
-    <button type="submit" (click)="checkValid()" mat-dialog-close [disabled]="isSubmitDisabled()" mat-button>
+    <button type="submit" (click)="checkValid()" [disabled]="isSubmitDisabled()" mat-button>
       Change
     </button>
   </mat-dialog-actions>
 </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
 

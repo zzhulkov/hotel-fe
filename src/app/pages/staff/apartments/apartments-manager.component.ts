@@ -21,19 +21,8 @@ import {MatExpansionPanel} from '@angular/material/expansion';
 export class ApartmentsManagerComponent {
   isClicked = false;
 
-  constructor(public dialog: MatDialog, public expansionPanel: MatExpansionPanel, private cdRef: ChangeDetectorRef) {}
-  openDialog() {
-    // const dialogRef = this.dialog.open(ChangeApartmentsDialogComponent);
-    // if (this.checkbox.value) {
-     // this.expansionPanel.open();
-    // }
-
-    // dialogRef.afterClosed().subscribe(result => {
-     // console.log(`Dialog result: ${result}`);
-    // });
-  }
-
-
+  constructor(public dialog: MatDialog,
+              private cdRef: ChangeDetectorRef) {}
 
   isClickedRow() {
     this.isClicked = true;
