@@ -1,6 +1,15 @@
+<div class="change-component">
+  <mat-accordion>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Change
+      </mat-panel-title>
+      <mat-panel-description>
+        Apartment
+      </mat-panel-description>
+    </mat-expansion-panel-header>
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="change-apartment">
-  <h2 mat-dialog-title>Edit Apartment</h2>
-  <mat-dialog-content class="mat-typography">
     <mat-form-field>
       <input matInput required="required" formControlName="id" class="full-width" placeholder="ID">
     </mat-form-field>
@@ -39,19 +48,20 @@
       </mat-select>
     </mat-form-field>
     <br/>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button
+  <mat-action-row align="end">
+    <button mat-raised-button
             mat-dialog-close
             [mat-dialog-close]="true">
       Cancel
     </button>
-    <button mat-dialog-close
+    <button mat-raised-button
             type="submit"
             (click)="checkValid()"
             [disabled]="isSubmitDisabled()" mat-button>
       Change
     </button>
-  </mat-dialog-actions>
+  </mat-action-row>
 </form>
-
+  </mat-expansion-panel>
+  </mat-accordion>
+</div>

@@ -13,20 +13,22 @@ import {ApartmentsClassesTableComponent} from './components/apartments-classes-t
 import {ChangeApartmentsClassesDialogComponent} from './components/change-apartment-class-dialog/change-apartments-classes-dialog.component';
 import {AddApartmentsClassesDialogComponent} from './components/add-apartment-class-dialog/add-apartments-classes-dialog.component';
 import {DeleteApartmentsClassesDialogComponent} from './components/delete-apartment-class-dialog/delete-apartments-classes-dialog.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
-  imports: [
-    MatPaginatorModule,
-    BrowserModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatTableModule,
-    MatDialogModule,
-    MatInputModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        MatPaginatorModule,
+        BrowserModule,
+        HttpClientModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatTableModule,
+        MatDialogModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatExpansionModule
+    ],
   exports: [
     MatButtonModule,
     MatDialogModule,

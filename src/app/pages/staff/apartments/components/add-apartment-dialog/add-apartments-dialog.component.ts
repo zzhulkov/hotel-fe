@@ -36,16 +36,10 @@ export class AddApartmentsDialogComponent implements OnInit {
       photo: ['', Validators.pattern(
         '^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')],
       description: [''],
-      status: [''
-        // , Validators.required
-      ],
-      // className: ['', Validators.required],
-      numberOfRooms: [''
-        // , Validators.pattern('^\\d{1}$')
-      ],
-      numberOfCouchette: [''
-        // , Validators.pattern('^\\d{1}$')
-      ]
+      status: [''],
+      apartmentClass: [''],
+      numberOfRooms: [{value: '', disabled: true}],
+      numberOfCouchette: [{value: '', disabled: true}]
     });
   }
 

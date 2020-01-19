@@ -2,15 +2,14 @@
   Apartments list
   <div class="wrap">
     <div class="table">
-      <apartments-table-component></apartments-table-component>
+      <apartments-table-component (selectedRowClicked)="isClickedRow()" (reselectRow)="reselectRow()"></apartments-table-component>
     </div>
+
     <div class="tools">
       <div class="buttons">
         <button class="mat-button" mat-raised-button (click)="addApartmentDialog()">Add</button>
       </div>
-      <div class="buttons">
-        <button class="mat-button" mat-raised-button (click)="openDialog()">Change</button>
-      </div>
+
       <div class="buttons">
         <button class="mat-button" mat-raised-button (click)="deleteApartment()">Delete</button>
       </div>
@@ -25,6 +24,9 @@
             <mat-option value="Ready to check in">Ready to check in</mat-option>
           </mat-select>
         </mat-form-field>
+      </div>
+      <div class="change">
+        <app-change-apartments-dialog *ngIf="isClicked"></app-change-apartments-dialog>
       </div>
     </div>
   </div>
