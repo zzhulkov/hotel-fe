@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Staff} from '../../../../../component/staff';
 import {User} from '../../../../../component/user';
@@ -29,11 +29,8 @@ export class AddStaffDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.addStaffFrom = this.formBuilder.group({
-      firstName: ['', Validators.pattern('^([A-Z]){1}([a-z]+)$')],
-      lastName: ['', Validators.pattern('^([A-Z]){1}([a-z]+)$')],
       email: ['', Validators.pattern('^[a-zA-Z0-9.!#$%&’*+=?^_`{|}~-]+\\@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+$')],
-      phone: ['', Validators.pattern('(^\\+{1}\\d{7,13}$)|(^\\d{7,13}$)')],
-      login: ['', Validators.pattern('^([a-zA-Z])\\S+$')],
+      role: [''],
       active: ['true'],
       speciality: [''],
     });
@@ -60,7 +57,6 @@ export class AddStaffDialogComponent implements OnInit {
   }
 
   createStaff() {
-    this.setUser();
     this.createUser();
 
     this.http.post(URL + 'staff/', this.staff).subscribe(
@@ -83,18 +79,6 @@ export class AddStaffDialogComponent implements OnInit {
     this.staff.active = this.addStaffFrom.value.active;
     this.staff.speciality = this.addStaffFrom.value.speciality;
     console.log(this.staff);
-  }
-
-  setUser() {
-    this.user.points = 0;
-    this.user.password = '123456';
-    this.user.userRole = this.roles.values()[1];
-    this.user.firstName = this.addStaffFrom.value.firstName;
-    this.user.lastName = this.addStaffFrom.value.lastName;
-    this.user.email = this.addStaffFrom.value.email;
-    this.user.phoneNumber = this.addStaffFrom.value.phone;
-    this.user.login = this.addStaffFrom.value.login;
-    console.log(this.user);
   }
 }
 

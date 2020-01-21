@@ -3,25 +3,15 @@
 <h2 mat-dialog-title>Add Staff</h2>
 <mat-dialog-content class="mat-typography">
   <mat-form-field>
-    <input required="required" matInput formControlName="firstName" class="full-width" placeholder="First name">
-  </mat-form-field>
-  <br/><mat-form-field>
-    <input required="required" matInput formControlName="lastName" class="full-width" placeholder="Last name">
-  </mat-form-field>
-  <br/> <mat-form-field>
     <input required="required" matInput formControlName="email" class="full-width" placeholder="Email">
   </mat-form-field>
-  <br/><mat-form-field>
-    <input required="required" matInput formControlName="phone" class="full-width" placeholder="Phone">
-  </mat-form-field>
-  <br/><mat-form-field>
-    <input required="required" matInput formControlName="login" class="full-width" placeholder="Login">
+  <br/>
+  <mat-form-field>
+    <input required="required" matInput formControlName="role" class="full-width" placeholder="Role">
   </mat-form-field>
   <br/>
   <mat-label>is Active?  </mat-label>
   <mat-checkbox class="full-width" formControlName="active" aria-placeholder="isActive" checked></mat-checkbox>
-  <br/>
-  <mat-label>Only Manager</mat-label>
   <br/>
   <mat-form-field>
     <mat-select required="required"  formControlName="speciality" placeholder="Speciality">

@@ -22,15 +22,13 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
   private dataTransfer: DataTransferService;
   selectedRow: any;
 
-  displayedColumns = ['firstName', 'lastName', 'email', 'phone', 'login', 'speciality', 'active'];
+  displayedColumns = ['id', 'firstname', 'lastname', 'email', 'speciality', 'active'];
   staffList = new MatTableDataSource<Staff>();
   filterValues = {
     id: '',
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     email: '',
-    phone: '',
-    login: '',
     speciality: '',
     active: ''
   };
@@ -39,13 +37,13 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
   constructor(private http: HttpClient, shareService: ShareService, dataTransfer: DataTransferService) {
     super();
     this.getAllStaff();
+    this.dataTransfer = dataTransfer;
     this.staffList.filterPredicate = this.createFilter();
     this.shareService = shareService;
-    this.dataTransfer = dataTransfer;
   }
 
   selectRow(row: any): void {
-    this.selectedRow = row.firstName;
+    this.selectedRow = row.id;
     console.log(row);
     this.dataTransfer.setData(row);
   }
@@ -53,38 +51,32 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
   ngOnInit() {
     this.shareService.getEmittedValue()
       .subscribe(item => {
-          this.filterValues.firstName = item.firstName;
+        this.filterValues.id = item.id;
           this.staffList.filter = JSON.stringify(this.filterValues);
-          console.log(this.filterValues.firstName);
+        console.log(this.filterValues.id);
         }
       );
 
     this.shareService.getEmittedValue()
       .subscribe(item => {
-          this.filterValues.lastName = item.lastName;
+        this.filterValues.firstname = item.firstname;
           this.staffList.filter = JSON.stringify(this.filterValues);
-          console.log(this.filterValues.lastName);
+        console.log(this.filterValues.firstname);
+        }
+      );
+
+    this.shareService.getEmittedValue()
+      .subscribe(item => {
+        this.filterValues.lastname = item.lastname;
+          this.staffList.filter = JSON.stringify(this.filterValues);
+        console.log(this.filterValues.lastname);
         }
       );
     this.shareService.getEmittedValue()
       .subscribe(item => {
-          this.filterValues.email = item.email;
+        this.filterValues.email = item.email;
           this.staffList.filter = JSON.stringify(this.filterValues);
-          console.log(this.filterValues.email);
-        }
-      );
-    this.shareService.getEmittedValue()
-      .subscribe(item => {
-          this.filterValues.phone = item.phone;
-          this.staffList.filter = JSON.stringify(this.filterValues);
-          console.log(this.filterValues.phone);
-        }
-      );
-    this.shareService.getEmittedValue()
-      .subscribe(item => {
-          this.filterValues.login = item.login;
-          this.staffList.filter = JSON.stringify(this.filterValues);
-          console.log(this.filterValues.login);
+        console.log(this.filterValues.email);
         }
       );
 
@@ -120,11 +112,9 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
     // tslint:disable-next-line:only-arrow-functions
     let filterFunction = function(data, filter): boolean {
       let searchTerms = JSON.parse(filter);
-      return data.lastName.toLowerCase().indexOf(searchTerms.lastName.toLowerCase()) !== -1
+      return data.lastname.toLowerCase().indexOf(searchTerms.lastname.toLowerCase()) !== -1
         && data.email.toLowerCase().indexOf(searchTerms.email.toLowerCase()) !== -1
-        && data.firstName.toLowerCase().indexOf(searchTerms.firstName.toLowerCase()) !== -1
-        && data.phoneNumber.toLowerCase().indexOf(searchTerms.phone.toLowerCase()) !== -1
-        && data.login.toLowerCase().indexOf(searchTerms.login.toLowerCase()) !== -1
+        && data.firstname.toLowerCase().indexOf(searchTerms.firstname.toLowerCase()) !== -1
         && data.speciality.toLowerCase().indexOf(searchTerms.speciality.toLowerCase()) !== -1
         && data.active.toString().toLowerCase().indexOf(searchTerms.active.toLowerCase()) !== -1;
     };
