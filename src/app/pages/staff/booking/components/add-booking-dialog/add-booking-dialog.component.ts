@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Apartments} from '../../../../../component/apartments';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {ConstantsService} from '../../../../../services/constants.service';
@@ -40,9 +39,9 @@ export class AddBookingDialogComponent implements OnInit {
       createdDate: ['', Validators.required],
       review: [''],
       bookingStatus: [''],
-      userName: [''],
-      apartmentsClassName: [''],
-      apartmentsRoomNumber: ['']
+      firstname: [''],
+      nameClass: [''],
+      roomNumber: ['']
     });
   }
 
@@ -63,7 +62,7 @@ export class AddBookingDialogComponent implements OnInit {
   }
 
   createBooking() {
-    this.http.post(URL + 'bookung/', this.booking).subscribe(
+    this.http.post(URL + 'bookings/', this.booking).subscribe(
       res => {
         console.log(res);
         this.booking = (res as Booking);
@@ -72,7 +71,7 @@ export class AddBookingDialogComponent implements OnInit {
 
   setBooking() {
     this.booking.apartmentsClass = this.selectedApartmentsClass;
-    this.booking.apartments.roomNumber = this.addForm.value.apartmentsRoomNumber;
+    this.booking.apartments.roomNumber = this.addForm.value.roomNumber;
     this.booking.startDate = this.addForm.value.startDate;
     this.booking.endDate = this.addForm.value.endDate;
     this.booking.totalPrice = this.addForm.value.totalPrice;
@@ -80,7 +79,7 @@ export class AddBookingDialogComponent implements OnInit {
     this.booking.createdDate = this.addForm.value.createdDate;
     this.booking.review = this.addForm.value.review;
     this.booking.bookingStatus = this.addForm.value.bookingStatus;
-    this.booking.user.firstName = this.addForm.value.userName;
+    this.booking.user.firstname = this.addForm.value.firstname;
     console.log(this.booking);
   }
 
