@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
@@ -36,16 +36,10 @@ export class AddApartmentsDialogComponent implements OnInit {
       photo: ['', Validators.pattern(
         '^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$')],
       description: [''],
-      status: [''
-        // , Validators.required
-      ],
-      // className: ['', Validators.required],
-      numberOfRooms: [''
-        // , Validators.pattern('^\\d{1}$')
-      ],
-      numberOfCouchette: [''
-        // , Validators.pattern('^\\d{1}$')
-      ]
+      status: [''],
+      apartmentClass: [''],
+      numberOfRooms: [{value: '', disabled: true}],
+      numberOfCouchette: [{value: '', disabled: true}]
     });
   }
 

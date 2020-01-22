@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Staff} from '../../../../../component/staff';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {HttpClient} from '@angular/common/http';
@@ -16,6 +16,9 @@ const URL = new ConstantsService().BASE_URL;
   templateUrl: 'staff-table.html',
 })
 export class StaffTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
+
+  @Output() selectedRowClicked: EventEmitter<any> = new EventEmitter();
+  @Output() reselectRow: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -43,9 +46,15 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
   }
 
   selectRow(row: any): void {
+    this.reselectRow.emit();
     this.selectedRow = row.id;
     console.log(row);
     this.dataTransfer.setData(row);
+    this.isSelected();
+  }
+
+  isSelected() {
+    this.selectedRowClicked.emit();
   }
 
   ngOnInit() {
@@ -102,7 +111,7 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
   }
 
   public getAllStaff = () => {
-    this.http.get(URL + '/staff').subscribe(res => {
+    this.http.get(URL + 'staff').subscribe(res => {
       console.log(res);
       this.staffList.data = (res as Staff[]);
     });
@@ -110,7 +119,7 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
 
   createFilter(): (data: any, filter: string) => boolean {
     // tslint:disable-next-line:only-arrow-functions
-    let filterFunction = function(data, filter): boolean {
+    let filterFunction = function (data, filter): boolean {
       let searchTerms = JSON.parse(filter);
       return data.lastname.toLowerCase().indexOf(searchTerms.lastname.toLowerCase()) !== -1
         && data.email.toLowerCase().indexOf(searchTerms.email.toLowerCase()) !== -1

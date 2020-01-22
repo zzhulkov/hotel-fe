@@ -1,7 +1,36 @@
-<form [formGroup]="changeStaffFrom" (ngSubmit)="onSubmit()" class="change-apartment">
+<div class="change-component">
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Change
+        </mat-panel-title>
+        <mat-panel-description>
+          Apartment
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <form [formGroup]="changeStaffFrom" (ngSubmit)="onSubmit()" class="change-apartment">
 <section class="change-staff">
-<h2 mat-dialog-title>Edit Staff</h2>
-<mat-dialog-content class="mat-typography">
+  <mat-form-field>
+    <input required="required" matInput formControlName="firstName" class="full-width" placeholder="First name">
+  </mat-form-field>
+  <br/>
+  <mat-form-field>
+    <input required="required" matInput formControlName="lastName" class="full-width" placeholder="Last name">
+  </mat-form-field>
+  <br/>
+  <mat-form-field>
+    <input required="required" matInput formControlName="email" class="full-width" placeholder="Email">
+  </mat-form-field>
+  <br/>
+  <mat-form-field>
+    <input required="required" matInput formControlName="phone" class="full-width" placeholder="Phone">
+  </mat-form-field>
+  <br/>
+  <mat-form-field>
+    <input required="required" matInput formControlName="login" class="full-width" placeholder="Login">
+  </mat-form-field>
+  <br/>
   <mat-label>is Active?  </mat-label>
   <mat-checkbox class="full-width" formControlName="active" aria-placeholder="isActive" checked></mat-checkbox>
   <br/><mat-form-field>
@@ -9,10 +38,12 @@
       <mat-option value="Manager">Manager</mat-option>
     </mat-select>
   </mat-form-field>
-</mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button type="submit" (click)="checkValid()" mat-dialog-close [disabled]="isSubmitDisabled()" mat-button>Change</button>
+  <button mat-button>Cancel</button>
+  <button type="submit" (click)="checkValid()" [disabled]="isSubmitDisabled()" mat-button>Change</button>
 </mat-dialog-actions>
 </section>
 </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

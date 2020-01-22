@@ -36,6 +36,7 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
     this.selectedApartmentsClass = this.apartment.apartmentClass;
   }
 
+
   ngOnInit(): void {
     this.profileForm = this.formBuilder.group({
       id: [this.apartment.id, Validators.pattern('^\\d{1,4}$')],
@@ -46,6 +47,7 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
       status: [this.apartment.status],
       nameClass: [this.apartment.apartmentClass.nameClass]
     });
+    this.checkValid();
   }
 
   checkValid() {

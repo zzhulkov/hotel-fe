@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {HttpClient} from '@angular/common/http';
@@ -20,6 +20,9 @@ const URL = new ConstantsService().BASE_URL;
   templateUrl: 'apartments-classes-table.html',
 })
 export class ApartmentsClassesTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
+
+  @Output() selectedRowClicked: EventEmitter<any> = new EventEmitter();
+  @Output() reselectRow: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -47,10 +50,17 @@ export class ApartmentsClassesTableComponent extends Unsubscribable implements O
   }
 
   selectRow(row: any): void {
+    this.reselectRow.emit();
     this.selectedRow = row.nameClass;
     console.log(row);
     this.dataTransfer.setData(row);
+    this.isSelected();
   }
+
+  isSelected() {
+    this.selectedRowClicked.emit();
+  }
+
 
   ngOnInit() {
     this.nameClassFilter.valueChanges.pipe(takeUntil(this.destroy$))

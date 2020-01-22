@@ -42,7 +42,6 @@ export class StaffFilterComponent extends Unsubscribable implements OnInit {
       );
   }
 
-
   constructor(shareService: ShareService) {
     super();
     this.shareService = shareService;
