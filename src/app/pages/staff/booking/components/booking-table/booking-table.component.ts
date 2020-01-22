@@ -169,17 +169,18 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     // tslint:disable-next-line:only-arrow-functions
     const filterFunction = function (data, filter): boolean {
       const searchTerms = JSON.parse(filter);
-      return data.startDate.toString().toLowerCase().indexOf(searchTerms.startDate) !== -1
+      let result = data.startDate.toString().toLowerCase().indexOf(searchTerms.startDate) !== -1
         && data.endDate.toString().toLowerCase().indexOf(searchTerms.endDate) !== -1
         && data.totalPrice.toString().toLowerCase().indexOf(searchTerms.totalPrice) !== -1
-        && data.comment.toLowerCase().indexOf(searchTerms.comment) !== -1
         && data.createdDate.toString().toLowerCase().indexOf(searchTerms.createdDate) !== -1
-        && data.review.toLowerCase().indexOf(searchTerms.review) !== -1
         && data.bookingStatus.toString().toLowerCase().indexOf(searchTerms.bookingStatus) !== -1
-        && data.user.firstname.toLowerCase().indexOf(searchTerms.firstname) !== -1
-        && data.apartmentClass.nameClass.toLowerCase().indexOf(searchTerms.nameClass) !== -1
-        && (data.apartment !== null ? false :
-          (data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1));
+        && data.user.firstname.indexOf(searchTerms.firstname) !== -1
+        && data.apartmentClass.nameClass.indexOf(searchTerms.nameClass) !== -1;
+
+      if (data.apartment !== null) {
+        result = result && data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
+      }
+      return result;
     };
     return filterFunction;
   }

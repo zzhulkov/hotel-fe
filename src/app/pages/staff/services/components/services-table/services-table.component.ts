@@ -83,8 +83,8 @@ export class ServicesTableComponent extends Unsubscribable implements OnInit, Af
   createFilter(): (data: any, filter: string) => boolean {
     let filterFunction = function (data, filter): boolean {
       let searchTerms = JSON.parse(filter);
-      return data.service.serviceName.toString().toLowerCase().indexOf(searchTerms.serviceName) !== -1
-        && data.service.price.toString().toLowerCase().indexOf(searchTerms.price) !== -1;
+      return data.serviceName.toLowerCase().indexOf(searchTerms.serviceName) !== -1
+        && data.price.toString().toLowerCase().indexOf(searchTerms.price) !== -1;
     };
     return filterFunction;
   }

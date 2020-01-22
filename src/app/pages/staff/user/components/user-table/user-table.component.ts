@@ -126,13 +126,13 @@ export class UserTableComponent extends Unsubscribable implements OnInit, AfterV
   createFilter(): (data: any, filter: string) => boolean {
     let filterFunction = function (data, filter): boolean {
       let searchTerms = JSON.parse(filter);
-      return data.user.login.toString().toLowerCase().indexOf(searchTerms.login) !== -1
-        && data.user.userRole.toString().toLowerCase().indexOf(searchTerms.userRole) !== -1
-        && data.user.firstname.toLowerCase().indexOf(searchTerms.firstname) !== -1
-        && data.user.lastname.toLowerCase().indexOf(searchTerms.lastname) !== -1
-        && data.user.email.toLowerCase().indexOf(searchTerms.email) !== -1
-        && data.user.phoneNumber.toLowerCase().indexOf(searchTerms.phoneNumber) !== -1
-        && data.user.points.toLowerCase().indexOf(searchTerms.points) !== -1;
+      return data.login.toString().toLowerCase().indexOf(searchTerms.login) !== -1
+        && data.userRole.indexOf(searchTerms.userRole) !== -1
+        && data.firstname.indexOf(searchTerms.firstname) !== -1
+        && data.lastname.indexOf(searchTerms.lastname) !== -1
+        && data.email.indexOf(searchTerms.email) !== -1
+        && data.phoneNumber.toString().toLowerCase().indexOf(searchTerms.phoneNumber) !== -1
+        && data.points.toString().toLowerCase().indexOf(searchTerms.points) !== -1;
     };
     return filterFunction;
   }
