@@ -24,8 +24,8 @@ export class ChangeStaffDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeStaffFrom = this.formBuilder.group({
-      firstname: [this.staff.firstname],
-      lastname: [this.staff.lastname],
+      firstname: [{value: this.user.firstname, disabled: true}],
+      lastname: [{value: this.user.lastname, disabled: true}],
       active: [this.staff.active],
       speciality: [this.staff.speciality],
     });

@@ -50,7 +50,7 @@ export class DeleteServicesDialogComponent implements OnInit {
   }
 
   deleteService() {
-    this.http.delete(URL + 'bookingAddServices' + this.service.id, this.deleteForm.value).subscribe(
+    this.http.delete(URL + 'bookingAddServices/' + this.service.id, this.deleteForm.value).subscribe(
       res => {
         console.log(res);
       });

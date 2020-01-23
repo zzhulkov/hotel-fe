@@ -10,25 +10,12 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <form [formGroup]="changeStaffFrom" (ngSubmit)="onSubmit()" class="change-apartment">
-<section class="change-staff">
   <mat-form-field>
-    <input required="required" matInput formControlName="firstName" class="full-width" placeholder="First name">
+    <input required="required" matInput formControlName="firstname" class="full-width" placeholder="First name">
   </mat-form-field>
   <br/>
   <mat-form-field>
-    <input required="required" matInput formControlName="lastName" class="full-width" placeholder="Last name">
-  </mat-form-field>
-  <br/>
-  <mat-form-field>
-    <input required="required" matInput formControlName="email" class="full-width" placeholder="Email">
-  </mat-form-field>
-  <br/>
-  <mat-form-field>
-    <input required="required" matInput formControlName="phone" class="full-width" placeholder="Phone">
-  </mat-form-field>
-  <br/>
-  <mat-form-field>
-    <input required="required" matInput formControlName="login" class="full-width" placeholder="Login">
+    <input required="required" matInput formControlName="lastname" class="full-width" placeholder="Last name">
   </mat-form-field>
   <br/>
   <mat-label>is Active?  </mat-label>
@@ -40,9 +27,11 @@
   </mat-form-field>
 <mat-dialog-actions align="end">
   <button mat-button>Cancel</button>
-  <button type="submit" (click)="checkValid()" [disabled]="isSubmitDisabled()" mat-button>Change</button>
+  <button mat-raised-button
+          type="submit" (click)="checkValid()"
+          [disabled]="isSubmitDisabled()" mat-button>Change
+  </button>
 </mat-dialog-actions>
-</section>
 </form>
     </mat-expansion-panel>
   </mat-accordion>
