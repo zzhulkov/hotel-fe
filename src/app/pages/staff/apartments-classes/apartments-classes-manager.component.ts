@@ -41,13 +41,5 @@ export class ApartmentsClassesManagerComponent {
       console.log(`Dialog result: ${result}`);
     });
   }
-
-  deleteDialog() {
-    const dialogRef = this.dialog.open(DeleteApartmentsClassesDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
 }
 

@@ -5,6 +5,8 @@ import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
+import {DeleteApartmentsClassesDialogComponent} from "../delete-apartment-class-dialog/delete-apartments-classes-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -25,7 +27,7 @@ export class ChangeApartmentsClassesDialogComponent implements OnInit {
   changeForm: FormGroup;
   apartmentClass = {} as ApartmentsClass;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, dataTransfer: DataTransferService) {
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private http: HttpClient, dataTransfer: DataTransferService) {
     this.apartmentClass = dataTransfer.getData();
     console.log(this.apartmentClass);
   }
@@ -68,6 +70,15 @@ export class ChangeApartmentsClassesDialogComponent implements OnInit {
     this.apartmentClass.numberOfRooms = this.changeForm.value.numberOfRooms;
     this.apartmentClass.numberOfCouchette = this.changeForm.value.numberOfCouchette;
     console.log(this.apartmentClass);
+  }
+
+
+  deleteDialog() {
+    const dialogRef = this.dialog.open(DeleteApartmentsClassesDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
 
