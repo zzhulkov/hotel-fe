@@ -2,7 +2,6 @@ import {ChangeDetectorRef, Component} from '@angular/core';
 import {HttpService} from '../../../http.service';
 import {MatDialog} from '@angular/material/dialog';
 // tslint:disable-next-line:max-line-length
-import {ChangeApartmentsClassesDialogComponent} from './components/change-apartment-class-dialog/change-apartments-classes-dialog.component';
 import {AddApartmentsClassesDialogComponent} from './components/add-apartment-class-dialog/add-apartments-classes-dialog.component';
 // tslint:disable-next-line:max-line-length
 import {DeleteApartmentsClassesDialogComponent} from './components/delete-apartment-class-dialog/delete-apartments-classes-dialog.component';
@@ -21,7 +20,8 @@ export class ApartmentsClassesManagerComponent {
   isClicked = false;
 
   constructor(public dialog: MatDialog,
-              private cdRef: ChangeDetectorRef) {}
+              private cdRef: ChangeDetectorRef) {
+  }
 
   isClickedRow() {
     this.isClicked = true;

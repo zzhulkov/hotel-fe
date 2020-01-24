@@ -6,7 +6,6 @@ import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
-import {MatExpansionPanel} from "@angular/material/expansion";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -34,7 +33,7 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
     super();
     this.getAllApartmentsClasses();
     this.apartment = dataTransfer.getData();
-    this.selectedApartmentsClass  = this.apartment.apartmentClass;
+    this.selectedApartmentsClass = this.apartment.apartmentClass;
   }
 
 

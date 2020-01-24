@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Apartments} from '../../../../../component/apartments';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {Booking} from '../../../../../component/booking';
+import {DataTransferService} from '../../../../../services/data-transfer.service';
+import {Unsubscribable} from '../../../../../component/Unsubscribable';
+import {Apartments} from "../../../../../component/apartments";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -17,15 +19,19 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './change-booking-dialog.html',
 })
-export class ChangeBookingDialogComponent implements OnInit {
+export class ChangeBookingDialogComponent extends Unsubscribable implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private dataTransfer: DataTransferService) {
+    super();
     this.getAllApartmentsClasses();
+    this.booking = dataTransfer.getData();
+    console.log(this.booking);
   }
 
   addForm: FormGroup;
 
   booking = {} as Booking;
+  apartment = {} as Apartments;
   apartmentClass = {} as ApartmentsClass;
 
   apartmentsClassesList: ApartmentsClass[];
@@ -33,16 +39,16 @@ export class ChangeBookingDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.addForm = this.formBuilder.group({
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      totalPrice: ['', Validators.required],
-      comment: [''],
-      createdDate: ['', Validators.required],
-      review: [''],
-      bookingStatus: [''],
-      userName: [''],
-      apartmentsClassName: [''],
-      apartmentsRoomNumber: ['']
+      startDate: [this.booking.startDate, Validators.required],
+      endDate: [this.booking.endDate, Validators.required],
+      totalPrice: [this.booking.totalPrice, Validators.required],
+      comment: [this.booking.comment],
+      createdDate: [this.booking.createdDate, Validators.required],
+      review: [this.booking.review],
+      bookingStatus: [this.booking.bookingStatus],
+      email: [this.booking.user.email],
+      nameClass: [this.booking.apartmentsClass.nameClass],
+      roomNumber: [this.booking.apartments.roomNumber]
     });
   }
 
@@ -63,7 +69,7 @@ export class ChangeBookingDialogComponent implements OnInit {
   }
 
   createBooking() {
-    this.http.post(URL + 'bookung/', this.booking).subscribe(
+    this.http.post(URL + 'bookings/', this.booking).subscribe(
       res => {
         console.log(res);
         this.booking = (res as Booking);
@@ -72,7 +78,7 @@ export class ChangeBookingDialogComponent implements OnInit {
 
   setBooking() {
     this.booking.apartmentsClass = this.selectedApartmentsClass;
-    this.booking.apartments.roomNumber = this.addForm.value.apartmentsRoomNumber;
+    this.booking.apartments.roomNumber = this.addForm.value.roomNumber;
     this.booking.startDate = this.addForm.value.startDate;
     this.booking.endDate = this.addForm.value.endDate;
     this.booking.totalPrice = this.addForm.value.totalPrice;
@@ -80,7 +86,7 @@ export class ChangeBookingDialogComponent implements OnInit {
     this.booking.createdDate = this.addForm.value.createdDate;
     this.booking.review = this.addForm.value.review;
     this.booking.bookingStatus = this.addForm.value.bookingStatus;
-    this.booking.user.firstName = this.addForm.value.userName;
+    this.booking.user.email = this.addForm.value.email;
     console.log(this.booking);
   }
 

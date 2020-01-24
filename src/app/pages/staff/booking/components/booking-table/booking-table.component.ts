@@ -6,6 +6,7 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {Booking} from '../../../../../component/booking';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {FormControl} from '@angular/forms';
+import {DataTransferService} from '../../../../../services/data-transfer.service';
 
 
 const URL = new ConstantsService().BASE_URL;
@@ -23,9 +24,11 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  private dataTransfer: DataTransferService;
+  selectedRow: any;
   bookingList = new MatTableDataSource<Booking>();
   selectedBooking: Booking;
-  displayedColumns = ['startDate', 'endDate', 'totalPrice', 'comments', 'createdDate', 'review', 'bookingStatus', 'bookedBy', 'apartmentClass', 'apartment'];
+  displayedColumns = ['id', 'startDate', 'endDate', 'totalPrice', 'comments', 'createdDate', 'review', 'bookingStatus', 'firstname', 'nameClass', 'roomNumber'];
   dataSource = this.bookingList;
   startDateFilter = new FormControl('');
   endDateFilter = new FormControl('');
@@ -39,6 +42,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
   apartmentFilter = new FormControl('');
 
   filterValues = {
+    id: '',
     startDate: '',
     endDate: '',
     totalPrice: '',
@@ -46,15 +50,30 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     createdDate: '',
     review: '',
     bookingStatus: '',
-    userName: '',
-    apartmentsClassName: '',
-    apartmentsRoomNumber: '',
+    firstname: '',
+    nameClass: '',
+    roomNumber: '',
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, dataTransfer: DataTransferService) {
     super();
     this.getAllBookings();
+    this.dataTransfer = dataTransfer;
     this.bookingList.filterPredicate = this.createFilter();
+  }
+
+  haveApartments(booking: any): boolean {
+    if (booking.apartment == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  selectRow(row: any): void {
+    this.selectedRow = row.id;
+    console.log(row);
+    this.dataTransfer.setData(row);
   }
 
   onSelect(booking: Booking): void {
@@ -113,22 +132,23 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
       );
     this.bookedByFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        userName => {
-          this.filterValues.userName = userName;
+        firstname => {
+          this.filterValues.firstname = firstname;
           this.bookingList.filter = JSON.stringify(this.filterValues);
         }
       );
     this.apartmentClassFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        apartmentsClassName => {
-          this.filterValues.apartmentsClassName = apartmentsClassName;
+        nameClass => {
+          this.filterValues.nameClass = nameClass;
           this.bookingList.filter = JSON.stringify(this.filterValues);
         }
       );
+
     this.apartmentFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        apartmentsRoomNumber => {
-          this.filterValues.apartmentsRoomNumber = apartmentsRoomNumber;
+        roomNumber => {
+          this.filterValues.roomNumber = roomNumber;
           this.bookingList.filter = JSON.stringify(this.filterValues);
         }
       );
@@ -149,16 +169,18 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     // tslint:disable-next-line:only-arrow-functions
     const filterFunction = function (data, filter): boolean {
       const searchTerms = JSON.parse(filter);
-      return data.startDate.toString().toLowerCase().indexOf(searchTerms.startDate) !== -1
+      let result = data.startDate.toString().toLowerCase().indexOf(searchTerms.startDate) !== -1
         && data.endDate.toString().toLowerCase().indexOf(searchTerms.endDate) !== -1
         && data.totalPrice.toString().toLowerCase().indexOf(searchTerms.totalPrice) !== -1
-        && data.comment.toLowerCase().indexOf(searchTerms.comment) !== -1
         && data.createdDate.toString().toLowerCase().indexOf(searchTerms.createdDate) !== -1
-        && data.review.toLowerCase().indexOf(searchTerms.review) !== -1
         && data.bookingStatus.toString().toLowerCase().indexOf(searchTerms.bookingStatus) !== -1
-        && data.user.firstName.toLowerCase().indexOf(searchTerms.userName) !== -1
-        && data.apartmentClass.nameClass.toLowerCase().indexOf(searchTerms.apartmentsClassName) !== -1
-        && data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.apartmentsRoomNumber) !== -1;
+        && data.user.firstname.indexOf(searchTerms.firstname) !== -1
+        && data.apartmentClass.nameClass.indexOf(searchTerms.nameClass) !== -1;
+
+      if (data.apartment !== null) {
+        result = result && data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
+      }
+      return result;
     };
     return filterFunction;
   }

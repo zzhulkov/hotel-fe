@@ -5,8 +5,8 @@ export interface User {
   login: string;
   password: string;
   userRole: Roles;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   email: string;
   phoneNumber: string;
   points: number;

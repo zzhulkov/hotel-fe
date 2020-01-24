@@ -1,53 +1,53 @@
 <div class="change-component">
   <mat-accordion>
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Change
-      </mat-panel-title>
-      <mat-panel-description>
-        Apartment
-      </mat-panel-description>
-    </mat-expansion-panel-header>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Change
+        </mat-panel-title>
+        <mat-panel-description>
+          Apartment
+        </mat-panel-description>
+      </mat-expansion-panel-header>
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="change-apartment">
-    <mat-form-field>
-      <input matInput required="required" formControlName="id" class="full-width" placeholder="ID">
-    </mat-form-field>
-    <br/>
-    <mat-form-field>
-      <input matInput required="required" formControlName="roomNumber" class="full-width" placeholder="Room number">
-    </mat-form-field>
-    <br/>
-    <mat-form-field>
-      <input matInput required="required" formControlName="photo" class="full-width" placeholder="Photo">
-    </mat-form-field>
-    <br/>
-    <mat-form-field>
-      <input matInput formControlName="description" class="full-width" placeholder="Description">
-    </mat-form-field>
-    <br/>
-    <mat-form-field>
-      <mat-label>Status</mat-label>
-      <mat-select placeholder="Status" formControlName="status">
-        <mat-option value="OnRepair">On repair</mat-option>
-        <mat-option value="NeedCleaning">Need cleaning</mat-option>
-        <mat-option value="Occupied">Occupied</mat-option>
-        <mat-option value="ReadyToCheckIn">Ready to check in</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <br/>
-    <mat-form-field>
-      <mat-label>Apartments Class</mat-label>
-      <mat-select placeholder="Apartments Class" formControlName="nameClass">
-        <mat-option *ngFor="let apartmentClass of apartmentsClassesList"
-                    (click)="onSelect(apartmentClass)"
-                    value={{apartmentClass?.nameClass}}>
+  <mat-form-field>
+    <input matInput required="required" formControlName="id" class="full-width" placeholder="ID">
+  </mat-form-field>
+  <br/>
+  <mat-form-field>
+    <input matInput required="required" formControlName="roomNumber" class="full-width" placeholder="Room number">
+  </mat-form-field>
+  <br/>
+  <mat-form-field>
+    <input matInput required="required" formControlName="photo" class="full-width" placeholder="Photo">
+  </mat-form-field>
+  <br/>
+  <mat-form-field>
+    <input matInput formControlName="description" class="full-width" placeholder="Description">
+  </mat-form-field>
+  <br/>
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <mat-select placeholder="Status" formControlName="status">
+      <mat-option value="OnRepair">On repair</mat-option>
+      <mat-option value="NeedCleaning">Need cleaning</mat-option>
+      <mat-option value="Occupied">Occupied</mat-option>
+      <mat-option value="ReadyToCheckIn">Ready to check in</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br/>
+  <mat-form-field>
+    <mat-label>Apartments Class</mat-label>
+    <mat-select placeholder="Apartments Class" formControlName="nameClass">
+      <mat-option *ngFor="let apartmentClass of apartmentsClassesList"
+                  (click)="onSelect(apartmentClass)"
+                  value={{apartmentClass?.nameClass}}>
 
-          {{apartmentClass?.nameClass}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <br/>
+        {{apartmentClass?.nameClass}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br/>
   <mat-action-row align="end">
     <button mat-raised-button
             mat-dialog-close
@@ -62,6 +62,6 @@
     </button>
   </mat-action-row>
 </form>
-  </mat-expansion-panel>
+    </mat-expansion-panel>
   </mat-accordion>
 </div>
