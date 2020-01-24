@@ -5,6 +5,8 @@ import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {Booking} from '../../../../../component/booking';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
+import {Unsubscribable} from '../../../../../component/Unsubscribable';
+import {Apartments} from "../../../../../component/apartments";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -17,17 +19,19 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './change-booking-dialog.html',
 })
-export class ChangeBookingDialogComponent implements OnInit {
+export class ChangeBookingDialogComponent extends Unsubscribable implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, dataTransfer: DataTransferService) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private dataTransfer: DataTransferService) {
+    super();
+    this.getAllApartmentsClasses();
     this.booking = dataTransfer.getData();
     console.log(this.booking);
-    this.getAllApartmentsClasses();
   }
 
   addForm: FormGroup;
 
   booking = {} as Booking;
+  apartment = {} as Apartments;
   apartmentClass = {} as ApartmentsClass;
 
   apartmentsClassesList: ApartmentsClass[];
@@ -42,7 +46,7 @@ export class ChangeBookingDialogComponent implements OnInit {
       createdDate: [this.booking.createdDate, Validators.required],
       review: [this.booking.review],
       bookingStatus: [this.booking.bookingStatus],
-      firstname: [this.booking.user.firstname],
+      email: [this.booking.user.email],
       nameClass: [this.booking.apartmentsClass.nameClass],
       roomNumber: [this.booking.apartments.roomNumber]
     });
@@ -82,7 +86,7 @@ export class ChangeBookingDialogComponent implements OnInit {
     this.booking.createdDate = this.addForm.value.createdDate;
     this.booking.review = this.addForm.value.review;
     this.booking.bookingStatus = this.addForm.value.bookingStatus;
-    this.booking.user.firstname = this.addForm.value.firstname;
+    this.booking.user.email = this.addForm.value.email;
     console.log(this.booking);
   }
 
