@@ -3,7 +3,6 @@ import {Staff} from '../../../../../component/staff';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {HttpClient} from '@angular/common/http';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
-import {ShareService} from '../../../../../services/share.service';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
 import {FormControl} from "@angular/forms";
@@ -44,7 +43,6 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
     speciality: '',
     active: ''
   };
-  private shareService: ShareService;
 
   constructor(private http: HttpClient, dataTransfer: DataTransferService) {
     super();

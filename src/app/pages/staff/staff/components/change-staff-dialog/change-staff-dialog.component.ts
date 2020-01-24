@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Staff} from '../../../../../component/staff';
 import {User} from '../../../../../component/user';
 import {DataTransferService} from "../../../../../services/data-transfer.service";
 import {ConstantsService} from "../../../../../services/constants.service";
+import {Unsubscribable} from "../../../../../component/Unsubscribable";
+import {Speciality} from "../../../../../component/speciality.type";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -17,24 +19,38 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './change-staff-dialog.html',
 })
-export class ChangeStaffDialogComponent implements OnInit {
+export class ChangeStaffDialogComponent extends Unsubscribable implements OnInit {
   changeStaffFrom: FormGroup;
   staff = {} as Staff;
   user = {} as User;
 
+  specialities = [
+    'Cleaner',
+    'Handyman',
+    'Manager',
+    'Hotel_Administrator'
+  ];
+  private selectedSpeciality: Speciality;
+
+  constructor(private formBuilder: FormBuilder, private  http: HttpClient, dataTransfer: DataTransferService) {
+    super();
+    this.staff = dataTransfer.getData();
+  }
+
   ngOnInit(): void {
     this.changeStaffFrom = this.formBuilder.group({
-      firstname: [{value: this.user.firstname, disabled: true}],
-      lastname: [{value: this.user.lastname, disabled: true}],
+      id: [this.staff.id, Validators.pattern('^\\d{1,4}$')],
+      firstname: [{value: this.staff.user.firstname, disabled: true}],
+      lastname: [{value: this.staff.user.lastname, disabled: true}],
       active: [this.staff.active],
       speciality: [this.staff.speciality],
     });
+    this.checkValid();
   }
 
-  constructor(private formBuilder: FormBuilder, private  http: HttpClient, dataTransfer: DataTransferService) {
-    this.staff = dataTransfer.getData();
-    this.user = this.staff;
-    console.log(this.staff);
+  onSelectSpec(spec: any): void {
+    this.selectedSpeciality = spec;
+    console.log(this.selectedSpeciality);
   }
 
   checkValid() {
@@ -54,7 +70,6 @@ export class ChangeStaffDialogComponent implements OnInit {
   }
 
   createStaff() {
-
     this.http.put(URL + 'staff/' + this.staff.id, this.staff).subscribe(
       res => {
         console.log(res);
@@ -64,7 +79,7 @@ export class ChangeStaffDialogComponent implements OnInit {
 
   setStaff() {
     this.staff.active = this.changeStaffFrom.value.active;
-    this.staff.speciality = this.changeStaffFrom.value.speciality;
+    this.staff.speciality = this.selectedSpeciality;
     console.log(this.staff);
   }
 }

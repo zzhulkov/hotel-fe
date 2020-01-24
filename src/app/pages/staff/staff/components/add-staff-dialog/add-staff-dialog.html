@@ -7,17 +7,30 @@
   </mat-form-field>
   <br/>
   <mat-form-field>
-    <input required="required" matInput formControlName="role" class="full-width" placeholder="Role">
+    <mat-select formControlName="role" placeholder="Role">
+      <mat-option *ngFor="let roles of roles"
+                  (click)="onSelectRole(roles)"
+                  value="Client">
+
+        {{roles}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
   <br/>
   <mat-label>is Active?  </mat-label>
   <mat-checkbox class="full-width" formControlName="active" aria-placeholder="isActive" checked></mat-checkbox>
   <br/>
   <mat-form-field>
-    <mat-select required="required"  formControlName="speciality" placeholder="Speciality">
-      <mat-option value="Manager">Manager</mat-option>
+    <mat-select formControlName="speciality" placeholder="Speciality">
+      <mat-option *ngFor="let speciality of specialities"
+                  (click)="onSelectSpec(speciality)"
+                  value="Cleaner">
+
+        {{speciality}}
+      </mat-option>
     </mat-select>
   </mat-form-field>
+  <br/>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
