@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {HttpClient} from '@angular/common/http';
@@ -7,6 +16,7 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {FormControl} from '@angular/forms';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from "../../../../../services/data-transfer.service";
+import {SelectService} from "../../../../../services/select.service";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -21,9 +31,7 @@ const URL = new ConstantsService().BASE_URL;
 })
 export class ApartmentsTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
 
-  @Output() selectedRowClicked: EventEmitter<any> = new EventEmitter();
-  @Output() reselectRow: EventEmitter<any> = new EventEmitter();
-
+  @Input() isClicked: string;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   private dataTransfer: DataTransferService;
@@ -55,25 +63,20 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
   };
 
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService) {
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, private missionService: SelectService, private ckRef: ChangeDetectorRef) {
     super();
     this.getAllApartments();
     this.dataTransfer = dataTransfer;
     this.apartmentsList.filterPredicate = this.createFilter();
+
   }
 
   selectRow(row: any): void {
-    this.reselectRow.emit();
     this.selectedRow = row.roomNumber;
     console.log(row);
     this.dataTransfer.setData(row);
-    this.isSelected();
+    this.missionService.announceMission(row.id);
   }
-
-  isSelected() {
-    this.selectedRowClicked.emit();
-  }
-
 
   onSelect(apartments: Apartments): void {
     this.selectedApartments = apartments;

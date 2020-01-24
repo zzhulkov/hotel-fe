@@ -4,7 +4,7 @@ import {BehaviorSubject, Subject} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MissionService {
+export class SelectService {
 
   // Observable string sources
   private missionAnnouncedSource = new Subject<string>();
@@ -13,7 +13,8 @@ export class MissionService {
   missionAnnounced$ = this.missionAnnouncedSource.asObservable();
 
   // Service message commands
-  announceMission(mission: string) {
-    this.missionAnnouncedSource.next(mission);
+  announceMission(id: string) {
+    console.log(id);
+    this.missionAnnouncedSource.next(id);
   }
 }

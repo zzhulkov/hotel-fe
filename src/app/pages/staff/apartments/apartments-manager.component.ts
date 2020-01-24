@@ -1,38 +1,47 @@
-import {ChangeDetectorRef, Component, ViewChildren} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChildren} from '@angular/core';
 import {HttpService} from '../../../http.service';
 import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog.component';
 import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dialog/delete-apartments-dialog.component';
-import {ApartmentsTableComponent} from './components/apartments-table/apartments-table.component';
-import {FormControl} from '@angular/forms';
-import {MatExpansionPanel} from '@angular/material/expansion';
+import {SelectService} from "../../../services/select.service";
+import {Observable, Subscription} from "rxjs";
 
 
 @Component({
   selector: 'app-apartments-manager',
   templateUrl: './apartments-manager.component.html',
   styleUrls: ['../styles/page.css'],
-  providers: [HttpService],
-  viewProviders: [MatExpansionPanel]
+  // providers: [HttpService],
+  // viewProviders: [MatExpansionPanel]
 })
 
-export class ApartmentsManagerComponent {
-  isClicked = false;
+export class ApartmentsManagerComponent implements OnInit, OnDestroy {
+  changeApps = ['Done', 'None'];
+  @Input() isClicked: string;
+  clickRow: boolean;
+  subscription: Subscription;
+  changeApp: any;
+  id$: Observable<string>;
 
-  constructor(public dialog: MatDialog,
-              private cdRef: ChangeDetectorRef) {}
+  constructor(public dialog: MatDialog, private missionService: SelectService, private ckRef: ChangeDetectorRef) {
 
-  isClickedRow() {
-    this.isClicked = true;
-    this.cdRef.detectChanges();
   }
 
-  reselectRow() {
-    this.isClicked = false;
-    this.cdRef.detectChanges();
-    console.log('reselect');
+  ngOnInit(): void {
+    this.id$ = this.missionService.missionAnnounced$;
+  }
+
+  Clicking() {
+      // tslint:disable-next-line:triple-equals
+      if (this.isClicked === 'Done') {
+        console.log('select');
+        return true;
+        // tslint:disable-next-line:triple-equals
+      } else if (this.isClicked === 'None') {
+        console.log('Destroy');
+        return true;
+      }
   }
 
   addApartmentDialog() {
@@ -49,6 +58,10 @@ export class ApartmentsManagerComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
 

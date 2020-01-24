@@ -73,13 +73,7 @@ export class ChangeApartmentsClassesDialogComponent implements OnInit {
   }
 
 
-  deleteDialog() {
-    const dialogRef = this.dialog.open(DeleteApartmentsClassesDialogComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
 }
 
 

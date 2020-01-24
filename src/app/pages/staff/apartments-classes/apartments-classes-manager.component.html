@@ -8,6 +8,7 @@
       <apartments-classes-table-component (selectedRowClicked)="isClickedRow()" (reselectRow)="reselectRow()"></apartments-classes-table-component>
     </div>
     <div class="tools">
+      <button style="background-color: tomato" class="mat-button" mat-raised-button (click)="deleteDialog()">Delete</button>
       <div class="change">
         <app-change-apartments-classes-dialog *ngIf="isClicked"></app-change-apartments-classes-dialog>
       </div>
