@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Unsubscribable} from './component/Unsubscribable';
-import { Location } from '@angular/common';
+import {Location} from '@angular/common';
 import {HttpService} from './http.service';
 import {take} from "rxjs/operators";
 import {SelectService} from "./services/select.service";
-
-
 
 
 @Component({
@@ -18,7 +16,7 @@ import {SelectService} from "./services/select.service";
 export class AppComponent extends Unsubscribable implements OnInit {
 
   private userPaths: Array<string> = ['/manager/apartments', '/manager/booking',
-    '/manager/services', '/manager/staff', '/manager/tasks', '/manager/apartments-classes'];
+    '/manager/services', '/manager/staff', '/manager/tasks', '/manager/apartments-classes', '/manager/users'];
   condition: boolean;
 
   constructor(private location: Location, private missionService: SelectService) {

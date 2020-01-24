@@ -41,7 +41,6 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
   displayedColumns = ['roomNumber', 'photo', 'description', 'status', 'apartmentClass.id',
     'apartmentClass.nameClass', 'apartmentClass.numberOfRooms', 'apartmentClass.numberOfCouchette'];
 
-  dataSource = this.apartmentsList;
   roomNumberFilter = new FormControl('');
   photoFilter = new FormControl('');
   descriptionFilter = new FormControl('');
@@ -159,11 +158,11 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
       let searchTerms = JSON.parse(filter);
       return data.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1
         && data.photo.toLowerCase().indexOf(searchTerms.photo) !== -1
-        && data.description.toLowerCase().indexOf(searchTerms.description) !== -1
-        && data.status.toLowerCase().indexOf(searchTerms.status) !== -1
+        && data.description.indexOf(searchTerms.description) !== -1
+        && data.status.indexOf(searchTerms.status) !== -1
         && data.apartmentClass.numberOfCouchette.toString().toLowerCase().indexOf(searchTerms.numberOfCouchette) !== -1
         && data.apartmentClass.numberOfRooms.toString().toLowerCase().indexOf(searchTerms.numberOfRooms) !== -1
-        && data.apartmentClass.nameClass.toLowerCase().indexOf(searchTerms.nameClass) !== -1
+        && data.apartmentClass.nameClass.indexOf(searchTerms.nameClass) !== -1
         && data.apartmentClass.id.toString().toLowerCase().indexOf(searchTerms.classId) !== -1;
     };
     return filterFunction;

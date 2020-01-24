@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
+import {DataTransferService} from '../../../../../services/data-transfer.service';
+import {Booking} from '../../../../../component/booking';
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -17,8 +19,10 @@ const URL = new ConstantsService().BASE_URL;
 export class DeleteBookingDialogComponent implements OnInit {
 
   deleteBookingForm: FormGroup;
+  booking = {} as Booking;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, dataTransfer: DataTransferService) {
+    this.booking = dataTransfer.getData();
   }
 
   ngOnInit(): void {
@@ -39,12 +43,12 @@ export class DeleteBookingDialogComponent implements OnInit {
   onSubmit() {
     if (this.deleteBookingForm.valid) {
       console.log(this.deleteBookingForm.value);
-      this.deleteApartment();
+      this.deleteBooking();
     }
   }
 
-  deleteApartment() {
-    this.http.delete(URL + 'booking/' + this.deleteBookingForm.value.id, this.deleteBookingForm.value).subscribe(
+  deleteBooking() {
+    this.http.delete(URL + 'bookings/' + this.booking.id, this.deleteBookingForm.value).subscribe(
       res => {
         console.log(res);
       });

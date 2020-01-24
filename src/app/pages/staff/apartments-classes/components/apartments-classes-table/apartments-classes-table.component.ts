@@ -102,9 +102,9 @@ export class ApartmentsClassesTableComponent extends Unsubscribable implements O
     // tslint:disable-next-line:only-arrow-functions
     let filterFunction = function(data, filter): boolean {
       let searchTerms = JSON.parse(filter);
-      return data.apartmentsClass.numberOfCouchette.toString().toLowerCase().indexOf(searchTerms.numberOfCouchette) !== -1
-        && data.apartmentsClass.numberOfRooms.toString().toLowerCase().indexOf(searchTerms.numberOfRooms) !== -1
-        && data.apartmentsClass.nameClass.toLowerCase().indexOf(searchTerms.nameClass) !== -1;
+      return data.nameClass.indexOf(searchTerms.nameClass) !== -1
+        && data.numberOfRooms.toString().toLowerCase().indexOf(searchTerms.numberOfRooms) !== -1
+        && data.numberOfCouchette.toString().toLowerCase().indexOf(searchTerms.numberOfCouchette) !== -1;
     };
     return filterFunction;
   }

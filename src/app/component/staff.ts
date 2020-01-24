@@ -1,7 +1,9 @@
 import {User} from './user';
+import {Speciality} from "./speciality.type";
 
-export interface Staff extends User {
+export interface Staff {
   id: number;
-  speciality: string;
+  speciality: Speciality;
   active: boolean;
+  user: User;
 }

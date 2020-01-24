@@ -1,1 +1,1 @@
-export type TaskStatus = 'OPEN' | 'STARTED' | 'COMPLETE' | 'FAILED' | 'CANCELED';
+export type TaskStatus = 'Open' | 'Started' | 'Complete' | 'Failed' | 'Canceled';

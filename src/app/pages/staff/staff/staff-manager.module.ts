@@ -1,6 +1,12 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {MatAutocompleteModule, MatButtonModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatPaginatorModule
+} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from '../../../http.service';
 import {StaffManagerComponent} from './staff-manager.component';
@@ -9,13 +15,10 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import {StaffTableComponent} from './components/staff-table/staff-table.component';
-import {MatPaginatorModule} from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
-import {StaffFilterComponent} from './components/filter-staff/staff-filter.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {AddStaffDialogComponent} from './components/add-staff-dialog/add-staff-dialog.component';
 import {MatExpansionModule} from "@angular/material/expansion";
-
 
 
 @NgModule({
@@ -31,8 +34,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
         MatFormFieldModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
-        MatCheckboxModule,
-        MatExpansionModule
+      MatCheckboxModule,
+      MatExpansionModule
     ],
   exports: [
     MatButtonModule,
@@ -43,7 +46,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     MatTableModule
   ],
   declarations: [
-    StaffManagerComponent, ChangeStaffDialogComponent, AddStaffDialogComponent, StaffTableComponent, StaffFilterComponent
+    StaffManagerComponent, ChangeStaffDialogComponent, AddStaffDialogComponent, StaffTableComponent
   ],
   providers: [HttpService],
   entryComponents: [ ChangeStaffDialogComponent, AddStaffDialogComponent],

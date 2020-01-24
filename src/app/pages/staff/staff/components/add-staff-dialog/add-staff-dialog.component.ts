@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Staff} from '../../../../../component/staff';
 import {User} from '../../../../../component/user';
 import {ConstantsService} from '../../../../../services/constants.service';
+import {Roles} from "../../../../../component/roles.type";
+import {Speciality} from "../../../../../component/speciality.type";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -17,29 +19,36 @@ const URL = new ConstantsService().BASE_URL;
 })
 export class AddStaffDialogComponent implements OnInit {
 
+  constructor(private formBuilder: FormBuilder, private  http: HttpClient) {
+  }
+
   addStaffFrom: FormGroup;
   staff = {} as Staff;
   user = {} as User;
   roles = [
-    'MANAGER',
-    'ADMIN',
-    'USER',
-    'WORKER'
+    'Manager',
+    'Administrator',
+    'Client',
+    'Worker'
   ];
+  private selectedRole: Roles;
+  specialities = [
+    'Cleaner',
+    'Handyman',
+    'Manager',
+    'Hotel_Administrator'
+  ];
+  private selectedSpeciality: Speciality;
+
+  uList: User[];
 
   ngOnInit(): void {
     this.addStaffFrom = this.formBuilder.group({
-      firstName: ['', Validators.pattern('^([A-Z]){1}([a-z]+)$')],
-      lastName: ['', Validators.pattern('^([A-Z]){1}([a-z]+)$')],
       email: ['', Validators.pattern('^[a-zA-Z0-9.!#$%&’*+=?^_`{|}~-]+\\@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+$')],
-      phone: ['', Validators.pattern('(^\\+{1}\\d{7,13}$)|(^\\d{7,13}$)')],
-      login: ['', Validators.pattern('^([a-zA-Z])\\S+$')],
+      role: [''],
       active: ['true'],
       speciality: [''],
     });
-  }
-
-  constructor(private formBuilder: FormBuilder, private  http: HttpClient) {
   }
 
   checkValid() {
@@ -53,48 +62,58 @@ export class AddStaffDialogComponent implements OnInit {
 
   onSubmit() {
     if (this.addStaffFrom.valid) {
-      this.setStaff();
-      this.createStaff();
-      console.log(this.addStaffFrom.value);
+      this.getUser();
+      // console.log(this.addStaffFrom.value);
     }
   }
 
-  createStaff() {
-    this.setUser();
-    this.createUser();
+  onSelectRole(roles: any): void {
+    this.selectedRole = roles;
+    console.log(this.selectedRole);
+  }
 
-    this.http.post(URL + 'staff/', this.staff).subscribe(
+  onSelectSpec(spec: any): void {
+    this.selectedSpeciality = spec;
+    console.log(this.selectedSpeciality);
+  }
+
+  createStaff() {
+    this.http.post(URL + 'staff', this.staff).subscribe(
       res => {
         console.log(res);
         this.staff = (res as Staff);
+
+        this.updateUser();
       });
   }
 
-  createUser() {
-    this.http.post(URL + 'users/', this.user).subscribe(
+  getUser() {
+    this.http.get(URL + 'users' + '?email=' + this.addStaffFrom.value.email).subscribe(
       res => {
         console.log(res);
-        this.user = (res as User);
+        this.uList = (res as User[]);
+        this.user = this.uList[0];
+        console.log(this.user);
+        this.setStaff();
+        this.createStaff();
+      });
+  }
+
+  updateUser() {
+    this.user.userRole = this.selectedRole;
+    this.http.put(URL + 'users/' + this.user.id, this.user).subscribe(
+      res => {
+        console.log(res);
+
       });
   }
 
   setStaff() {
-    this.staff = this.user as Staff;
+    this.staff.id = this.user.id;
+    this.staff.user = this.user;
     this.staff.active = this.addStaffFrom.value.active;
-    this.staff.speciality = this.addStaffFrom.value.speciality;
+    this.staff.speciality = this.selectedSpeciality;
     console.log(this.staff);
-  }
-
-  setUser() {
-    this.user.points = 0;
-    this.user.password = '123456';
-    this.user.userRole = this.roles.values()[1];
-    this.user.firstName = this.addStaffFrom.value.firstName;
-    this.user.lastName = this.addStaffFrom.value.lastName;
-    this.user.email = this.addStaffFrom.value.email;
-    this.user.phoneNumber = this.addStaffFrom.value.phone;
-    this.user.login = this.addStaffFrom.value.login;
-    console.log(this.user);
   }
 }
 
