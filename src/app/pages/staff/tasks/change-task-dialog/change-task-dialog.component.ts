@@ -43,15 +43,15 @@ export class ChangeTaskDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeForm = this.formBuilder.group({
-      startDate: [this.task.startDate, Validators.required],
-      endDate: [this.task.endDate, Validators.required],
-      acceptDate: [this.task.acceptDate, Validators.required],
-      completeDate: [this.task.completeDate, Validators.required],
+      start: [this.task.start, Validators.required],
+      end: [this.task.end, Validators.required],
+      accept: [this.task.accept, Validators.required],
+      complete: [this.task.complete, Validators.required],
       description: [this.task.description, Validators.required],
       taskStatus: [this.task.status, Validators.required],
-      apartmentRoomNumber: [this.task.apartment.roomNumber, Validators.required],
-      creator: [this.task.creator.lastName, Validators.required],
-      executor: [this.task.executor.lastName, Validators.required]
+      roomNumber: [this.task.apartment.roomNumber, Validators.required],
+      creatorLastName: [this.task.creator.speciality, Validators.required],
+      executorLastName: [this.task.executor.speciality, Validators.required]
     });
 
   }
@@ -84,10 +84,10 @@ export class ChangeTaskDialogComponent implements OnInit {
     this.task.creator = this.selectedCreator;
     this.task.executor = this.selectedExecutor;
     this.task.apartment = this.selectedApartment;
-    this.task.startDate = this.changeForm.value.startDate;
-    this.task.endDate = this.changeForm.value.endDate;
-    this.task.acceptDate = this.changeForm.value.acceptDate;
-    this.task.completeDate = this.changeForm.value.completeDate;
+    this.task.start = this.changeForm.value.startDate;
+    this.task.end = this.changeForm.value.endDate;
+    this.task.accept = this.changeForm.value.acceptDate;
+    this.task.complete = this.changeForm.value.completeDate;
     this.task.description = this.changeForm.value.description;
     this.task.status = this.changeForm.value.taskStatus;
     console.log(this.task);

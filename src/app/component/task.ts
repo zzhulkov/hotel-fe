@@ -4,10 +4,10 @@ import {Staff} from './staff';
 
 export interface Task {
   id: number;
-  startDate: Date;
-  endDate: Date;
-  acceptDate: Date;
-  completeDate: Date;
+  start: Date;
+  end: Date;
+  accept: Date;
+  complete: Date;
   description: string;
   status: TaskStatus;
   apartment: Apartments;

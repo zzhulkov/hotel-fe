@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
+  Input, OnDestroy,
   OnInit,
   Output,
   ViewChild
@@ -17,6 +17,7 @@ import {FormControl} from '@angular/forms';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from "../../../../../services/data-transfer.service";
 import {SelectService} from "../../../../../services/select.service";
+import {Subscription} from "rxjs";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -30,8 +31,6 @@ const URL = new ConstantsService().BASE_URL;
   templateUrl: 'apartments-table.html',
 })
 export class ApartmentsTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
-
-  @Input() isClicked: string;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   private dataTransfer: DataTransferService;
@@ -62,15 +61,15 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
   };
 
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService, private missionService: SelectService, private ckRef: ChangeDetectorRef) {
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, private missionService: SelectService) {
     super();
     this.getAllApartments();
     this.dataTransfer = dataTransfer;
     this.apartmentsList.filterPredicate = this.createFilter();
-
   }
 
   selectRow(row: any): void {
+    this.missionService.announceMission(null);
     this.selectedRow = row.roomNumber;
     console.log(row);
     this.dataTransfer.setData(row);

@@ -5,43 +5,27 @@ import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/ad
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dialog/delete-apartments-dialog.component';
 import {SelectService} from "../../../services/select.service";
-import {Observable, Subscription} from "rxjs";
+import {BehaviorSubject, Observable, Subscription} from "rxjs";
+import {MatExpansionPanel} from "@angular/material/expansion";
 
 
 @Component({
   selector: 'app-apartments-manager',
   templateUrl: './apartments-manager.component.html',
   styleUrls: ['../styles/page.css'],
-  // providers: [HttpService],
-  // viewProviders: [MatExpansionPanel]
+   providers: [HttpService],
+   viewProviders: [MatExpansionPanel]
 })
 
 export class ApartmentsManagerComponent implements OnInit, OnDestroy {
-  changeApps = ['Done', 'None'];
-  @Input() isClicked: string;
-  clickRow: boolean;
-  subscription: Subscription;
-  changeApp: any;
   id$: Observable<string>;
+  subscription: Subscription;
 
-  constructor(public dialog: MatDialog, private missionService: SelectService, private ckRef: ChangeDetectorRef) {
-
+  constructor(public dialog: MatDialog, private missionService: SelectService) {
   }
 
   ngOnInit(): void {
-    this.id$ = this.missionService.missionAnnounced$;
-  }
-
-  Clicking() {
-      // tslint:disable-next-line:triple-equals
-      if (this.isClicked === 'Done') {
-        console.log('select');
-        return true;
-        // tslint:disable-next-line:triple-equals
-      } else if (this.isClicked === 'None') {
-        console.log('Destroy');
-        return true;
-      }
+    this.subscription = this.missionService.missionAnnounced$.subscribe(id => this.id$ = this.missionService.missionAnnounced$);
   }
 
   addApartmentDialog() {
@@ -61,6 +45,7 @@ export class ApartmentsManagerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.missionService.announceMission(null);
     this.subscription.unsubscribe();
   }
 }

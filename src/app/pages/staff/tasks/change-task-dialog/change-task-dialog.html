@@ -11,19 +11,19 @@
       </mat-expansion-panel-header>
       <form [formGroup]="changeForm" (ngSubmit)="onSubmit()" class="change-apartment">
         <mat-form-field>
-          <input matInput required="required" formControlName="startDate" class="full-width" placeholder="Start date">
+          <input matInput required="required" formControlName="start" class="full-width" placeholder="Start date">
         </mat-form-field>
         <br/>
         <mat-form-field>
-          <input matInput required="required" formControlName="endDate" class="full-width" placeholder="End date">
+          <input matInput required="required" formControlName="end" class="full-width" placeholder="End date">
         </mat-form-field>
         <br/>
         <mat-form-field>
-          <input matInput required="required" formControlName="acceptDate" class="full-width" placeholder="Accept date">
+          <input matInput required="required" formControlName="accept" class="full-width" placeholder="Accept date">
         </mat-form-field>
         <br/>
         <mat-form-field>
-          <input matInput required="required" formControlName="completeDate" class="full-width" placeholder="Complete date">
+          <input matInput required="required" formControlName="complete" class="full-width" placeholder="Complete date">
         </mat-form-field>
         <br/>
         <mat-form-field>
@@ -44,10 +44,10 @@
         <mat-form-field>
           <mat-label>
             Apartment </mat-label>
-          <mat-select>
+          <mat-select placeholder="Apartment" formControlName="roomNumber">
             <mat-option *ngFor="let apartment of apartmentList"
                         (click)="onSelectApartment(apartment)"
-                        value={{task?.apartment.roomNumber}}>
+                        value={{apartment?.roomNumber}}>
 
               {{apartment?.roomNumber}}
             </mat-option>
@@ -60,9 +60,9 @@
           <mat-select>
             <mat-option *ngFor="let staff of staffList"
                         (click)="onSelectCreator(staff)"
-                        value={{staff?.lastName}}>
+                        value="{{staff?.user.lastname+' '+staff?.user.firstname+' '+staff?.speciality}}">
 
-              {{staff?.lastName}}
+              {{staff?.user.lastname+' '+staff?.user.firstname+' '+staff?.speciality}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -73,9 +73,9 @@
           <mat-select>
             <mat-option *ngFor="let staff of staffList"
                         (click)="onSelectExecutor(staff)"
-                        value={{staff?.lastName}}>
+                        value="{{staff?.user.lastname+' '+staff?.user.firstname+' '+staff?.speciality}}">
 
-              {{staff?.lastName}}
+              {{staff?.user.lastname+' '+staff?.user.firstname+' '+staff?.speciality}}
             </mat-option>
           </mat-select>
         </mat-form-field>

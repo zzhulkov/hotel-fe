@@ -77,10 +77,10 @@ export class AddTaskDialogComponent implements OnInit {
     this.task.creator = this.selectedCreator;
     this.task.executor = this.selectedExecutor;
     this.task.apartment = this.selectedApartment;
-    this.task.startDate = this.addTaskForm.value.startDate;
-    this.task.endDate = this.addTaskForm.value.endDate;
-    this.task.acceptDate = this.addTaskForm.value.acceptDate;
-    this.task.completeDate = this.addTaskForm.value.completeDate;
+    this.task.start = this.addTaskForm.value.startDate;
+    this.task.end = this.addTaskForm.value.endDate;
+    this.task.accept = this.addTaskForm.value.acceptDate;
+    this.task.complete = this.addTaskForm.value.completeDate;
     this.task.description = this.addTaskForm.value.description;
     this.task.status = this.addTaskForm.value.taskStatus;
     console.log(this.task);

@@ -26,7 +26,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   taskList = new MatTableDataSource<Task>();
   selectedTask: Task;
-  displayedColumns = ['start', 'end', 'accept', 'complete', 'description', 'status', 'apartmentsRoomNumber', 'creator', 'executor'];
+  displayedColumns = ['start', 'end', 'accept', 'complete', 'description', 'status', 'apartmentsRoomNumber', 'creatorLastName', 'executorLastName'];
   dataSource = this.taskList;
   startDateFilter = new FormControl('');
   endDateFilter = new FormControl('');
@@ -46,8 +46,8 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
     description: '',
     status: '',
     apartmentsRoomNumber: '',
-    creator: '',
-    executor: ''
+    creatorLastName: '',
+    executorLastName: ''
   };
 
   private dataTransfer: DataTransferService;
@@ -128,15 +128,15 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
       );
     this.creatorFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        creator => {
-          this.filterValues.creator = creator;
+        creatorLastName => {
+          this.filterValues.creatorLastName = creatorLastName;
           this.taskList.filter = JSON.stringify(this.filterValues);
         }
       );
     this.executorFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        executor => {
-          this.filterValues.executor = executor;
+        executorLastName => {
+          this.filterValues.executorLastName = executorLastName;
           this.taskList.filter = JSON.stringify(this.filterValues);
         }
       );
@@ -164,8 +164,8 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
         && data.description.toLowerCase().indexOf(searchTerms.description) !== -1
         && data.status.toLowerCase().indexOf(searchTerms.status) !== -1
         && data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.apartmentsRoomNumber) !== -1
-        && data.creator.firstName.toLowerCase().indexOf(searchTerms.creator) !== -1
-        && data.executor.firstName.toLowerCase().indexOf(searchTerms.executor) !== -1;
+        && data.creator.user.lastname.toLowerCase().indexOf(searchTerms.creator) !== -1
+        && data.executor.user.lastname.toLowerCase().indexOf(searchTerms.executor) !== -1;
     };
     return filterFunction;
   }

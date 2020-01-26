@@ -7,7 +7,7 @@ import {BehaviorSubject, Subject} from 'rxjs';
 export class SelectService {
 
   // Observable string sources
-  private missionAnnouncedSource = new Subject<string>();
+  private missionAnnouncedSource = new BehaviorSubject<string>(null);
 
   // Observable string streams
   missionAnnounced$ = this.missionAnnouncedSource.asObservable();

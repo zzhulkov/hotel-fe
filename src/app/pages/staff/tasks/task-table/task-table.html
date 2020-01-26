@@ -80,7 +80,7 @@
       <td mat-cell *matCellDef="let selectedTask"> {{selectedTask?.apartment.roomNumber}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="creator">
+    <ng-container matColumnDef="creatorLastName">
       <th mat-header-cell *matHeaderCellDef>
         Creator
         <mat-form-field class="filter" floatLabel="never">
@@ -88,10 +88,10 @@
           <input matInput [formControl]="creatorFilter">
         </mat-form-field>
       </th>
-      <td mat-cell *matCellDef="let selectedTask"> {{selectedTask?.creator.lastName}} </td>
+      <td mat-cell *matCellDef="let selectedTask"> {{selectedTask?.creator.speciality}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="executor">
+    <ng-container matColumnDef="executorLastName">
       <th mat-header-cell *matHeaderCellDef>
         Executor
         <mat-form-field class="filter" floatLabel="never">
@@ -99,7 +99,9 @@
           <input matInput [formControl]="executorFilter">
         </mat-form-field>
       </th>
-      <td mat-cell *matCellDef="let selectedTask"> {{selectedTask?.executor.lastName}} </td>
+      <td mat-cell *matCellDef="let selectedTask">
+        {{selectedTask?.executor.speciality}}
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
