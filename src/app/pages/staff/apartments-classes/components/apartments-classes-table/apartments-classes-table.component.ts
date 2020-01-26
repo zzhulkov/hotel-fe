@@ -7,6 +7,7 @@ import {FormControl} from '@angular/forms';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {DataTransferService} from "../../../../../services/data-transfer.service";
+import {SelectService} from "../../../../../services/select.service";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -42,7 +43,7 @@ export class ApartmentsClassesTableComponent extends Unsubscribable implements O
   };
 
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService) {
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, private missionService: SelectService) {
     super();
     this.getAllApartmentsClasses();
     this.dataTransfer = dataTransfer;
@@ -50,10 +51,10 @@ export class ApartmentsClassesTableComponent extends Unsubscribable implements O
   }
 
   selectRow(row: any): void {
-    this.reselectRow.emit();
     this.selectedRow = row.nameClass;
     console.log(row);
     this.dataTransfer.setData(row);
+    this.missionService.announceMission(row.id);
     this.isSelected();
   }
 

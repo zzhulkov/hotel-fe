@@ -1,19 +1,17 @@
 <section class="apartment-list">
-  Apartments classes list
+  <div class="buttons">
+    Apartments classes list &nbsp;
+    <button class="mat-button" mat-raised-button (click)="addDialog()">Add</button>
+  </div>
   <div class="wrap">
     <div class="table">
       <apartments-classes-table-component (selectedRowClicked)="isClickedRow()"
                                           (reselectRow)="reselectRow()"></apartments-classes-table-component>
     </div>
     <div class="tools">
-      <div class="buttons">
-        <button class="mat-button" mat-raised-button (click)="addDialog()">Add</button>
-      </div>
+      <button style="background-color: tomato" class="mat-button" mat-raised-button (click)="deleteDialog()">Delete</button>
       <div class="change">
         <app-change-apartments-classes-dialog *ngIf="isClicked"></app-change-apartments-classes-dialog>
-      </div>
-      <div class="buttons">
-        <button class="mat-button" mat-raised-button (click)="deleteDialog()">Delete</button>
       </div>
     </div>
   </div>

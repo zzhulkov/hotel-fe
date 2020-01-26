@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
@@ -6,6 +6,11 @@ import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
+import {MatExpansionPanel} from "@angular/material/expansion";
+import {Subscription} from "rxjs";
+import {SelectService} from "../../../../../services/select.service";
+import {DeleteApartmentsDialogComponent} from "../delete-apartment-dialog/delete-apartments-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -19,23 +24,21 @@ const URL = new ConstantsService().BASE_URL;
   templateUrl: './change-apartments-dialog.html',
 })
 
-export class ChangeApartmentsDialogComponent extends Unsubscribable implements OnInit {
-
+export class ChangeApartmentsDialogComponent extends Unsubscribable implements OnInit, OnDestroy {
   profileForm: FormGroup;
-
   apartment = {} as Apartments;
   apartmentClass = {} as ApartmentsClass;
 
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
+  subscription: Subscription;
 
-  constructor(private formBuilder: FormBuilder, private  http: HttpClient, dataTransfer: DataTransferService) {
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private  http: HttpClient, private dataTransfer: DataTransferService) {
     super();
     this.getAllApartmentsClasses();
-    this.apartment = dataTransfer.getData();
+    this.apartment = this.dataTransfer.getData();
     this.selectedApartmentsClass = this.apartment.apartmentClass;
   }
-
 
   ngOnInit(): void {
     this.profileForm = this.formBuilder.group({
@@ -66,11 +69,23 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
     }
   }
 
+  ngOnDestroy() {
+   this.subscription.unsubscribe();
+  }
+
   createApartment() {
     this.http.put(URL + 'apartments/' + this.apartment.id, this.apartment).subscribe(
     res => {
     console.log(res);
     this.apartment = (res as Apartments);
+    });
+  }
+
+  deleteApartment() {
+    const dialogRef = this.dialog.open(DeleteApartmentsDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
     });
   }
 
@@ -94,6 +109,7 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
       this.apartmentsClassesList = (res as ApartmentsClass[]);
     });
   }
+
 }
 
 

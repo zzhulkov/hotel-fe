@@ -4,6 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from "../../../../../services/data-transfer.service";
+import {SelectService} from "../../../../../services/select.service";
+import {take} from "rxjs/operators";
 
 
 /**
@@ -23,7 +25,7 @@ export class DeleteApartmentsClassesDialogComponent implements OnInit {
 
   deleteForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, dataTransfer: DataTransferService) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, dataTransfer: DataTransferService, private missionService: SelectService) {
     this.apartmentClass = dataTransfer.getData();
   }
 
@@ -43,16 +45,16 @@ export class DeleteApartmentsClassesDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.deleteForm.valid) {
       console.log(this.deleteForm.value);
       this.deleteApartment();
-    }
   }
 
   deleteApartment() {
-    this.http.delete(URL + 'apartmentsClasses/' + this.apartmentClass.id, this.deleteForm.value).subscribe(
-      res => {
-        console.log(res);
+    this.missionService.missionAnnounced$
+      .pipe(take(1))
+      .subscribe( id => {
+      this.http.delete(URL + 'apartmentsClasses/' + id)
+        .subscribe(res => this.missionService.announceMission(null));
       });
   }
 }

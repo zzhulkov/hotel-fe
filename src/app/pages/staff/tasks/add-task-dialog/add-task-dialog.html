@@ -1,0 +1,80 @@
+<form [formGroup]="addTaskForm" (ngSubmit)="onSubmit()" class="change-task">
+  <h2 mat-dialog-title>Add Task</h2>
+  <mat-dialog-content class="mat-typography">
+    <mat-form-field>
+      <input matInput required="required" formControlName="startDate" class="full-width" placeholder="Start date">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <input matInput required="required" formControlName="endDate" class="full-width" placeholder="End date">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <input matInput required="required" formControlName="acceptDate" class="full-width" placeholder="Accept date">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <input matInput required="required" formControlName="completeDate" class="full-width" placeholder="Complete date">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <input matInput required="required" formControlName="description" class="full-width" placeholder="Description">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <mat-label>Task status</mat-label>
+      <mat-select placeholder="Status" formControlName="taskStatus">
+        <mat-option value="OPEN">Open</mat-option>
+        <mat-option value="Started">Started</mat-option>
+        <mat-option value="Complete">Complete</mat-option>
+        <mat-option value="Failed">Failed</mat-option>
+        <mat-option value="Canceled">Canceled</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <mat-label>
+        Apartment </mat-label>
+      <mat-select>
+        <mat-option *ngFor="let apartment of apartmentList"
+                    (click)="onSelectApartment(apartment)"
+                    value={{apartment?.roomNumber}}>
+
+          {{apartment?.roomNumber}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <mat-label>
+        Creator </mat-label>
+      <mat-select>
+        <mat-option *ngFor="let staff of staffList"
+                    (click)="onSelectCreator(staff)"
+                    value={{staff?.lastName}}>
+
+          {{staff?.lastName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <mat-label>
+        Executor </mat-label>
+      <mat-select>
+        <mat-option *ngFor="let staff of staffList"
+                    (click)="onSelectExecutor(staff)"
+                    value={{staff?.lastName}}>
+
+          {{staff?.lastName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="true" mat-dialog-close>Cancel</button>
+    <button type="submit" (click)="checkValid()" mat-dialog-close [disabled]="isSubmitDisabled()" mat-button>Add</button>
+  </mat-dialog-actions>
+</form>
+
