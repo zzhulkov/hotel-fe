@@ -1,35 +1,30 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChildren} from '@angular/core';
 import {HttpService} from '../../../http.service';
+import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog.component';
 import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dialog/delete-apartments-dialog.component';
-import {MatExpansionPanel} from '@angular/material/expansion';
+import {SelectService} from "../../../services/select.service";
+import {BehaviorSubject, Observable, Subscription} from "rxjs";
+import {MatExpansionPanel} from "@angular/material/expansion";
 
 
 @Component({
   selector: 'app-apartments-manager',
   templateUrl: './apartments-manager.component.html',
   styleUrls: ['../styles/page.css'],
-  providers: [HttpService],
-  viewProviders: [MatExpansionPanel]
+   viewProviders: [MatExpansionPanel]
 })
 
-export class ApartmentsManagerComponent {
-  isClicked = false;
+export class ApartmentsManagerComponent implements OnInit, OnDestroy {
+  id$: Observable<string>;
+  subscription: Subscription;
 
-  constructor(public dialog: MatDialog,
-              private cdRef: ChangeDetectorRef) {
+  constructor(public dialog: MatDialog, private selectService: SelectService) {
+    this.subscription = this.selectService.missionAnnounced$.subscribe(id =>  this.id$ = this.selectService.missionAnnounced$ );
   }
 
-  isClickedRow() {
-    this.isClicked = true;
-    this.cdRef.detectChanges();
-  }
-
-  reselectRow() {
-    this.isClicked = false;
-    this.cdRef.detectChanges();
-    console.log('reselect');
+  ngOnInit(): void {
   }
 
   addApartmentDialog() {
@@ -46,6 +41,17 @@ export class ApartmentsManagerComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+
+  ngOnDestroy(): void {
+    console.log('destroy apartment');
+    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.selectService.announceMission(null);
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
   }
 }
 

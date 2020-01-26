@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input, OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {HttpClient} from '@angular/common/http';
@@ -7,6 +16,8 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {FormControl} from '@angular/forms';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from "../../../../../services/data-transfer.service";
+import {SelectService} from "../../../../../services/select.service";
+import {Subscription} from "rxjs";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -19,13 +30,9 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/table.css'],
   templateUrl: 'apartments-table.html',
 })
-export class ApartmentsTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
-
-  @Output() selectedRowClicked: EventEmitter<any> = new EventEmitter();
-  @Output() reselectRow: EventEmitter<any> = new EventEmitter();
-
+export class ApartmentsTableComponent extends Unsubscribable implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-
+  subscription: Subscription;
   private dataTransfer: DataTransferService;
   selectedRow: any;
   apartmentsList = new MatTableDataSource<Apartments>();
@@ -54,25 +61,21 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
   };
 
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService) {
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, private selectService: SelectService, private ckRef: ChangeDetectorRef) {
     super();
+    this.subscription = this.selectService.missionAnnounced$.subscribe();
     this.getAllApartments();
     this.dataTransfer = dataTransfer;
     this.apartmentsList.filterPredicate = this.createFilter();
   }
 
   selectRow(row: any): void {
-    this.reselectRow.emit();
+    this.selectService.announceMission(null);
     this.selectedRow = row.roomNumber;
     console.log(row);
     this.dataTransfer.setData(row);
-    this.isSelected();
+    this.selectService.announceMission(row.id);
   }
-
-  isSelected() {
-    this.selectedRowClicked.emit();
-  }
-
 
   onSelect(apartments: Apartments): void {
     this.selectedApartments = apartments;
@@ -163,5 +166,10 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
         && data.apartmentClass.id.toString().toLowerCase().indexOf(searchTerms.classId) !== -1;
     };
     return filterFunction;
+  }
+  ngOnDestroy(): void {
+    super.ngOnDestroy();
+    console.log('destroy table');
+    this.subscription.unsubscribe();
   }
 }
