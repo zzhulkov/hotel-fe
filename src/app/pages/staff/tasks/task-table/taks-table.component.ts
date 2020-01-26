@@ -26,7 +26,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   taskList = new MatTableDataSource<Task>();
   selectedTask: Task;
-  displayedColumns = ['start', 'end', 'accept', 'complete', 'description', 'status', 'apartmentsRoomNumber', 'creatorLastName', 'executorLastName'];
+  displayedColumns = ['start', 'end', 'accept', 'complete', 'description', 'status', 'roomNumber', 'creatorLastName', 'executorLastName'];
   dataSource = this.taskList;
   startDateFilter = new FormControl('');
   endDateFilter = new FormControl('');
@@ -45,7 +45,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
     complete: '',
     description: '',
     status: '',
-    apartmentsRoomNumber: '',
+    roomNumber: '',
     creatorLastName: '',
     executorLastName: ''
   };
@@ -121,8 +121,8 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
       );
     this.apartmentsRoomNumberFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        apartmentsRoomNumber => {
-          this.filterValues.apartmentsRoomNumber = apartmentsRoomNumber;
+        roomNumber => {
+          this.filterValues.roomNumber = roomNumber;
           this.taskList.filter = JSON.stringify(this.filterValues);
         }
       );
@@ -163,7 +163,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
         && data.completeDate.toString().toLowerCase().indexOf(searchTerms.completeDate) !== -1
         && data.description.toLowerCase().indexOf(searchTerms.description) !== -1
         && data.status.toLowerCase().indexOf(searchTerms.status) !== -1
-        && data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.apartmentsRoomNumber) !== -1
+        && data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1
         && data.creator.user.lastname.toLowerCase().indexOf(searchTerms.creator) !== -1
         && data.executor.user.lastname.toLowerCase().indexOf(searchTerms.executor) !== -1;
     };

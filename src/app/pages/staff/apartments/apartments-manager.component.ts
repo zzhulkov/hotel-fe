@@ -13,7 +13,6 @@ import {MatExpansionPanel} from "@angular/material/expansion";
   selector: 'app-apartments-manager',
   templateUrl: './apartments-manager.component.html',
   styleUrls: ['../styles/page.css'],
-   providers: [HttpService],
    viewProviders: [MatExpansionPanel]
 })
 
@@ -21,11 +20,11 @@ export class ApartmentsManagerComponent implements OnInit, OnDestroy {
   id$: Observable<string>;
   subscription: Subscription;
 
-  constructor(public dialog: MatDialog, private missionService: SelectService) {
+  constructor(public dialog: MatDialog, private selectService: SelectService) {
+    this.subscription = this.selectService.missionAnnounced$.subscribe(id =>  this.id$ = this.selectService.missionAnnounced$ );
   }
 
   ngOnInit(): void {
-    this.subscription = this.missionService.missionAnnounced$.subscribe(id => this.id$ = this.missionService.missionAnnounced$);
   }
 
   addApartmentDialog() {
@@ -44,9 +43,15 @@ export class ApartmentsManagerComponent implements OnInit, OnDestroy {
     });
   }
 
+
   ngOnDestroy(): void {
-    this.missionService.announceMission(null);
+    console.log('destroy apartment');
     this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.selectService.announceMission(null);
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
   }
 }
 

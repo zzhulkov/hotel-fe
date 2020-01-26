@@ -25,10 +25,6 @@ export class AppComponent extends Unsubscribable implements OnInit {
 
   ngOnInit() {
     console.log('init');
-    this.missionService.missionAnnounced$
-      .pipe(take(10))
-      .subscribe( id => { console.log('111111', id);
-      });
     if (this.userPaths.includes(this.location.path())) {
       this.condition = false;
     } else {

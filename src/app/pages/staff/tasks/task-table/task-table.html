@@ -69,7 +69,7 @@
       <td mat-cell *matCellDef="let selectedTask"> {{selectedTask?.status}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="apartmentsRoomNumber">
+    <ng-container matColumnDef="roomNumber">
       <th mat-header-cell *matHeaderCellDef>
         Apartment
         <mat-form-field class="filter" floatLabel="never">
@@ -88,7 +88,7 @@
           <input matInput [formControl]="creatorFilter">
         </mat-form-field>
       </th>
-      <td mat-cell *matCellDef="let selectedTask"> {{selectedTask?.creator.speciality}} </td>
+      <td mat-cell *matCellDef="let selectedTask"> {{selectedTask?.creator.user.lastname}} </td>
     </ng-container>
 
     <ng-container matColumnDef="executorLastName">

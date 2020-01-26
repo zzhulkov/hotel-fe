@@ -26,7 +26,6 @@ const URL = new ConstantsService().BASE_URL;
 
 export class ChangeApartmentsDialogComponent extends Unsubscribable implements OnInit, OnDestroy {
   profileForm: FormGroup;
-
   apartment = {} as Apartments;
   apartmentClass = {} as ApartmentsClass;
 
@@ -40,7 +39,6 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
     this.apartment = this.dataTransfer.getData();
     this.selectedApartmentsClass = this.apartment.apartmentClass;
   }
-
 
   ngOnInit(): void {
     this.profileForm = this.formBuilder.group({

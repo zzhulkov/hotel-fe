@@ -30,9 +30,9 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/table.css'],
   templateUrl: 'apartments-table.html',
 })
-export class ApartmentsTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
+export class ApartmentsTableComponent extends Unsubscribable implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-
+  subscription: Subscription;
   private dataTransfer: DataTransferService;
   selectedRow: any;
   apartmentsList = new MatTableDataSource<Apartments>();
@@ -61,19 +61,20 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
   };
 
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService, private missionService: SelectService) {
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, private selectService: SelectService, private ckRef: ChangeDetectorRef) {
     super();
+    this.subscription = this.selectService.missionAnnounced$.subscribe();
     this.getAllApartments();
     this.dataTransfer = dataTransfer;
     this.apartmentsList.filterPredicate = this.createFilter();
   }
 
   selectRow(row: any): void {
-    this.missionService.announceMission(null);
+    this.selectService.announceMission(null);
     this.selectedRow = row.roomNumber;
     console.log(row);
     this.dataTransfer.setData(row);
-    this.missionService.announceMission(row.id);
+    this.selectService.announceMission(row.id);
   }
 
   onSelect(apartments: Apartments): void {
@@ -165,5 +166,10 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
         && data.apartmentClass.id.toString().toLowerCase().indexOf(searchTerms.classId) !== -1;
     };
     return filterFunction;
+  }
+  ngOnDestroy(): void {
+    super.ngOnDestroy();
+    console.log('destroy table');
+    this.subscription.unsubscribe();
   }
 }
