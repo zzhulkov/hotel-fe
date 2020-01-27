@@ -30,11 +30,12 @@ export class ChangeStaffDialogComponent extends Unsubscribable implements OnInit
     'Manager',
     'Hotel_Administrator'
   ];
-  private selectedSpeciality: Speciality;
+  selectedSpeciality: Speciality;
 
   constructor(private formBuilder: FormBuilder, private  http: HttpClient, dataTransfer: DataTransferService) {
     super();
     this.staff = dataTransfer.getData();
+    this.selectedSpeciality = this.staff.speciality;
   }
 
   ngOnInit(): void {

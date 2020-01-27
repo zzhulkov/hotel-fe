@@ -1,14 +1,15 @@
 <section class="apartment-list">
-Staff list
+  <div class="buttons">
+    Staff list
+    <button class="mat-button" mat-raised-button (click)="addDialog()">Add</button>
+  </div>
   <div class="wrap">
     <div class="table">
       <staff-table-component (selectedRowClicked)="isClickedRow()"
                              (reselectRow)="reselectRow()"></staff-table-component>
     </div>
     <div class="tools">
-      <div class="buttons">
-        <button class="mat-button" mat-raised-button (click)="addDialog()">Add</button>
-      </div>
+
       <div class="change">
         <app-change-staff-dialog *ngIf="isClicked"></app-change-staff-dialog>
       </div>

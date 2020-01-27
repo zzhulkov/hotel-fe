@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
@@ -6,8 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
-import {MatExpansionPanel} from "@angular/material/expansion";
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {SelectService} from "../../../../../services/select.service";
 import {DeleteApartmentsDialogComponent} from "../delete-apartment-dialog/delete-apartments-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -22,7 +21,6 @@ const URL = new ConstantsService().BASE_URL;
   selector: 'app-change-apartments-dialog',
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './change-apartments-dialog.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class ChangeApartmentsDialogComponent extends Unsubscribable implements OnInit, OnDestroy {
@@ -32,13 +30,20 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
 
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
+  id$: Observable<string>;
   subscription: Subscription;
 
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private  http: HttpClient, private dataTransfer: DataTransferService) {
+  constructor(public dialog: MatDialog,
+              private formBuilder: FormBuilder,
+              private  http: HttpClient,
+              private dataTransfer: DataTransferService,
+              private selectService: SelectService) {
     super();
     this.getAllApartmentsClasses();
     this.apartment = this.dataTransfer.getData();
     this.selectedApartmentsClass = this.apartment.apartmentClass;
+    this.subscription = this.selectService.missionAnnounced$
+      .subscribe(id => this.id$ = this.selectService.missionAnnounced$);
   }
 
   ngOnInit(): void {
@@ -71,7 +76,12 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
   }
 
   ngOnDestroy() {
-   this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.selectService.announceMission(null);
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
   }
 
   createApartment() {
