@@ -1,0 +1,124 @@
+<mat-horizontal-stepper linear labelPosition="bottom" #stepper>
+  <mat-step [completed]="isDatesFromComplete">
+    <ng-template matStepLabel>Dates</ng-template>
+    <form [formGroup]="datesForm" class="datesForm">
+      <mat-form-field>
+        <input matInput
+               [matDatepicker]="startDatePicker"
+               formControlName="startDate"
+               (ngModelChange)="onDatesFormChange()"
+               [min]="currentDate"
+               [max] = "maxDate"
+               placeholder="Arrive date"
+               disabled
+               required
+               id="startDateField">
+        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker disabled="false"></mat-datepicker>
+        <mat-error *ngIf="startDate().errors">
+          <span *ngIf="startDate().errors.required">This field must be filled</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput
+               [matDatepicker]="endDatePicker"
+               formControlName="endDate"
+               (ngModelChange)="onDatesFormChange()"
+               [min]="minDate"
+               placeholder="Departure date"
+               disabled
+               required>
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker disabled="false"></mat-datepicker>
+        <mat-error *ngIf="endDate().errors">
+          <span *ngIf="endDate().errors.required">This field must be filled</span>
+        </mat-error>
+      </mat-form-field>
+      <button mat-button
+              matStepperNext
+              (click)="onDateFormSubmit()"
+              [disabled]="!isDatesFromComplete"
+              >Choose apartments</button>
+    </form>
+  </mat-step>
+  <mat-step [completed]="isApartmentClassFormComplete">
+    <ng-template matStepLabel>Apartments</ng-template>
+    <form [formGroup]="apartmentClassChooseForm" class="apartmentClassesForm">
+      <div *ngIf="freeapartmentClasses == null" class="form-loader">
+        <app-loading-animation></app-loading-animation>
+      </div>
+      <div *ngIf="freeapartmentClasses !== null">
+
+        <div class="apartment-classes-list">
+        <div *ngFor="let apartClass of freeapartmentClasses">
+          <input type="radio"
+                 formControlName="apartmentClassId"
+                 [value]="apartClass.apartmentClass.id"
+                 [id]="'apartmentClass' + apartClass.apartmentClass.id"
+                 (ngModelChange)="onApartmentClassFormChange()"
+                 required>
+          <label [for]="'apartmentClass' + apartClass.apartmentClass.id">
+            <h3>{{apartClass.apartmentClass.nameClass}}</h3>
+            <div class="apartment-class-row">
+              <p>Couchettes: {{apartClass.apartmentClass.numberOfCouchette}}</p>
+              <p class="apartment-number" *ngIf="apartClass.countOfApartments <= 4">Only {{apartClass.countOfApartments}} left</p>
+            </div>
+            <div class="apartment-class-row">
+              <p>Rooms: {{apartClass.apartmentClass.numberOfRooms}}</p>
+              <p class="apartment-price">100$</p>
+            </div>
+          </label>
+        </div>
+        </div>
+
+      </div>
+      <button mat-button matStepperPrevious type="reset" (click)="onChangeDatesClick()">Change dates</button>
+      <button mat-button matStepperNext (click)="onApartmentClassFormSubmit()" [disabled]="!isApartmentClassFormComplete">Choose additional services</button>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Services</ng-template>
+    <form>
+      <div *ngIf="bookingServices == null || currentBooking == null" class="form-loader">
+        <app-loading-animation></app-loading-animation>
+      </div>
+      <div *ngIf="bookingServices != null && currentBooking != null" class="services">
+        <div *ngFor="let serv of bookingServices">
+          <input type="checkbox" [value]="serv.id" name="service-checkbox" [id]="'service' + serv.id">
+          <label [for]="'service' + serv.id">
+            <h3>{{serv.serviceName}}</h3>
+            <p class="service-price">{{serv.price}}$</p>
+          </label>
+        </div>
+      </div>
+
+      <button mat-button type="reset" matStepperPrevious (click)="onChangeApartmentsClick()">Change apartments</button>
+      <button mat-button matStepperNext (click)="onServicesFormSubmit()">Finish booking</button>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Finish</ng-template>
+
+    <div *ngIf="dbBooking == null" class="form-loader">
+      <app-loading-animation></app-loading-animation>
+    </div>
+
+    <div *ngIf="dbBooking != null" class="final-step">
+      <p>Arrive date: <span>{{dbBooking.startDate}}</span></p>
+      <p>Departure date: <span>{{dbBooking.endDate}}</span></p>
+      <p>Apartment class: <span>{{dbBooking.apartmentClass.nameClass}}</span></p>
+
+      <p>Additional services:</p>
+      <ul *ngIf="dbCurrentBookingServices != null">
+        <li *ngFor="let s of dbCurrentBookingServices">{{s.bookingAddServices.serviceName}}</li>
+      </ul>
+
+      <p>Total price: <span>{{dbBooking.totalPrice}}$</span></p>
+    </div>
+    <form>
+      <button mat-button type="reset" matStepperPrevious (click)="onChangeServicesClick()">Change services</button>
+      <button mat-button matStepperNext (click)="onConfirmBookingClick()">Finish booking</button>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>

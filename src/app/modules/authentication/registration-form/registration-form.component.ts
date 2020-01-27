@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../authentication.service';
-import {User} from '../../component/user';
+import {User} from '../../../component/user';
 
 @Component({
   selector: 'app-registration-form',
@@ -58,12 +58,20 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.registrationForm.value);
-    if(this.isValid){
-      const user: User =  this.registrationForm.value;
-      user.userRole = 'Client';
-      console.log(user);
+    if (!this.isValid) {
+      return;
     }
-    // let user: User =  this.registrationForm.value;
+
+    const user: User =  this.registrationForm.value;
+    user.userRole = 'Client';
+    console.log(user);
+    this.authService.registration(user)
+      .subscribe(data => {
+        if (data !== null) {
+          this.isValid = false;
+          this.registrationForm.get(data).setErrors({unique: 'reserved'});
+        }
+      });
   }
+
 }

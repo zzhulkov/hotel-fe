@@ -8,7 +8,7 @@ import {AppComponent} from './app.component';
 import {HttpService} from './http.service';
 import {StaffModule} from './pages/staff/staff.module';
 import {UserModule} from './pages/user/user.module';
-import {JWTInterceptor} from './modules/jwt.interceptor';
+import {JWTInterceptor} from './modules/authentication/jwt.interceptor';
 
 @NgModule({
   imports: [

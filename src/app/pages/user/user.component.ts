@@ -1,56 +1,34 @@
-import {Component} from '@angular/core';
-import {HttpService} from '../../http.service';
-import {AuthenticationService} from '../../modules/authentication.service';
-import {Apartments} from '../../component/apartments';
-import {HttpClient} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.html',
-  styleUrls: ['./user.css'],
-  providers: [HttpService]
+  styleUrls: ['./user.css']
 })
 
-export class UserComponent {
+export class UserComponent implements OnInit{
 
-  apartments: Apartments;
-
-  authenticated: boolean;
-  username: string;
-  authService: AuthenticationService;
-  authenticationState = 'hidden';
+  datesForm: FormGroup;
+  currentDate = new Date();
+  openBooking = false;
   images: string[] = ['https://q-cf.bstatic.com/images/hotel/max1024x768/306/30607234.jpg',
     'https://www3.hilton.com/resources/media/hi/KBPHIHI/en_US/img/shared/full_page_image_gallery/main/HL_sideext_1270x560_FitToBoxSmallDimension_UpperCenter.jpg',
     'https://www3.hilton.com/resources/media/hi/KBPHIHI/en_US/img/shared/full_page_image_gallery/main/HL_pool01_21_1270x560_FitToBoxSmallDimension_Center.jpg'];
 
-  constructor(authService: AuthenticationService, private http: HttpClient) {
-    this.authService = authService;
-    this.authService.currentUserObservable.subscribe(user => {
-      if (user === null) {
-        this.authenticated = false;
-      } else {
-        this.authenticationState = 'logged';
-        this.authenticated = true;
-        this.username = user.lastname + ' ' + user.firstname;
-      }
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.datesForm = this.fb.group({
+      startDate: [null, Validators.required],
+      endDate: [null, Validators.required]
     });
   }
 
-  logout() {
-    this.authService.logout();
+  onDatesFormClick() {
+    this.openBooking = true;
   }
 
-  getApartments() {
-    this.http.get('http://localhost:8090/apartments/2').subscribe(
-      data => {
-        this.apartments = (data as Apartments);
-      },
-      error => {
-        this.apartments = null;
-        console.log(error);
-      }
-    );
-  }
 }
 

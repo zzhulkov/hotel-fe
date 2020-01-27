@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
-import {User} from '../component/user';
+import {User} from '../../component/user';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
 @Injectable({
@@ -47,7 +47,7 @@ export class AuthenticationService {
             this.token = tok.token;
             localStorage.setItem('token', tok.token);
             if (isNotNullOrUndefined(tok)) {
-              this.http.get('http://localhost:8090/user?login=' + username)
+              this.http.get('http://localhost:8090/users?login=' + username)
                 .subscribe(
                   resp => {
                     this.currentUserSubject.next((resp as User));
@@ -70,4 +70,24 @@ export class AuthenticationService {
     this.token = null;
   }
 
+  registration(user: User): Observable<any> {
+
+    const errorField = new Subject<string>();
+    errorField.next(null);
+
+    this.http.post('http://localhost:8090/users', user)
+      .subscribe(data => {
+        console.log(data);
+        this.login(user.login, user.password);
+      },
+      err => {
+        console.log(err);
+        const fields = err.error.match(/\(\w+\)/g);
+        if (fields) {
+          let f = fields[0].replace(/[()]/g, '');
+          errorField.next(f);
+        }
+      });
+    return errorField.asObservable();
+  }
 }

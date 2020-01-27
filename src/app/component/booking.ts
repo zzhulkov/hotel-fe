@@ -12,6 +12,6 @@ export class Booking {
   review: string;
   bookingStatus: string;
   user: User;
-  apartmentsClass: ApartmentsClass
+  apartmentClass: ApartmentsClass;
   apartments: Apartments;
 }

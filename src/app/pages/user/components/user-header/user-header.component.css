@@ -1,0 +1,66 @@
+/*styles for navigation*/
+
+nav{
+  max-width: 1000px;
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  grid-area: container-content;
+}
+
+nav a{
+  color: inherit;
+}
+.logo{
+  width: 90px;
+  display: flex;
+  justify-content: center;
+  margin-right: auto;
+}
+.logo img{
+  width: 60px;
+}
+
+.menu{
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  margin: 0 15px;
+}
+
+.sign-welcome, .signed{
+  margin-left: auto;
+  width: 96px;
+}
+.signed p {
+  font-size: 16px;
+  cursor: pointer;
+}
+.sign-welcome{
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+/*end of styles for navigation*/
+
+.auth-reg-container{
+  display: flex;
+  justify-content: center;
+}
+
+app-registration-form, app-login-form{
+  max-width: 400px;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+
+
+

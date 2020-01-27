@@ -1,51 +1,8 @@
 <a name="home"></a>
-<div class="container">
-<nav>
+<app-user-header></app-user-header>
 
-  <div class="logo">
-    <img src="../../../assets/img/logo.png" />
-  </div>
-
-  <div class="menu">
-    <a href="#home"><button mat-button>Home</button></a>
-    <a href="#apartments"><button mat-button>Apartments</button></a>
-    <a href="#reviews"><button mat-button>Reviews</button></a>
-    <a href="#services"><button mat-button>Services</button></a>
-    <a href="#contacts"><button mat-button>Contacts</button></a>
-  </div>
-
-  <ng-template *ngIf="authenticated; then signed else signWelcome"></ng-template>
-  <ng-template #signWelcome>
-    <div class="sign-welcome">
-      <button mat-button (click)="authenticationState='register'">Sign up</button>
-      <!-- TODO: Delete this event handler-->
-      <button mat-button (click)="authenticationState='login'">Sign in</button>
-    </div>
-  </ng-template>
-
-  <ng-template #signed>
-    <div class="signed" >
-      <p>{{ username }}</p>
-      <button mat-button (click) = "logout()">Logout</button>
-    </div>
-  </ng-template>
-
-</nav>
-</div>
-
-<div [ngSwitch]="authenticationState" class="auth-reg-container">
-  <ng-template ngSwitchCase="register">
-    <app-registration-form></app-registration-form>
-  </ng-template>
-  <ng-template ngSwitchCase="login">
-    <app-login-form></app-login-form>
-  </ng-template>
-</div>
-
-<!--TODO: delete when deploy-->
-<div style="width: 100%">
-  <p>{{  apartments }}</p>
-  <button mat-button (click)="getApartments()">Go-go power rangers</button>
+<div style="width: 100%" *ngIf="openBooking">
+  <app-booking-creator [sDate]="datesForm.get('startDate').value" [eDate]="datesForm.get('endDate').value"></app-booking-creator>
 </div>
 <div class="carousel-container">
   <mat-carousel
@@ -67,19 +24,19 @@
     ></mat-carousel-slide>
   </mat-carousel>
   <div class="container home-date-container">
-    <form class="search-date-form">
-      <mat-form-field >
-        <input matInput [matDatepicker]="startDate" placeholder="Arrive date">
+    <form class="search-date-form" [formGroup]="datesForm">
+      <mat-form-field>
+        <input matInput [matDatepicker]="startDate" [min]="currentDate" [max]="datesForm.get('endDate').value" formControlName="startDate" placeholder="Arrive date" disabled>
         <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-        <mat-datepicker #startDate></mat-datepicker>
+        <mat-datepicker #startDate disabled="false"></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [matDatepicker]="endDate" placeholder="Departure date">
+        <input matInput [matDatepicker]="endDate" [min]="(datesForm.get('startDate').value != null)? datesForm.get('startDate').value: currentDate" formControlName="endDate" placeholder="Departure date" disabled>
         <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-        <mat-datepicker #endDate></mat-datepicker>
+        <mat-datepicker #endDate disabled="false"></mat-datepicker>
       </mat-form-field>
 
-      <button mat-button type="submit">Find apartments</button>
+      <button mat-button  (click)="onDatesFormClick()">Find apartments</button>
     </form>
   </div>
   <div class="container home-about-container">
