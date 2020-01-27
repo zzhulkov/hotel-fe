@@ -1,11 +1,9 @@
-import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChildren} from '@angular/core';
-import {HttpService} from '../../../http.service';
-import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog.component';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dialog/delete-apartments-dialog.component';
 import {SelectService} from "../../../services/select.service";
-import {BehaviorSubject, Observable, Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {MatExpansionPanel} from "@angular/material/expansion";
 
 
@@ -21,7 +19,8 @@ export class ApartmentsManagerComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(public dialog: MatDialog, private selectService: SelectService) {
-    this.subscription = this.selectService.missionAnnounced$.subscribe(id =>  this.id$ = this.selectService.missionAnnounced$ );
+    this.subscription = this.selectService.missionAnnounced$
+      .subscribe(id => this.id$ = this.selectService.missionAnnounced$);
   }
 
   ngOnInit(): void {
