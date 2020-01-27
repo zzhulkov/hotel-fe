@@ -20,11 +20,10 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="change">
+      <div class="change" [hidden]="!str">
         {{id$ | async}}
-        <app-change-apartments-dialog *ngIf="(id$ | async) as id; else loading"></app-change-apartments-dialog>
+        <app-change-apartments-dialog *ngIf="isClicked(id$)"></app-change-apartments-dialog>
       </div>
-      <ng-template #loading> Wait </ng-template>
     </div>
   </div>
 </section>

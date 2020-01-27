@@ -1,30 +1,34 @@
-import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChildren} from '@angular/core';
-import {HttpService} from '../../../http.service';
-import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog.component';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dialog/delete-apartments-dialog.component';
 import {SelectService} from "../../../services/select.service";
-import {BehaviorSubject, Observable, Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {MatExpansionPanel} from "@angular/material/expansion";
+import {first} from "rxjs/operators";
+import {stringify} from "querystring";
 
 
 @Component({
   selector: 'app-apartments-manager',
   templateUrl: './apartments-manager.component.html',
   styleUrls: ['../styles/page.css'],
-   viewProviders: [MatExpansionPanel]
+   viewProviders: [MatExpansionPanel],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class ApartmentsManagerComponent implements OnInit, OnDestroy {
   id$: Observable<string>;
-  subscription: Subscription;
+  str: string;
+  subscription$: Subscription;
 
-  constructor(public dialog: MatDialog, private selectService: SelectService) {
-    this.subscription = this.selectService.missionAnnounced$.subscribe(id =>  this.id$ = this.selectService.missionAnnounced$ );
+  constructor(public dialog: MatDialog, private selectService: SelectService, private changeDetection: ChangeDetectorRef) {
+
   }
 
   ngOnInit(): void {
+    this.subscription$ = this.selectService.missionAnnounced$
+      .subscribe(id =>  { this.str = id; this.id$ =  this.selectService.missionAnnounced$; } );
   }
 
   addApartmentDialog() {
@@ -33,6 +37,13 @@ export class ApartmentsManagerComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+  isClicked(id$: Observable<string>): boolean {
+    id$.subscribe(res => this.str = res);
+    return this.isValid(this.str);
+  }
+  isValid(id: string): boolean {
+    return id != null;
   }
 
   deleteApartment() {
@@ -46,11 +57,11 @@ export class ApartmentsManagerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     console.log('destroy apartment');
-    this.subscription.unsubscribe();
-    if (this.subscription) {
+    this.subscription$.unsubscribe();
+    if (this.subscription$) {
       this.selectService.announceMission(null);
-      this.subscription.unsubscribe();
-      this.subscription = null;
+      this.subscription$.unsubscribe();
+      this.subscription$ = null;
     }
   }
 }

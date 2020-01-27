@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
@@ -22,6 +22,7 @@ const URL = new ConstantsService().BASE_URL;
   selector: 'app-change-apartments-dialog',
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './change-apartments-dialog.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class ChangeApartmentsDialogComponent extends Unsubscribable implements OnInit, OnDestroy {

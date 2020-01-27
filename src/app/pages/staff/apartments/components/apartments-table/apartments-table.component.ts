@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterViewInit, ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
@@ -29,6 +29,7 @@ const URL = new ConstantsService().BASE_URL;
   selector: 'apartments-table-component',
   styleUrls: ['../../../styles/table.css'],
   templateUrl: 'apartments-table.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApartmentsTableComponent extends Unsubscribable implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
