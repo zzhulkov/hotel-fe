@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
@@ -21,12 +21,7 @@ const URL = new ConstantsService().BASE_URL;
 })
 export class ChangeBookingDialogComponent extends Unsubscribable implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private dataTransfer: DataTransferService) {
-    super();
-    this.getAllApartmentsClasses();
-    this.booking = dataTransfer.getData();
-    console.log(this.booking);
-  }
+
 
   addForm: FormGroup;
 
@@ -37,19 +32,53 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
 
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private dataTransfer: DataTransferService) {
+    super();
+    this.getAllApartmentsClasses();
+    this.booking = dataTransfer.getData();
+    if (this.booking.apartmentsClass == null) {
+      // this.selectedApartmentsClass = new ApartmentsClass;
+    }
+    this.selectedApartmentsClass = this.booking.apartmentsClass;
+    console.log(this.booking);
+  }
   ngOnInit(): void {
     this.addForm = this.formBuilder.group({
-      startDate: [this.booking.startDate, Validators.required],
-      endDate: [this.booking.endDate, Validators.required],
-      totalPrice: [this.booking.totalPrice, Validators.required],
-      comment: [this.booking.comment],
-      createdDate: [this.booking.createdDate, Validators.required],
-      review: [this.booking.review],
-      bookingStatus: [this.booking.bookingStatus],
-      email: [this.booking.user.email],
-      nameClass: [this.booking.apartmentsClass.nameClass],
-      roomNumber: [this.booking.apartments.roomNumber]
+      startDate: [
+        this.booking.startDate
+      ],
+      endDate: [
+        this.booking.endDate
+      ],
+      totalPrice: [
+        this.booking.totalPrice
+      ],
+      comment: [
+        this.booking.comment
+      ],
+      createdDate: [
+        this.booking.createdDate
+      ],
+      review: [
+        this.booking.review
+      ],
+      bookingStatus: [
+        this.booking.bookingStatus
+      ],
+      email: [
+        this.booking.user.email
+      ],
+      nameClass: [
+        ''
+        // this.selectedApartmentsClass.nameClass
+      ],
+      roomNumber: [
+        ''
+
+        // this.booking.apartments.roomNumber
+      ]
     });
+    // this.checkValid();
   }
 
   checkValid() {
@@ -78,7 +107,7 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
 
   setBooking() {
     this.booking.apartmentsClass = this.selectedApartmentsClass;
-    this.booking.apartments.roomNumber = this.addForm.value.roomNumber;
+    // this.booking.apartments.roomNumber = this.addForm.value.roomNumber;
     this.booking.startDate = this.addForm.value.startDate;
     this.booking.endDate = this.addForm.value.endDate;
     this.booking.totalPrice = this.addForm.value.totalPrice;

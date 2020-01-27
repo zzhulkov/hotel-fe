@@ -40,14 +40,17 @@ export class AddStaffDialogComponent implements OnInit {
   ];
   private selectedSpeciality: Speciality;
 
-  uList: User[];
-
   ngOnInit(): void {
     this.addStaffFrom = this.formBuilder.group({
+      firstname: ['', Validators.pattern('^([A-Z]){1}([a-z]+)$')],
+      lastname: ['', Validators.pattern('^([A-Z]){1}([a-z]+)$')],
       email: ['', Validators.pattern('^[a-zA-Z0-9.!#$%&’*+=?^_`{|}~-]+\\@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+$')],
-      role: [''],
+      phoneNumber: ['', Validators.pattern('(^\\+{1}\\d{7,13}$)|(^\\d{7,13}$)')],
+      login: ['', Validators.pattern('^([a-zA-Z])\\S+$')],
+      password: ['', Validators.required],
+      role: ['', Validators.required],
       active: ['true'],
-      speciality: [''],
+      speciality: ['', Validators.required],
     });
   }
 
@@ -62,8 +65,9 @@ export class AddStaffDialogComponent implements OnInit {
 
   onSubmit() {
     if (this.addStaffFrom.valid) {
-      this.getUser();
-      // console.log(this.addStaffFrom.value);
+      console.log(this.addStaffFrom.value);
+      this.setStaff();
+      this.createStaff();
     }
   }
 
@@ -82,34 +86,17 @@ export class AddStaffDialogComponent implements OnInit {
       res => {
         console.log(res);
         this.staff = (res as Staff);
-
-        this.updateUser();
-      });
-  }
-
-  getUser() {
-    this.http.get(URL + 'users' + '?email=' + this.addStaffFrom.value.email).subscribe(
-      res => {
-        console.log(res);
-        this.uList = (res as User[]);
-        this.user = this.uList[0];
-        console.log(this.user);
-        this.setStaff();
-        this.createStaff();
-      });
-  }
-
-  updateUser() {
-    this.user.userRole = this.selectedRole;
-    this.http.put(URL + 'users/' + this.user.id, this.user).subscribe(
-      res => {
-        console.log(res);
-
       });
   }
 
   setStaff() {
-    this.staff.id = this.user.id;
+    this.user.firstname = this.addStaffFrom.value.firstname;
+    this.user.lastname = this.addStaffFrom.value.lastname;
+    this.user.login = this.addStaffFrom.value.login;
+    this.user.password = this.addStaffFrom.value.password;
+    this.user.email = this.addStaffFrom.value.email;
+    this.user.phoneNumber = this.addStaffFrom.value.phoneNumber;
+    this.user.userRole = this.selectedRole;
     this.staff.user = this.user;
     this.staff.active = this.addStaffFrom.value.active;
     this.staff.speciality = this.selectedSpeciality;
