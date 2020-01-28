@@ -31,9 +31,12 @@ export class ChangeServicesDialogComponent extends Unsubscribable implements OnI
   service = {} as Service;
   subscription: Subscription;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, public dialog: MatDialog,
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,
+              dataTransfer: DataTransferService,
+              public dialog: MatDialog,
               public selectService: SelectService) {
     super(selectService);
+    this.service = dataTransfer.getData();
     console.log(this.service);
   }
 
