@@ -7,6 +7,9 @@ import {DataTransferService} from "../../../../../services/data-transfer.service
 import {ConstantsService} from "../../../../../services/constants.service";
 import {Unsubscribable} from "../../../../../component/Unsubscribable";
 import {Speciality} from "../../../../../component/speciality.type";
+import {Subscription} from "rxjs";
+import {SelectService} from "../../../../../services/select.service";
+import {ApartmentsClass} from "../../../../../component/apartments-class";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -23,6 +26,7 @@ export class ChangeStaffDialogComponent extends Unsubscribable implements OnInit
   changeStaffFrom: FormGroup;
   staff = {} as Staff;
   user = {} as User;
+  subscription: Subscription;
 
   specialities = [
     'Cleaner',
@@ -32,8 +36,10 @@ export class ChangeStaffDialogComponent extends Unsubscribable implements OnInit
   ];
   selectedSpeciality: Speciality;
 
-  constructor(private formBuilder: FormBuilder, private  http: HttpClient, dataTransfer: DataTransferService) {
-    super();
+  constructor(private formBuilder: FormBuilder, private  http: HttpClient,
+              dataTransfer: DataTransferService,
+              public selectService: SelectService) {
+    super(selectService);
     this.staff = dataTransfer.getData();
     this.selectedSpeciality = this.staff.speciality;
   }
@@ -47,7 +53,20 @@ export class ChangeStaffDialogComponent extends Unsubscribable implements OnInit
       speciality: [this.staff.speciality],
     });
     this.checkValid();
+    this.subscription = this.selectService.selectAnnounced$
+      .subscribe(row => { console.log(row); this.staff = row; this.fillForm(row); });
   }
+
+  fillForm(row: Staff) {
+    this.changeStaffFrom.setValue({
+      id: row.id,
+      firstname: row.user.firstname,
+      lastname: row.user.lastname,
+      active: row.active,
+      speciality: row.speciality
+    });
+  }
+
 
   onSelectSpec(spec: any): void {
     this.selectedSpeciality = spec;

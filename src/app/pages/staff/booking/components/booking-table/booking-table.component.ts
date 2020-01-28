@@ -7,6 +7,7 @@ import {Booking} from '../../../../../component/booking';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {FormControl} from '@angular/forms';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
+import {SelectService} from "../../../../../services/select.service";
 
 
 const URL = new ConstantsService().BASE_URL;
@@ -55,8 +56,8 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     roomNumber: '',
   };
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService) {
-    super();
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
+    super(selectService);
     this.getAllBookings();
     this.dataTransfer = dataTransfer;
     this.bookingList.filterPredicate = this.createFilter();

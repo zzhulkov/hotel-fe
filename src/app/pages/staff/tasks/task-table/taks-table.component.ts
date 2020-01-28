@@ -9,6 +9,7 @@ import {HttpClient} from "@angular/common/http";
 import {Task} from "../../../../component/task";
 import {MatTableDataSource} from '@angular/material/table';
 import {takeUntil} from 'rxjs/operators';
+import {SelectService} from "../../../../services/select.service";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -26,7 +27,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   taskList = new MatTableDataSource<Task>();
   selectedTask: Task;
-  displayedColumns = ['start', 'end', 'accept', 'complete', 'description', 'status', 'roomNumber', 'creatorLastName', 'executorLastName'];
+  displayedColumns = ['start', 'end', 'accept', 'complete', 'description', 'status', 'apartmentsRoomNumber', 'creatorEmail', 'executorEmail'];
   dataSource = this.taskList;
   startDateFilter = new FormControl('');
   endDateFilter = new FormControl('');
@@ -45,33 +46,27 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
     complete: '',
     description: '',
     status: '',
-    roomNumber: '',
-    creatorLastName: '',
-    executorLastName: ''
+    apartmentsRoomNumber: '',
+    creatorEmail: '',
+    executorEmail: ''
   };
 
   private dataTransfer: DataTransferService;
   selectedRow: any;
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService) {
-    super();
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
+    super(selectService);
     this.getAllTask();
     this.dataTransfer = dataTransfer;
     this.taskList.filterPredicate = this.createFilter();
   }
 
   selectRow(row: any): void {
-    this.reselectRow.emit();
     this.selectedRow = row.description;
     console.log(row);
     this.dataTransfer.setData(row);
-    this.isSelected();
+    this.selectService.announceSelect(row);
   }
-
-  isSelected() {
-    this.selectedRowClicked.emit();
-  }
-
   onSelect(task: Task): void {
     this.selectedTask = task;
   }
@@ -121,22 +116,22 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
       );
     this.apartmentsRoomNumberFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        roomNumber => {
-          this.filterValues.roomNumber = roomNumber;
+        apartmentsRoomNumber => {
+          this.filterValues.apartmentsRoomNumber = apartmentsRoomNumber;
           this.taskList.filter = JSON.stringify(this.filterValues);
         }
       );
     this.creatorFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        creatorLastName => {
-          this.filterValues.creatorLastName = creatorLastName;
+        creatorEmail => {
+          this.filterValues.creatorEmail = creatorEmail;
           this.taskList.filter = JSON.stringify(this.filterValues);
         }
       );
     this.executorFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        executorLastName => {
-          this.filterValues.executorLastName = executorLastName;
+        executorEmail => {
+          this.filterValues.executorEmail = executorEmail;
           this.taskList.filter = JSON.stringify(this.filterValues);
         }
       );

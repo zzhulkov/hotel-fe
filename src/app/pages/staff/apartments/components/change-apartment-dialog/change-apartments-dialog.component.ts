@@ -35,12 +35,11 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
   constructor(public dialog: MatDialog,
               private formBuilder: FormBuilder,
               private http: HttpClient,
-              private dataTransfer: DataTransferService,
-              private selectService: SelectService) {
+              dataTransfer: DataTransferService,
+              public selectService: SelectService) {
     super(selectService);
+    this.apartment = dataTransfer.getData();
     this.getAllApartmentsClasses();
-    this.apartment = this.dataTransfer.getData();
-    this.selectedApartmentsClass = this.apartment.apartmentClass;
   }
 
   ngOnInit(): void {
@@ -55,7 +54,11 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
     });
     this.checkValid();
     this.subscription = this.selectService.selectAnnounced$
-      .subscribe(row => {this.fillForm(row); });
+      .subscribe(row => {
+        this.apartment = row;
+        this.selectedApartmentsClass = this.apartment.apartmentClass;
+        this.fillForm(row);
+      });
   }
 
   fillForm(row: Apartments) {

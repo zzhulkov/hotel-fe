@@ -7,6 +7,7 @@ import {FormControl} from '@angular/forms';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
 import {User} from '../../../../../component/user';
+import {SelectService} from "../../../../../services/select.service";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -47,8 +48,8 @@ export class UserTableComponent extends Unsubscribable implements OnInit, AfterV
   };
 
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService) {
-    super();
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
+    super(selectService);
     this.getAllApartmentsClasses();
     this.dataTransfer = dataTransfer;
     this.usersList.filterPredicate = this.createFilter();

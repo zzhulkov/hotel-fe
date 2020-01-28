@@ -2,6 +2,9 @@ import {ChangeDetectorRef, Component} from '@angular/core';
 import {HttpService} from '../../../http.service';
 import {MatDialog} from "@angular/material/dialog";
 import {AddTaskDialogComponent} from "./add-task-dialog/add-task-dialog.component";
+import {Observable} from "rxjs";
+import {SelectService} from "../../../services/select.service";
+import {Unsubscribable} from "../../../component/Unsubscribable";
 
 
 @Component({
@@ -11,10 +14,14 @@ import {AddTaskDialogComponent} from "./add-task-dialog/add-task-dialog.componen
   providers: [HttpService]
 })
 
-export class TaskManagerComponent {
-  isClicked = false;
+export class TaskManagerComponent extends Unsubscribable {
+  row$: Observable<any>;
 
-  constructor(public dialog: MatDialog, private cdRef: ChangeDetectorRef) {}
+  constructor(public dialog: MatDialog, public selectService: SelectService) {
+    super(selectService);
+    this.selectService.selectAnnounced$
+      .subscribe(id => this.row$ = this.selectService.selectAnnounced$);
+  }
 
   addDialog() {
     const dialogRef = this.dialog.open(AddTaskDialogComponent);
@@ -22,17 +29,6 @@ export class TaskManagerComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
-  }
-
-  isClickedRow() {
-    this.isClicked = true;
-    this.cdRef.detectChanges();
-  }
-
-  reselectRow() {
-    this.isClicked = false;
-    this.cdRef.detectChanges();
-    console.log('reselect');
   }
 }
 

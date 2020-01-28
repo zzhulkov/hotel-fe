@@ -9,6 +9,8 @@ import {Task} from "../../../../component/task";
 import {DeleteTaskDialogComponent} from "../delete-task-dialog/delete-task-dialog.component";
 import {Staff} from "../../../../component/staff";
 import {Apartments} from "../../../../component/apartments";
+import {SelectService} from "../../../../services/select.service";
+import {ApartmentsClass} from "../../../../component/apartments-class";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -34,7 +36,9 @@ export class ChangeTaskDialogComponent implements OnInit {
   selectedApartment: Apartments;
 
 
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private http: HttpClient, dataTransfer: DataTransferService) {
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder,
+              private http: HttpClient,
+              dataTransfer: DataTransferService, public selectService: SelectService) {
     this.task = dataTransfer.getData();
     this.getAllApartment();
     this.getAllAStaff();
@@ -49,11 +53,31 @@ export class ChangeTaskDialogComponent implements OnInit {
       complete: [this.task.complete, Validators.required],
       description: [this.task.description, Validators.required],
       taskStatus: [this.task.status, Validators.required],
-      roomNumber: [this.task.apartment.roomNumber, Validators.required],
-      creatorLastName: [this.task.creator.speciality, Validators.required],
-      executorLastName: [this.task.executor.speciality, Validators.required]
+      apartmentsRoomNumber: [this.task.apartment.roomNumber],
+      creatorEmail: [this.task.creator.user.email],
+      executorEmail: [this.task.executor.user.email]
     });
+    this.checkValid();
+    this.selectService.selectAnnounced$
+      .subscribe(row => {
+        console.log(row);
+        this.task = row;
+        this.fillForm(row);
+      });
+  }
 
+  fillForm(row: Task) {
+    this.changeForm.setValue({
+      start: row.start,
+      end: row.end,
+      accept:  row.accept,
+      complete: row.complete,
+      description: row.description,
+      taskStatus: row.status,
+      apartmentsRoomNumber: row.apartment.roomNumber,
+      creatorEmail: row.creator.user.email,
+      executorEmail: row.executor.user.email
+    });
   }
 
   checkValid() {
