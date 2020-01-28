@@ -23,27 +23,24 @@ const URL = new ConstantsService().BASE_URL;
   templateUrl: './change-apartments-dialog.html',
 })
 
-export class ChangeApartmentsDialogComponent extends Unsubscribable implements OnInit, OnDestroy {
+export class ChangeApartmentsDialogComponent extends Unsubscribable implements OnInit {
   profileForm: FormGroup;
   apartment = {} as Apartments;
   apartmentClass = {} as ApartmentsClass;
 
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
-  id$: Observable<string>;
   subscription: Subscription;
 
   constructor(public dialog: MatDialog,
               private formBuilder: FormBuilder,
-              private  http: HttpClient,
+              private http: HttpClient,
               private dataTransfer: DataTransferService,
               private selectService: SelectService) {
-    super();
+    super(selectService);
     this.getAllApartmentsClasses();
     this.apartment = this.dataTransfer.getData();
     this.selectedApartmentsClass = this.apartment.apartmentClass;
-    this.subscription = this.selectService.missionAnnounced$
-      .subscribe(id => this.id$ = this.selectService.missionAnnounced$);
   }
 
   ngOnInit(): void {
@@ -57,6 +54,19 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
       nameClass: [this.apartment.apartmentClass.nameClass]
     });
     this.checkValid();
+    this.subscription = this.selectService.selectAnnounced$
+      .subscribe(row => {this.fillForm(row); });
+  }
+
+  fillForm(row: Apartments) {
+    this.profileForm.setValue({
+      id: row.id,
+      roomNumber: row.roomNumber,
+      photo:  row.photo,
+      description: row.description,
+      status: row.status,
+      nameClass: row.apartmentClass.nameClass
+    });
   }
 
   checkValid() {
@@ -72,15 +82,6 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
     if (this.profileForm.valid) {
       this.setApartment();
       this.createApartment();
-    }
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-    if (this.subscription) {
-      this.selectService.announceMission(null);
-      this.subscription.unsubscribe();
-      this.subscription = null;
     }
   }
 
