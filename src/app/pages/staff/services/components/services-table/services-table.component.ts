@@ -50,6 +50,7 @@ export class ServicesTableComponent extends Unsubscribable implements OnInit, Af
     this.selectedRow = row.id;
     console.log(row);
     this.dataTransfer.setData(row);
+    this.selectService.announceSelect(row);
   }
 
   ngOnInit() {
