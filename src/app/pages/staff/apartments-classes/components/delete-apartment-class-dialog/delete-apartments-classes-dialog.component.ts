@@ -19,42 +19,17 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './delete-apartments-classes-dialog.html',
 })
-export class DeleteApartmentsClassesDialogComponent implements OnInit {
+export class DeleteApartmentsClassesDialogComponent {
 
-  apartmentClass = {} as ApartmentsClass;
-
-  deleteForm: FormGroup;
-
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, dataTransfer: DataTransferService, private missionService: SelectService) {
-    this.apartmentClass = dataTransfer.getData();
-  }
-
-  ngOnInit(): void {
-    this.deleteForm = this.formBuilder.group({
-      id: ['', Validators.pattern('^\\d{1,3}$')]
-    });
-  }
-
-  checkValid() {
-    this.deleteForm.markAllAsTouched();
-    console.log('FormGroup: ', this.deleteForm.valid);
-  }
-
-  isSubmitDisabled(): boolean {
-    return !this.deleteForm.valid ;
-  }
-
-  onSubmit() {
-      console.log(this.deleteForm.value);
-      this.deleteApartment();
+  constructor(private http: HttpClient, private selectService: SelectService) {
   }
 
   deleteApartment() {
-    this.missionService.missionAnnounced$
+    this.selectService.selectAnnounced$
       .pipe(take(1))
       .subscribe( id => {
-      this.http.delete(URL + 'apartmentsClasses/' + id)
-        .subscribe(res => this.missionService.announceMission(null));
+      this.http.delete(URL + 'apartmentsClasses/' + id.id)
+        .subscribe(res => this.selectService.announceSelect(null));
       });
   }
 }

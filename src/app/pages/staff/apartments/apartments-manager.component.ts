@@ -5,6 +5,7 @@ import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dia
 import {SelectService} from "../../../services/select.service";
 import {Observable, Subscription} from "rxjs";
 import {MatExpansionPanel} from "@angular/material/expansion";
+import {Unsubscribable} from "../../../component/Unsubscribable";
 
 
 @Component({
@@ -14,13 +15,14 @@ import {MatExpansionPanel} from "@angular/material/expansion";
    viewProviders: [MatExpansionPanel]
 })
 
-export class ApartmentsManagerComponent implements OnInit, OnDestroy {
+export class ApartmentsManagerComponent extends Unsubscribable implements OnInit {
   id$: Observable<string>;
   subscription: Subscription;
 
-  constructor(public dialog: MatDialog, private selectService: SelectService) {
-    this.subscription = this.selectService.missionAnnounced$
-      .subscribe(id => this.id$ = this.selectService.missionAnnounced$);
+  constructor(public dialog: MatDialog, public selectService: SelectService) {
+    super(selectService);
+    this.subscription = this.selectService.selectAnnounced$
+      .subscribe(id => this.id$ = this.selectService.selectAnnounced$);
   }
 
   ngOnInit(): void {
@@ -32,25 +34,6 @@ export class ApartmentsManagerComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
-  }
-
-  deleteApartment() {
-    const dialogRef = this.dialog.open(DeleteApartmentsDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-
-
-  ngOnDestroy(): void {
-    console.log('destroy apartment');
-    this.subscription.unsubscribe();
-    if (this.subscription) {
-      this.selectService.announceMission(null);
-      this.subscription.unsubscribe();
-      this.subscription = null;
-    }
   }
 }
 

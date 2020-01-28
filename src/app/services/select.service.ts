@@ -7,14 +7,14 @@ import {BehaviorSubject, Subject} from 'rxjs';
 export class SelectService {
 
   // Observable string sources
-  private missionAnnouncedSource = new BehaviorSubject<string>(null);
+  private selectAnnouncedSource = new BehaviorSubject<any>(null);
 
   // Observable string streams
-  missionAnnounced$ = this.missionAnnouncedSource.asObservable();
+  selectAnnounced$ = this.selectAnnouncedSource.asObservable();
 
   // Service message commands
-  announceMission(id: string) {
-    console.log(id);
-    this.missionAnnouncedSource.next(id);
+  announceSelect(row: any) {
+    console.log(row);
+    this.selectAnnouncedSource.next(row);
   }
 }
