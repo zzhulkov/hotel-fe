@@ -51,9 +51,9 @@
       <mat-select>
         <mat-option *ngFor="let staff of staffList"
                     (click)="onSelectCreator(staff)"
-                    value={{staff?.lastName}}>
+                    value={{staff?.user.email}}>
 
-          {{staff?.lastName}}
+          {{staff?.user.email}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -64,9 +64,9 @@
       <mat-select>
         <mat-option *ngFor="let staff of staffList"
                     (click)="onSelectExecutor(staff)"
-                    value={{staff?.lastName}}>
+                    value={{staff?.user.email}}>
 
-          {{staff?.lastName}}
+          {{staff?.user.email}}
         </mat-option>
       </mat-select>
     </mat-form-field>

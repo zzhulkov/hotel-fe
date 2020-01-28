@@ -44,7 +44,7 @@
         <mat-form-field>
           <mat-label>
             Apartment </mat-label>
-          <mat-select placeholder="Apartment" formControlName="apartmentRoomNumber">
+          <mat-select placeholder="Apartment" formControlName="apartmentsRoomNumber">
             <mat-option *ngFor="let apartment of apartmentList"
                         (click)="onSelectApartment(apartment)"
                         value={{apartment?.roomNumber}}>

@@ -27,7 +27,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   taskList = new MatTableDataSource<Task>();
   selectedTask: Task;
-  displayedColumns = ['start', 'end', 'accept', 'complete', 'description', 'status', 'roomNumber', 'creatorLastName', 'executorLastName'];
+  displayedColumns = ['start', 'end', 'accept', 'complete', 'description', 'status', 'apartmentsRoomNumber', 'creatorEmail', 'executorEmail'];
   dataSource = this.taskList;
   startDateFilter = new FormControl('');
   endDateFilter = new FormControl('');
@@ -46,7 +46,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
     complete: '',
     description: '',
     status: '',
-    apartmentRoomNumber: '',
+    apartmentsRoomNumber: '',
     creatorEmail: '',
     executorEmail: ''
   };
@@ -116,8 +116,8 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
       );
     this.apartmentsRoomNumberFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        apartmentRoomNumber => {
-          this.filterValues.apartmentRoomNumber = apartmentRoomNumber;
+        apartmentsRoomNumber => {
+          this.filterValues.apartmentsRoomNumber = apartmentsRoomNumber;
           this.taskList.filter = JSON.stringify(this.filterValues);
         }
       );

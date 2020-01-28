@@ -53,7 +53,7 @@ export class ChangeTaskDialogComponent implements OnInit {
       complete: [this.task.complete, Validators.required],
       description: [this.task.description, Validators.required],
       taskStatus: [this.task.status, Validators.required],
-      apartmentRoomNumber: [this.task.apartment.roomNumber],
+      apartmentsRoomNumber: [this.task.apartment.roomNumber],
       creatorEmail: [this.task.creator.user.email],
       executorEmail: [this.task.executor.user.email]
     });
@@ -74,7 +74,7 @@ export class ChangeTaskDialogComponent implements OnInit {
       complete: row.complete,
       description: row.description,
       taskStatus: row.status,
-      apartmentRoomNumber: row.apartment.roomNumber,
+      apartmentsRoomNumber: row.apartment.roomNumber,
       creatorEmail: row.creator.user.email,
       executorEmail: row.executor.user.email
     });
