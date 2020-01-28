@@ -5,9 +5,9 @@ import {HttpClient} from '@angular/common/http';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
-import {FormControl} from "@angular/forms";
-import {takeUntil} from "rxjs/operators";
-import {SelectService} from "../../../../../services/select.service";
+import {FormControl} from '@angular/forms';
+import {takeUntil} from 'rxjs/operators';
+import {SelectService} from '../../../../../services/select.service';
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -18,10 +18,6 @@ const URL = new ConstantsService().BASE_URL;
   templateUrl: 'staff-table.html',
 })
 export class StaffTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
-
-  @Output() selectedRowClicked: EventEmitter<any> = new EventEmitter();
-  @Output() reselectRow: EventEmitter<any> = new EventEmitter();
-
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   private dataTransfer: DataTransferService;
@@ -53,22 +49,17 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
   }
 
   selectRow(row: any): void {
-    this.reselectRow.emit();
     this.selectedRow = row.id;
     console.log(row);
     this.dataTransfer.setData(row);
-    this.isSelected();
-  }
-
-  isSelected() {
-    this.selectedRowClicked.emit();
+    this.selectService.announceSelect(row);
   }
 
   ngOnInit() {
     this.firstNameFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(firstname => {
         this.filterValues.firstname = firstname;
-          this.staffList.filter = JSON.stringify(this.filterValues);
+        this.staffList.filter = JSON.stringify(this.filterValues);
         console.log(this.filterValues.firstname);
         }
       );
@@ -76,14 +67,14 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
     this.lastNameFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(lastname => {
         this.filterValues.lastname = lastname;
-          this.staffList.filter = JSON.stringify(this.filterValues);
+        this.staffList.filter = JSON.stringify(this.filterValues);
         console.log(this.filterValues.lastname);
         }
       );
     this.emailFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(email => {
         this.filterValues.email = email;
-          this.staffList.filter = JSON.stringify(this.filterValues);
+        this.staffList.filter = JSON.stringify(this.filterValues);
         console.log(this.filterValues.email);
         }
       );
@@ -91,16 +82,16 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
     this.specialityFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(speciality => {
         this.filterValues.speciality = speciality;
-          this.staffList.filter = JSON.stringify(this.filterValues);
-          console.log(this.filterValues.speciality);
+        this.staffList.filter = JSON.stringify(this.filterValues);
+        console.log(this.filterValues.speciality);
         }
       );
 
     this.activeFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(active => {
         this.filterValues.active = active;
-          this.staffList.filter = JSON.stringify(this.filterValues);
-          console.log(this.filterValues.active);
+        this.staffList.filter = JSON.stringify(this.filterValues);
+        console.log(this.filterValues.active);
         }
       );
   }
@@ -118,8 +109,8 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
 
   createFilter(): (data: any, filter: string) => boolean {
     // tslint:disable-next-line:only-arrow-functions
-    let filterFunction = function (data, filter): boolean {
-      let searchTerms = JSON.parse(filter);
+    const filterFunction = function(data, filter): boolean {
+      const searchTerms = JSON.parse(filter);
       return data.user.lastname.indexOf(searchTerms.lastname) !== -1
         && data.user.email.indexOf(searchTerms.email) !== -1
         && data.user.firstname.indexOf(searchTerms.firstname) !== -1
