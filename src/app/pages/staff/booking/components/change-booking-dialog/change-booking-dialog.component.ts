@@ -6,7 +6,6 @@ import {ConstantsService} from '../../../../../services/constants.service';
 import {Booking} from '../../../../../component/booking';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
-import {Apartments} from "../../../../../component/apartments";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -26,8 +25,8 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   addForm: FormGroup;
 
   booking = {} as Booking;
-  apartment = {} as Apartments;
-  apartmentClass = {} as ApartmentsClass;
+  // apartment = {} as Apartments;
+  // apartmentClass = {} as ApartmentsClass;
 
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
@@ -36,10 +35,6 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
     super();
     this.getAllApartmentsClasses();
     this.booking = dataTransfer.getData();
-    if (this.booking.apartmentsClass == null) {
-      // this.selectedApartmentsClass = new ApartmentsClass;
-    }
-    this.selectedApartmentsClass = this.booking.apartmentsClass;
     console.log(this.booking);
   }
   ngOnInit(): void {
@@ -70,14 +65,16 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
       ],
       nameClass: [
         ''
-        // this.selectedApartmentsClass.nameClass
+        // this.booking.apartmentsClass.nameClass
       ],
       roomNumber: [
         ''
-
-        // this.booking.apartments.roomNumber
       ]
     });
+
+    if (this.booking.apartments !== undefined) {
+      this.addForm.value.roomNumber = this.booking.apartments.roomNumber;
+    }
     // this.checkValid();
   }
 

@@ -36,7 +36,7 @@
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput formControlName="email" class="full-width" placeholder="Booked by">
+      <input matInput formControlName="email" class="full-width" placeholder="Booked by(user email)">
     </mat-form-field>
     <br/>
     <mat-form-field>
@@ -47,7 +47,8 @@
       <mat-label>Apartments Class</mat-label>
       <mat-select placeholder="Class name" formControlName="nameClass">
         <mat-option *ngFor="let apartmentClass of apartmentsClassesList"
-                    (click)="onSelect(apartmentClass)">
+                    (click)="onSelect(apartmentClass)"
+                    value={{apartmentClass?.nameClass}}>
 
           {{apartmentClass?.nameClass}}
         </mat-option>
