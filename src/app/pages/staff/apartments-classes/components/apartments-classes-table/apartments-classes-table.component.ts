@@ -21,10 +21,6 @@ const URL = new ConstantsService().BASE_URL;
   templateUrl: 'apartments-classes-table.html',
 })
 export class ApartmentsClassesTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
-
-  @Output() selectedRowClicked: EventEmitter<any> = new EventEmitter();
-  @Output() reselectRow: EventEmitter<any> = new EventEmitter();
-
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   private dataTransfer: DataTransferService;
