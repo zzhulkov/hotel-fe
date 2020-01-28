@@ -10,10 +10,8 @@
 
     <div class="tools">
       <div class="change">
-        <!--{{id$ | async}} -->
-        <app-change-apartments-dialog *ngIf="id$ | async; else loading"></app-change-apartments-dialog>
+        <app-change-apartments-dialog *ngIf="id$ | async"></app-change-apartments-dialog>
       </div>
-      <ng-template #loading> Wait</ng-template>
     </div>
   </div>
 </section>

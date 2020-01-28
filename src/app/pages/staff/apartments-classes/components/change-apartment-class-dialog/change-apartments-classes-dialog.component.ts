@@ -31,9 +31,12 @@ export class ChangeApartmentsClassesDialogComponent extends Unsubscribable imple
   subscription: Subscription;
   apartmentClass = {} as ApartmentsClass;
 
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private http: HttpClient,
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder,
+              private http: HttpClient,
+              dataTransfer: DataTransferService,
               public selectService: SelectService) {
     super(selectService);
+    this.apartmentClass = dataTransfer.getData();
     console.log(this.apartmentClass);
   }
 
