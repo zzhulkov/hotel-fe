@@ -9,6 +9,7 @@ import {HttpClient} from "@angular/common/http";
 import {Task} from "../../../../component/task";
 import {MatTableDataSource} from '@angular/material/table';
 import {takeUntil} from 'rxjs/operators';
+import {SelectService} from "../../../../services/select.service";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -53,8 +54,8 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   private dataTransfer: DataTransferService;
   selectedRow: any;
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService) {
-    super();
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
+    super(selectService);
     this.getAllTask();
     this.dataTransfer = dataTransfer;
     this.taskList.filterPredicate = this.createFilter();

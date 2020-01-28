@@ -7,6 +7,7 @@ import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
 import {FormControl} from "@angular/forms";
 import {takeUntil} from "rxjs/operators";
+import {SelectService} from "../../../../../services/select.service";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -44,8 +45,8 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
     active: ''
   };
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService) {
-    super();
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
+    super(selectService);
     this.getAllStaff();
     this.dataTransfer = dataTransfer;
     this.staffList.filterPredicate = this.createFilter();

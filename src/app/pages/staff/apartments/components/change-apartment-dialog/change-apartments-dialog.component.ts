@@ -36,7 +36,7 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
               private formBuilder: FormBuilder,
               private http: HttpClient,
               private dataTransfer: DataTransferService,
-              private selectService: SelectService) {
+              public selectService: SelectService) {
     super(selectService);
     this.getAllApartmentsClasses();
     this.apartment = this.dataTransfer.getData();

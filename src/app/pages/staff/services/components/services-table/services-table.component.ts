@@ -7,6 +7,7 @@ import {FormControl} from '@angular/forms';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
 import {Service} from '../../../../../component/service';
+import {SelectService} from "../../../../../services/select.service";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -38,8 +39,8 @@ export class ServicesTableComponent extends Unsubscribable implements OnInit, Af
   };
 
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService) {
-    super();
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
+    super(selectService);
     this.getAllApartmentsClasses();
     this.dataTransfer = dataTransfer;
     this.servicesList.filterPredicate = this.createFilter();

@@ -5,6 +5,7 @@ import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {takeUntil} from 'rxjs/operators';
 import {ConstantsService} from '../../../../../services/constants.service';
+import {SelectService} from "../../../../../services/select.service";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -19,8 +20,8 @@ export class ApartmentClassComponent extends Unsubscribable implements OnInit {
 
   @Input() apartmentClass: ApartmentsClass;
 
-  constructor(private http: HttpClient) {
-    super();
+  constructor(private http: HttpClient, public selectService: SelectService) {
+    super(selectService);
   }
 
   title = 'hotel-fe-apartment';

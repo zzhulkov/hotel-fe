@@ -19,7 +19,7 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './change-staff-dialog.html',
 })
-export class ChangeStaffDialogComponent extends Unsubscribable implements OnInit {
+export class ChangeStaffDialogComponent implements OnInit {
   changeStaffFrom: FormGroup;
   staff = {} as Staff;
   user = {} as User;
@@ -33,7 +33,6 @@ export class ChangeStaffDialogComponent extends Unsubscribable implements OnInit
   selectedSpeciality: Speciality;
 
   constructor(private formBuilder: FormBuilder, private  http: HttpClient, dataTransfer: DataTransferService) {
-    super();
     this.staff = dataTransfer.getData();
     this.selectedSpeciality = this.staff.speciality;
   }

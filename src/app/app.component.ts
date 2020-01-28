@@ -19,8 +19,8 @@ export class AppComponent extends Unsubscribable implements OnInit {
     '/manager/services', '/manager/staff', '/manager/tasks', '/manager/apartments-classes', '/manager/users'];
   condition: boolean;
 
-  constructor(private location: Location, private missionService: SelectService) {
-    super();
+  constructor(private location: Location, public selectService: SelectService) {
+    super(selectService);
   }
 
   ngOnInit() {

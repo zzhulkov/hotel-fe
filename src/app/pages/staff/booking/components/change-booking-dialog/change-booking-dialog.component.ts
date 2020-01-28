@@ -7,6 +7,7 @@ import {Booking} from '../../../../../component/booking';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {Apartments} from "../../../../../component/apartments";
+import {SelectService} from "../../../../../services/select.service";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -32,8 +33,8 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private dataTransfer: DataTransferService) {
-    super();
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private dataTransfer: DataTransferService, public  selectService: SelectService) {
+    super(selectService);
     this.getAllApartmentsClasses();
     this.booking = dataTransfer.getData();
     if (this.booking.apartmentsClass == null) {

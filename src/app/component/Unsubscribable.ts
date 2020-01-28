@@ -5,6 +5,7 @@ import {SelectService} from "../services/select.service";
 export class Unsubscribable implements OnDestroy {
   destroy$ = new Subject();
   constructor(public selectService: SelectService) {
+    this.selectService = selectService;
   }
 
 

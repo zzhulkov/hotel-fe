@@ -43,7 +43,7 @@ export class ApartmentsClassesTableComponent extends Unsubscribable implements O
   };
 
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService, private selectService: SelectService) {
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
     super(selectService);
     this.getAllApartmentsClasses();
     this.dataTransfer = dataTransfer;
