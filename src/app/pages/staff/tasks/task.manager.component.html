@@ -4,11 +4,11 @@
   </div>
   <div class="wrap">
     <div class="table">
-      <task-table-component (selectedRowClicked)="isClickedRow()" (reselectRow)="reselectRow()"></task-table-component>
+      <task-table-component></task-table-component>
     </div>
     <div class="tools">
       <div class="change">
-        <app-change-task-dialog *ngIf="isClicked"></app-change-task-dialog>
+        <app-change-task-dialog *ngIf="row$ | async"></app-change-task-dialog>
       </div>
     </div>
   </div>

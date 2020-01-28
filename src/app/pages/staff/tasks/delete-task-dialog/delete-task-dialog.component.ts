@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from "../../../../services/constants.service";
+import {take} from "rxjs/operators";
+import {SelectService} from "../../../../services/select.service";
+import {Unsubscribable} from "../../../../component/Unsubscribable";
 
 
 /**
@@ -15,39 +18,22 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../styles/change-dialog.css'],
   templateUrl: './delete-task-dialog.html',
 })
-export class DeleteTaskDialogComponent implements OnInit {
+export class DeleteTaskDialogComponent extends Unsubscribable {
 
   deleteTaskForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
-  }
-
-  ngOnInit(): void {
-    this.deleteTaskForm = this.formBuilder.group({
-      id: ['', Validators.pattern('^\\d{1,3}$')]
-    });
-  }
-
-  checkValid() {
-    this.deleteTaskForm.markAllAsTouched();
-    console.log('FormGroup: ', this.deleteTaskForm.valid);
-  }
-
-  isSubmitDisabled(): boolean {
-    return !this.deleteTaskForm.valid ;
-  }
-
-  onSubmit() {
-    if (this.deleteTaskForm.valid) {
-      console.log(this.deleteTaskForm.value);
-      this.deleteApartment();
-    }
+  constructor(private formBuilder: FormBuilder,
+              private http: HttpClient,
+              public selectService: SelectService) {
+    super(selectService);
   }
 
   deleteApartment() {
-    this.http.delete(URL + 'booking/' + this.deleteTaskForm.value.id, this.deleteTaskForm.value).subscribe(
-      res => {
-        console.log(res);
+    this.selectService.selectAnnounced$
+      .pipe(take(1))
+      .subscribe( id => {
+        this.http.delete(URL + 'tasks/' + id.id)
+          .subscribe(res => this.selectService.announceSelect(null));
       });
   }
 }

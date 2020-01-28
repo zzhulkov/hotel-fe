@@ -46,9 +46,9 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
     complete: '',
     description: '',
     status: '',
-    roomNumber: '',
-    creatorLastName: '',
-    executorLastName: ''
+    apartmentRoomNumber: '',
+    creatorEmail: '',
+    executorEmail: ''
   };
 
   private dataTransfer: DataTransferService;
@@ -62,17 +62,11 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   }
 
   selectRow(row: any): void {
-    this.reselectRow.emit();
     this.selectedRow = row.description;
     console.log(row);
     this.dataTransfer.setData(row);
-    this.isSelected();
+    this.selectService.announceSelect(row);
   }
-
-  isSelected() {
-    this.selectedRowClicked.emit();
-  }
-
   onSelect(task: Task): void {
     this.selectedTask = task;
   }
@@ -122,22 +116,22 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
       );
     this.apartmentsRoomNumberFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        roomNumber => {
-          this.filterValues.roomNumber = roomNumber;
+        apartmentRoomNumber => {
+          this.filterValues.apartmentRoomNumber = apartmentRoomNumber;
           this.taskList.filter = JSON.stringify(this.filterValues);
         }
       );
     this.creatorFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        creatorLastName => {
-          this.filterValues.creatorLastName = creatorLastName;
+        creatorEmail => {
+          this.filterValues.creatorEmail = creatorEmail;
           this.taskList.filter = JSON.stringify(this.filterValues);
         }
       );
     this.executorFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        executorLastName => {
-          this.filterValues.executorLastName = executorLastName;
+        executorEmail => {
+          this.filterValues.executorEmail = executorEmail;
           this.taskList.filter = JSON.stringify(this.filterValues);
         }
       );
