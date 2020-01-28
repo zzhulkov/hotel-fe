@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import {takeUntil} from 'rxjs/operators';
+import {take, takeUntil} from 'rxjs/operators';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {HttpClient} from '@angular/common/http';
 import {Apartments} from '../../../../../component/apartments';
@@ -17,7 +17,7 @@ import {FormControl} from '@angular/forms';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from "../../../../../services/data-transfer.service";
 import {SelectService} from "../../../../../services/select.service";
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -31,7 +31,7 @@ const URL = new ConstantsService().BASE_URL;
   templateUrl: 'apartments-table.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ApartmentsTableComponent extends Unsubscribable implements OnInit, AfterViewInit, OnDestroy {
+export class ApartmentsTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   subscription: Subscription;
   private dataTransfer: DataTransferService;
@@ -62,20 +62,19 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
   };
 
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService, private selectService: SelectService, private ckRef: ChangeDetectorRef) {
-    super();
-    this.subscription = this.selectService.missionAnnounced$.subscribe();
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
+    super(selectService);
+    this.subscription = this.selectService.selectAnnounced$.subscribe();
     this.getAllApartments();
     this.dataTransfer = dataTransfer;
     this.apartmentsList.filterPredicate = this.createFilter();
   }
 
   selectRow(row: any): void {
-    this.selectService.announceMission(null);
-    this.selectedRow = row.roomNumber;
+    this.selectedRow = row.id;
     console.log(row);
     this.dataTransfer.setData(row);
-    this.selectService.announceMission(row.id);
+    this.selectService.announceSelect(row);
   }
 
   onSelect(apartments: Apartments): void {
@@ -167,10 +166,5 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
         && data.apartmentClass.id.toString().toLowerCase().indexOf(searchTerms.classId) !== -1;
     };
     return filterFunction;
-  }
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
-    console.log('destroy table');
-    this.subscription.unsubscribe();
   }
 }

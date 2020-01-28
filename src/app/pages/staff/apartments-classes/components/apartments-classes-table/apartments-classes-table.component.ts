@@ -43,8 +43,8 @@ export class ApartmentsClassesTableComponent extends Unsubscribable implements O
   };
 
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService, private missionService: SelectService) {
-    super();
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, private selectService: SelectService) {
+    super(selectService);
     this.getAllApartmentsClasses();
     this.dataTransfer = dataTransfer;
     this.apartmentsClassesList.filterPredicate = this.createFilter();
@@ -54,12 +54,7 @@ export class ApartmentsClassesTableComponent extends Unsubscribable implements O
     this.selectedRow = row.nameClass;
     console.log(row);
     this.dataTransfer.setData(row);
-    this.missionService.announceMission(row.id);
-    this.isSelected();
-  }
-
-  isSelected() {
-    this.selectedRowClicked.emit();
+    this.selectService.announceSelect(row);
   }
 
 

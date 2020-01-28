@@ -5,6 +5,8 @@ import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
+import {take} from "rxjs/operators";
+import {SelectService} from "../../../../../services/select.service";
 
 
 /**
@@ -18,43 +20,17 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './delete-apartments-dialog.html',
 })
-export class DeleteApartmentsDialogComponent implements OnInit {
+export class DeleteApartmentsDialogComponent {
 
-  apartment = {} as Apartments;
-  apartmentClass = {} as ApartmentsClass;
-
-  deleteApartmentForm: FormGroup;
-
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, dataTransfer: DataTransferService) {
-    this.apartment = dataTransfer.getData();
-  }
-
-  ngOnInit(): void {
-    this.deleteApartmentForm = this.formBuilder.group({
-      id: ['', Validators.pattern('^\\d{1,3}$')]
-    });
-  }
-
-  checkValid() {
-    this.deleteApartmentForm.markAllAsTouched();
-    console.log('FormGroup: ', this.deleteApartmentForm.valid);
-  }
-
-  isSubmitDisabled(): boolean {
-    return !this.deleteApartmentForm.valid ;
-  }
-
-  onSubmit() {
-    if (this.deleteApartmentForm.valid) {
-      console.log(this.deleteApartmentForm.value);
-      this.deleteApartment();
-    }
+  constructor(private http: HttpClient, private selectService: SelectService) {
   }
 
   deleteApartment() {
-    this.http.delete(URL + 'apartments/' + this.apartment.id, this.deleteApartmentForm.value).subscribe(
-      res => {
-        console.log(res);
+    this.selectService.selectAnnounced$
+      .pipe(take(1))
+      .subscribe( id => {
+        this.http.delete(URL + 'apartments/' + id.id)
+          .subscribe(res => this.selectService.announceSelect(null));
       });
   }
 }
