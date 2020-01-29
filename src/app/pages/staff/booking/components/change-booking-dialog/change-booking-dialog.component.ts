@@ -55,11 +55,6 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
     super(selectService);
     this.getAllApartmentsClasses();
     this.booking = dataTransfer.getData();
-    this.selectedStatus = this.booking.bookingStatus;
-    this.selectedApartmentsClass = this.booking.apartmentClass;
-    if (this.booking.apartment !== null) {
-      this.selectedApartment = this.booking.apartment;
-    }
     this.getFreeApartments(this.booking.startDate, this.booking.endDate, this.booking.apartmentClass.id);
     console.log(this.booking);
   }
@@ -74,22 +69,34 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
       bookingStatus: [this.booking.bookingStatus],
       email: [this.booking.user.email],
       nameClass: [this.booking.apartmentClass.nameClass],
-      roomNumber: ['']
+      roomNumber: [this.getRoomNumber(this.booking.apartment)]
     });
 
     this.getUserByEmail();
 
-    if (this.booking.apartment !== null) {
-      this.addForm.value.roomNumber = this.booking.apartment.roomNumber;
-    }
+    // if (this.booking.apartment !== null) {
+    //   this.addForm.value.roomNumber = this.booking.apartment.roomNumber;
+    // }
     this.checkValid();
 
     this.subscription = this.selectService.selectAnnounced$
       .subscribe(row => {
         console.log(row);
+        this.selectedStatus = this.booking.bookingStatus;
+        this.selectedApartmentsClass = this.booking.apartmentClass;
+        if (this.booking.apartment !== null) {
+          this.selectedApartment = this.booking.apartment;
+        }
         this.fillForm(row);
       });
+  }
 
+  getRoomNumber(apartment: Apartments): string {
+    let roomNumber = '';
+    if (apartment !== null) {
+      roomNumber = apartment.roomNumber.toString();
+    }
+    return roomNumber;
   }
 
   fillForm(row: Booking) {
@@ -102,18 +109,20 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
       bookingStatus: row.bookingStatus,
       email: row.user.email,
       nameClass: row.apartmentClass.nameClass,
-      roomNumber: ''
+      roomNumber: this.getRoomNumber(row.apartment)
     });
-
-    if (this.booking.apartment !== null) {
-      this.addForm.value.roomNumber = this.booking.apartment.roomNumber;
-      // this.addForm.setValue({roomNumber: row.apartment.roomNumber});
-    }
   }
 
   checkValid() {
     this.addForm.markAllAsTouched();
     console.log('FormGroup: ', this.addForm.valid);
+  }
+
+  isValidForAprtmnt(): boolean {
+    if ((this.addForm.value.startDate !== '') && (this.addForm.value.endDate !== '') && (this.selectedApartmentsClass !== null)) {
+      return true;
+    }
+    return false;
   }
 
   isSubmitDisabled(): boolean {
@@ -122,6 +131,7 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
 
   onSubmit() {
     if (this.addForm.valid) {
+      this.getUserByEmail();
       this.setBooking();
       this.createBooking();
     }

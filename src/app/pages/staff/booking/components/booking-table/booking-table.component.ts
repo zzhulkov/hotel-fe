@@ -75,7 +75,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     this.selectedRow = row.id;
     console.log(row);
     this.dataTransfer.setData(row);
-    // this.selectService.announceSelect(row);
+    this.selectService.announceSelect(row);
   }
 
   onSelect(booking: Booking): void {
