@@ -1,8 +1,11 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {HttpService} from '../../../http.service';
 import {MatDialog} from '@angular/material/dialog';
 import {AddStaffDialogComponent} from './components/add-staff-dialog/add-staff-dialog.component';
 import {MatExpansionPanel} from "@angular/material/expansion";
+import {Observable, Subscription} from "rxjs";
+import {SelectService} from "../../../services/select.service";
+import {Unsubscribable} from "../../../component/Unsubscribable";
 
 
 @Component({
@@ -13,10 +16,14 @@ import {MatExpansionPanel} from "@angular/material/expansion";
   viewProviders: [MatExpansionPanel]
 })
 
-export class StaffManagerComponent {
-  isClicked = false;
+export class StaffManagerComponent extends Unsubscribable {
+  row$: Observable<any>;
+  subscription: Subscription;
 
-  constructor(public dialog: MatDialog, private cdRef: ChangeDetectorRef) {
+  constructor(public dialog: MatDialog, public selectService: SelectService) {
+    super(selectService);
+    this.subscription = this.selectService.selectAnnounced$
+      .subscribe(id => this.row$ = this.selectService.selectAnnounced$);
   }
 
   addDialog() {
@@ -25,17 +32,6 @@ export class StaffManagerComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
-  }
-
-  isClickedRow() {
-    this.isClicked = true;
-    this.cdRef.detectChanges();
-  }
-
-  reselectRow() {
-    this.isClicked = false;
-    this.cdRef.detectChanges();
-    console.log('reselect');
   }
 }
 

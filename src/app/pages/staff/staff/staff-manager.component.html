@@ -5,13 +5,12 @@
   </div>
   <div class="wrap">
     <div class="table">
-      <staff-table-component (selectedRowClicked)="isClickedRow()"
-                             (reselectRow)="reselectRow()"></staff-table-component>
+      <staff-table-component></staff-table-component>
     </div>
     <div class="tools">
 
       <div class="change">
-        <app-change-staff-dialog *ngIf="isClicked"></app-change-staff-dialog>
+        <app-change-staff-dialog *ngIf="row$ | async"></app-change-staff-dialog>
       </div>
     </div>
   </div>

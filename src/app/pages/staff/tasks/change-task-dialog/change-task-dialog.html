@@ -44,7 +44,7 @@
         <mat-form-field>
           <mat-label>
             Apartment </mat-label>
-          <mat-select placeholder="Apartment" formControlName="roomNumber">
+          <mat-select placeholder="Apartment" formControlName="apartmentsRoomNumber">
             <mat-option *ngFor="let apartment of apartmentList"
                         (click)="onSelectApartment(apartment)"
                         value={{apartment?.roomNumber}}>
@@ -57,12 +57,12 @@
         <mat-form-field>
           <mat-label>
             Creator </mat-label>
-          <mat-select>
+          <mat-select placeholder="Creator" formControlName="creatorEmail">
             <mat-option *ngFor="let staff of staffList"
                         (click)="onSelectCreator(staff)"
-                        value="{{staff?.user.lastname+' '+staff?.user.firstname+' '+staff?.speciality}}">
+                        value="{{staff?.user.email}}">
 
-              {{staff?.user.lastname+' '+staff?.user.firstname+' '+staff?.speciality}}
+              {{staff?.user.email}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -70,12 +70,12 @@
         <mat-form-field>
           <mat-label>
             Executor </mat-label>
-          <mat-select>
+          <mat-select placeholder="Executor" formControlName="executorEmail">
             <mat-option *ngFor="let staff of staffList"
                         (click)="onSelectExecutor(staff)"
-                        value="{{staff?.user.lastname+' '+staff?.user.firstname+' '+staff?.speciality}}">
+                        value="{{staff?.user.email}}">
 
-              {{staff?.user.lastname+' '+staff?.user.firstname+' '+staff?.speciality}}
+              {{staff?.user.email}}
             </mat-option>
           </mat-select>
         </mat-form-field>

@@ -6,13 +6,13 @@ import {ConstantsService} from '../../../../../services/constants.service';
 import {Booking} from '../../../../../component/booking';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
-import {SelectService} from "../../../../../services/select.service";
-import {Subscription} from "rxjs";
-import {User} from "../../../../../component/user";
-import {Apartments} from "../../../../../component/apartments";
-import {BookingStatus} from "../../../../../component/booking-status.type";
-import {MatDialog} from "@angular/material";
-import {DeleteBookingDialogComponent} from "../delete-booking-dialog/delete-booking-dialog.component";
+import {SelectService} from '../../../../../services/select.service';
+import {Subscription} from 'rxjs';
+import {User} from '../../../../../component/user';
+import {Apartments} from '../../../../../component/apartments';
+import {BookingStatus} from '../../../../../component/booking-status.type';
+import {MatDialog} from '@angular/material';
+import {DeleteBookingDialogComponent} from '../delete-booking-dialog/delete-booking-dialog.component';
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -51,7 +51,7 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
               private formBuilder: FormBuilder,
               private http: HttpClient,
               private dataTransfer: DataTransferService,
-              selectService: SelectService) {
+              public selectService: SelectService) {
     super(selectService);
     this.getAllApartmentsClasses();
     this.booking = dataTransfer.getData();

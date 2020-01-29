@@ -56,7 +56,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     roomNumber: '',
   };
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService, selectService: SelectService) {
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
     super(selectService);
     this.getAllBookings();
     this.dataTransfer = dataTransfer;
@@ -75,7 +75,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     this.selectedRow = row.id;
     console.log(row);
     this.dataTransfer.setData(row);
-    this.selectService.announceSelect(row);
+    // this.selectService.announceSelect(row);
   }
 
   onSelect(booking: Booking): void {
@@ -134,8 +134,8 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
       );
     this.bookedByFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        firstname => {
-          this.filterValues.email = firstname;
+        email => {
+          this.filterValues.email = email;
           this.bookingList.filter = JSON.stringify(this.filterValues);
         }
       );

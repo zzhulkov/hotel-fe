@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
-import {Observable, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {SelectService} from "../../../../../services/select.service";
 import {DeleteApartmentsDialogComponent} from "../delete-apartment-dialog/delete-apartments-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -35,12 +35,11 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
   constructor(public dialog: MatDialog,
               private formBuilder: FormBuilder,
               private http: HttpClient,
-              private dataTransfer: DataTransferService,
-              private selectService: SelectService) {
+              dataTransfer: DataTransferService,
+              public selectService: SelectService) {
     super(selectService);
+    this.apartment = dataTransfer.getData();
     this.getAllApartmentsClasses();
-    this.apartment = this.dataTransfer.getData();
-    this.selectedApartmentsClass = this.apartment.apartmentClass;
   }
 
   ngOnInit(): void {
@@ -55,7 +54,11 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
     });
     this.checkValid();
     this.subscription = this.selectService.selectAnnounced$
-      .subscribe(row => {this.fillForm(row); });
+      .subscribe(row => {
+        this.apartment = row;
+        this.selectedApartmentsClass = this.apartment.apartmentClass;
+        this.fillForm(row);
+      });
   }
 
   fillForm(row: Apartments) {
