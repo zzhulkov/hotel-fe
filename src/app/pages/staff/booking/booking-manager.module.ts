@@ -1,8 +1,10 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {EventEmitter, NgModule} from '@angular/core';
 import {
   MatButtonModule,
-  MatDialogModule, MatFormFieldModule,
+  MatDialogModule,
+  MatExpansionModule,
+  MatFormFieldModule,
   MatInputModule,
   MatPaginatorModule,
   MatSelectModule,
@@ -28,7 +30,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatTableModule,
     MatDialogModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatExpansionModule
   ],
   exports: [
     MatButtonModule,
@@ -45,7 +48,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     ChangeBookingDialogComponent,
     AddBookingDialogComponent
   ],
-  providers: [HttpService],
+  providers: [HttpService, EventEmitter],
   entryComponents: [
     DeleteBookingDialogComponent,
     ChangeBookingDialogComponent,

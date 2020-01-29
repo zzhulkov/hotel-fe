@@ -6,6 +6,13 @@ import {ConstantsService} from '../../../../../services/constants.service';
 import {Booking} from '../../../../../component/booking';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
+import {SelectService} from "../../../../../services/select.service";
+import {Subscription} from "rxjs";
+import {User} from "../../../../../component/user";
+import {Apartments} from "../../../../../component/apartments";
+import {BookingStatus} from "../../../../../component/booking-status.type";
+import {MatDialog} from "@angular/material";
+import {DeleteBookingDialogComponent} from "../delete-booking-dialog/delete-booking-dialog.component";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -20,62 +27,88 @@ const URL = new ConstantsService().BASE_URL;
 })
 export class ChangeBookingDialogComponent extends Unsubscribable implements OnInit {
 
-
-
   addForm: FormGroup;
 
   booking = {} as Booking;
-  // apartment = {} as Apartments;
-  // apartmentClass = {} as ApartmentsClass;
+  subscription: Subscription;
 
   apartmentsClassesList: ApartmentsClass[];
+  apartmentsList: Apartments[];
   selectedApartmentsClass: ApartmentsClass;
+  selectedApartment: Apartments;
+  user: User;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private dataTransfer: DataTransferService) {
-    super();
+  status = [
+    'Created',
+    'CheckedIn',
+    'Closed',
+    'Canceled'
+  ];
+  private selectedStatus: BookingStatus;
+
+  // tslint:disable-next-line:max-line-length
+  constructor(public dialog: MatDialog,
+              private formBuilder: FormBuilder,
+              private http: HttpClient,
+              private dataTransfer: DataTransferService,
+              selectService: SelectService) {
+    super(selectService);
     this.getAllApartmentsClasses();
     this.booking = dataTransfer.getData();
+    this.selectedStatus = this.booking.bookingStatus;
+    this.selectedApartmentsClass = this.booking.apartmentClass;
+    if (this.booking.apartment !== null) {
+      this.selectedApartment = this.booking.apartment;
+    }
+    this.getFreeApartments(this.booking.startDate, this.booking.endDate, this.booking.apartmentClass.id);
     console.log(this.booking);
   }
+
   ngOnInit(): void {
     this.addForm = this.formBuilder.group({
-      startDate: [
-        this.booking.startDate
-      ],
-      endDate: [
-        this.booking.endDate
-      ],
-      totalPrice: [
-        this.booking.totalPrice
-      ],
-      comment: [
-        this.booking.comment
-      ],
-      createdDate: [
-        this.booking.createdDate
-      ],
-      review: [
-        this.booking.review
-      ],
-      bookingStatus: [
-        this.booking.bookingStatus
-      ],
-      email: [
-        this.booking.user.email
-      ],
-      nameClass: [
-        ''
-        // this.booking.apartmentsClass.nameClass
-      ],
-      roomNumber: [
-        ''
-      ]
+      startDate: [this.booking.startDate],
+      endDate: [this.booking.endDate],
+      // totalPrice: [this.booking.totalPrice],
+      comment: [this.booking.comment],
+      review: [this.booking.review],
+      bookingStatus: [this.booking.bookingStatus],
+      email: [this.booking.user.email],
+      nameClass: [this.booking.apartmentClass.nameClass],
+      roomNumber: ['']
     });
 
-    if (this.booking.apartments !== undefined) {
-      this.addForm.value.roomNumber = this.booking.apartments.roomNumber;
+    this.getUserByEmail();
+
+    if (this.booking.apartment !== null) {
+      this.addForm.value.roomNumber = this.booking.apartment.roomNumber;
     }
-    // this.checkValid();
+    this.checkValid();
+
+    this.subscription = this.selectService.selectAnnounced$
+      .subscribe(row => {
+        console.log(row);
+        this.fillForm(row);
+      });
+
+  }
+
+  fillForm(row: Booking) {
+    this.addForm.setValue({
+      startDate: row.startDate,
+      endDate: row.endDate,
+      // totalPrice: row.totalPrice,
+      comment: row.comment,
+      review: row.review,
+      bookingStatus: row.bookingStatus,
+      email: row.user.email,
+      nameClass: row.apartmentClass.nameClass,
+      roomNumber: ''
+    });
+
+    if (this.booking.apartment !== null) {
+      this.addForm.value.roomNumber = this.booking.apartment.roomNumber;
+      // this.addForm.setValue({roomNumber: row.apartment.roomNumber});
+    }
   }
 
   checkValid() {
@@ -95,7 +128,7 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   }
 
   createBooking() {
-    this.http.post(URL + 'bookings/', this.booking).subscribe(
+    this.http.put(URL + 'bookings/' + this.booking.id, this.booking).subscribe(
       res => {
         console.log(res);
         this.booking = (res as Booking);
@@ -103,27 +136,68 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   }
 
   setBooking() {
-    this.booking.apartmentsClass = this.selectedApartmentsClass;
-    // this.booking.apartments.roomNumber = this.addForm.value.roomNumber;
+    this.booking.apartmentClass = this.selectedApartmentsClass;
+    this.booking.apartment = this.selectedApartment;
     this.booking.startDate = this.addForm.value.startDate;
     this.booking.endDate = this.addForm.value.endDate;
-    this.booking.totalPrice = this.addForm.value.totalPrice;
+    // this.booking.totalPrice = this.addForm.value.totalPrice;
     this.booking.comment = this.addForm.value.comment;
-    this.booking.createdDate = this.addForm.value.createdDate;
     this.booking.review = this.addForm.value.review;
-    this.booking.bookingStatus = this.addForm.value.bookingStatus;
-    this.booking.user.email = this.addForm.value.email;
+    this.booking.bookingStatus = this.selectedStatus;
+    this.booking.user = this.user;
     console.log(this.booking);
   }
 
-  onSelect(apartmentsClass: ApartmentsClass): void {
+  onSelectAprtmntClass(apartmentsClass: ApartmentsClass): void {
     this.selectedApartmentsClass = apartmentsClass;
+    this.getFreeApartments(this.addForm.value.startDate, this.addForm.value.endDate, apartmentsClass.id);
+    this.addForm.setValue({
+      roomNumber: ''
+    });
+  }
+
+  onSelectAprtmnt(apartments: Apartments): void {
+    this.selectedApartment = apartments;
+  }
+
+  onSelectStatus(status: any): void {
+    this.selectedStatus = status;
+  }
+
+  getUserByEmail() {
+    let uList: User[];
+    this.http.get(URL + 'users' + '?email=' + this.addForm.value.email).subscribe(
+      res => {
+        console.log(res);
+        uList = (res as User[]);
+        this.user = uList[0];
+        console.log(this.user);
+      });
   }
 
   getAllApartmentsClasses() {
     this.http.get(URL + 'apartmentsClasses').subscribe(res => {
       console.log(res);
       this.apartmentsClassesList = (res as ApartmentsClass[]);
+    });
+  }
+
+  getFreeApartments(startDate: Date, endDate: Date, classId: number) {
+    this.http.get(URL + 'bookings' + '/findList?'
+      + 'startDate=' + startDate
+      + '&endDate=' + endDate
+      + '&apartmentClass=' + classId)
+      .subscribe(res => {
+        console.log(res);
+        this.apartmentsList = (res as Apartments[]);
+      });
+  }
+
+  deleteBooking() {
+    const dialogRef = this.dialog.open(DeleteBookingDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
     });
   }
 }

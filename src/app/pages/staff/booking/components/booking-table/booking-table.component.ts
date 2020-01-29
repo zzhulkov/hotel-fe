@@ -7,6 +7,7 @@ import {Booking} from '../../../../../component/booking';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {FormControl} from '@angular/forms';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
+import {SelectService} from "../../../../../services/select.service";
 
 
 const URL = new ConstantsService().BASE_URL;
@@ -28,7 +29,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
   selectedRow: any;
   bookingList = new MatTableDataSource<Booking>();
   selectedBooking: Booking;
-  displayedColumns = ['id', 'startDate', 'endDate', 'totalPrice', 'comments', 'createdDate', 'review', 'bookingStatus', 'firstname', 'nameClass', 'roomNumber'];
+  displayedColumns = ['id', 'startDate', 'endDate', 'totalPrice', 'comments', 'createdDate', 'review', 'bookingStatus', 'email', 'nameClass', 'roomNumber'];
   dataSource = this.bookingList;
   startDateFilter = new FormControl('');
   endDateFilter = new FormControl('');
@@ -50,13 +51,13 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     createdDate: '',
     review: '',
     bookingStatus: '',
-    firstname: '',
+    email: '',
     nameClass: '',
     roomNumber: '',
   };
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService) {
-    super();
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, selectService: SelectService) {
+    super(selectService);
     this.getAllBookings();
     this.dataTransfer = dataTransfer;
     this.bookingList.filterPredicate = this.createFilter();
@@ -74,6 +75,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     this.selectedRow = row.id;
     console.log(row);
     this.dataTransfer.setData(row);
+    this.selectService.announceSelect(row);
   }
 
   onSelect(booking: Booking): void {
@@ -133,7 +135,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     this.bookedByFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         firstname => {
-          this.filterValues.firstname = firstname;
+          this.filterValues.email = firstname;
           this.bookingList.filter = JSON.stringify(this.filterValues);
         }
       );

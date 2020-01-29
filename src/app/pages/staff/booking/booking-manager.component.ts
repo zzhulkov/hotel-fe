@@ -1,9 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../../../http.service';
 import {MatDialog} from '@angular/material/dialog';
-import {ChangeBookingDialogComponent} from './components/change-booking-dialog/change-booking-dialog.component';
 import {AddBookingDialogComponent} from './components/add-booking-dialog/add-booking-dialog.component';
-import {DeleteBookingDialogComponent} from './components/delete-booking-dialog/delete-booking-dialog.component';
+import {SelectService} from '../../../services/select.service';
+import {Observable, Subscription} from 'rxjs';
+import {Unsubscribable} from '../../../component/Unsubscribable';
 
 
 @Component({
@@ -13,26 +14,21 @@ import {DeleteBookingDialogComponent} from './components/delete-booking-dialog/d
   providers: [HttpService]
 })
 
-export class BookingManagerComponent {
-  constructor(public dialog: MatDialog) {}
+export class BookingManagerComponent extends Unsubscribable implements OnInit {
+  id$: Observable<string>;
+  subscription: Subscription;
 
-  openDialog() {
-    const dialogRef = this.dialog.open(ChangeBookingDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+  constructor(public dialog: MatDialog, public selectService: SelectService) {
+    super(selectService);
+    this.subscription = this.selectService.selectAnnounced$
+      .subscribe(id => this.id$ = this.selectService.selectAnnounced$);
   }
+
+  ngOnInit(): void {
+  }
+
   addApartmentDialog() {
     const dialogRef = this.dialog.open(AddBookingDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-
-  deleteApartment() {
-    const dialogRef = this.dialog.open(DeleteBookingDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
