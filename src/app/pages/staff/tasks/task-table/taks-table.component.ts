@@ -3,12 +3,12 @@ import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from 
 import {Unsubscribable} from "../../../../component/Unsubscribable";
 import {DataTransferService} from "../../../../services/data-transfer.service";
 import {MatPaginator} from "@angular/material/paginator";
-import {Booking} from "../../../../component/booking";
 import {FormControl} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {Task} from "../../../../component/task";
 import {MatTableDataSource} from '@angular/material/table';
 import {takeUntil} from 'rxjs/operators';
+import {SelectService} from "../../../../services/select.service";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -26,7 +26,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   taskList = new MatTableDataSource<Task>();
   selectedTask: Task;
-  displayedColumns = ['start', 'end', 'accept', 'complete', 'description', 'status', 'roomNumber', 'creatorLastName', 'executorLastName'];
+  displayedColumns = ['id', 'start', 'end', 'accept', 'complete', 'description', 'status', 'roomNumber', 'creatorLastName', 'executorLastName'];
   dataSource = this.taskList;
   startDateFilter = new FormControl('');
   endDateFilter = new FormControl('');
@@ -39,6 +39,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   executorFilter = new FormControl('');
 
   filterValues = {
+    id: '',
     start: '',
     end: '',
     accept: '',
@@ -53,8 +54,8 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   private dataTransfer: DataTransferService;
   selectedRow: any;
 
-  constructor(private http: HttpClient, dataTransfer: DataTransferService) {
-    super();
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, selectService: SelectService) {
+    super(selectService);
     this.getAllTask();
     this.dataTransfer = dataTransfer;
     this.taskList.filterPredicate = this.createFilter();
@@ -62,7 +63,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
 
   selectRow(row: any): void {
     this.reselectRow.emit();
-    this.selectedRow = row.description;
+    this.selectedRow = row.id;
     console.log(row);
     this.dataTransfer.setData(row);
     this.isSelected();
