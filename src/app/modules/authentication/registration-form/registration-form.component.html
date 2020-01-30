@@ -1,0 +1,58 @@
+<form [formGroup]="registrationForm" (submit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput type="text" formControlName="firstname" id="firstname" required (ngModelChange)="onChange()">
+    <mat-error *ngIf="firstname().errors">
+      <span *ngIf="firstname().errors.required">This field must be filled</span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Last name</mat-label>
+    <input matInput type="text" formControlName="lastname" id="lastname" required (ngModelChange)="onChange()">
+    <mat-error *ngIf="lastname().errors">
+      <span *ngIf="lastname().errors.required">This field must be filled</span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Login</mat-label>
+    <input matInput type="text" formControlName="login" id="login" required (ngModelChange)="onChange()">
+    <mat-error *ngIf="login().errors">
+      <span *ngIf="login().errors.required">This field must be filled</span>
+      <span *ngIf="login().errors?.minlength">Minimal length 5 symbols</span>
+      <span *ngIf="login().errors?.maxlength">Msximal length 20 symbols</span>
+      <span *ngIf="login().errors?.unique">Login is already reserved</span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput type="password" formControlName="password" id="password" required (ngModelChange)="onChange()">
+    <mat-error *ngIf="password().errors">
+      <span *ngIf="password().errors.required">This field must be filled</span>
+      <span *ngIf="password().errors?.minlength">Minimal length 8 symbols</span>
+      <span *ngIf="password().errors?.maxlength">Msximal length 20 symbols</span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>E-mail</mat-label>
+    <input matInput type="email" formControlName="email" id="email" required (ngModelChange)="onChange()">
+    <mat-error *ngIf="email().errors">
+      <span *ngIf="email().errors.required">This field must be filled</span>
+      <span *ngIf="email().errors.email">Wrong format</span>
+      <span *ngIf="email().errors?.unique">Email is already reserved</span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Phone number</mat-label>
+    <input matInput type="tel" formControlName="phoneNumber" id="phoneNumber" required (ngModelChange)="onChange()">
+    <mat-error *ngIf="phoneNumber().errors">
+      <span *ngIf="phoneNumber().errors.required">This field must be filled</span>
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-button type="submit" [disabled]="!isValid">Register</button>
+</form>

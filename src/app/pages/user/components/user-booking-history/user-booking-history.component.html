@@ -1,0 +1,28 @@
+<div *ngIf="userBookingsHistory == null">
+  <app-loading-animation></app-loading-animation>
+</div>
+
+<div class="userBookingHistory" *ngIf="userBookingsHistory != null">
+  <div class="booking" *ngFor="let booking of userBookingsHistory" [ngClass]="{'finished': booking.endDate < currentDate}">
+    <div class="info">
+      <p>{{booking.startDate}} - {{booking.endDate}}</p>
+      <p>Apartment class: {{booking.apartmentClass.nameClass}}</p>
+      <p>Price: {{booking.totalPrice}}</p>
+      <button mat-button (click)="deleteBooking(booking.id)" *ngIf="booking.startDate > currentDate">Cancel booking</button>
+    </div>
+
+    <div class="review" *ngIf="booking.endDate < currentDate">
+      <form [formGroup]="reviewForm" *ngIf="booking.review == null">
+        <mat-form-field>
+          <textarea matInput placeholder="Your review" formControlName="review"></textarea>
+          <mat-hint align="start">Between 10 and 300 symbols</mat-hint>
+        </mat-form-field>
+        <button mat-button (click)="sendReview(booking.id)" *ngIf="booking.endDate < currentDate">Send review</button>
+      </form>
+      <div class="review-text" *ngIf="booking.review != null">
+        <p>Your review: </p>
+        <p>{{booking.review}}</p>
+      </div>
+    </div>
+  </div>
+</div>
