@@ -1,6 +1,6 @@
 import {ConstantsService} from "../../../../services/constants.service";
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Staff} from "../../../../component/staff";
 import {HttpClient} from "@angular/common/http";
 import {Apartments} from "../../../../component/apartments";
@@ -23,14 +23,23 @@ export class AddTaskDialogComponent implements OnInit {
   staff = {} as Staff;
   apartment = {} as Apartments;
   task = {} as Task;
+  taskStatus = [
+    'OPEN',
+    'Started',
+    'Complete',
+    'Failed',
+    'Canceled'
+  ];
 
   staffList: Staff[];
   selectedCreator: Staff;
   selectedExecutor: Staff;
   apartmentList: Apartments[];
   selectedApartment: Apartments;
+  selectedTask: any;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+
     this.getAllApartment();
     this.getAllAStaff();
   }
@@ -67,6 +76,10 @@ export class AddTaskDialogComponent implements OnInit {
       this.setTask();
       this.createTask();
     }
+  }
+
+  timeMask(value: any): void {
+    return null;
   }
 
   createTask() {
@@ -116,4 +129,7 @@ export class AddTaskDialogComponent implements OnInit {
     this.selectedApartment = apartment;
   }
 
+  onSelectTaskStatus(task: any): void {
+    this.selectedTask = task;
+  }
 }

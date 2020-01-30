@@ -148,17 +148,24 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
 
   createFilter(): (data: any, filter: string) => boolean {
     // tslint:disable-next-line:only-arrow-functions
-    const filterFunction = function (data, filter): boolean {
+    const filterFunction = function(data, filter): boolean {
       const searchTerms = JSON.parse(filter);
-      return data.start.toString().toLowerCase().indexOf(searchTerms.start) !== -1
+      let result = data.start.toString().toLowerCase().indexOf(searchTerms.start) !== -1
         && data.end.toString().toLowerCase().indexOf(searchTerms.end) !== -1
         && data.accept.toString().toLowerCase().indexOf(searchTerms.accept) !== -1
         && data.complete.toString().toLowerCase().indexOf(searchTerms.complete) !== -1
-        && data.description.toLowerCase().indexOf(searchTerms.description) !== -1
-        && data.status.toLowerCase().indexOf(searchTerms.status) !== -1
+        && data.description.indexOf(searchTerms.description) !== -1
+        && data.status.indexOf(searchTerms.status) !== -1
         && data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1
-        && data.creator.user.lastname.toLowerCase().indexOf(searchTerms.creator) !== -1
-        && data.executor.user.lastname.toLowerCase().indexOf(searchTerms.executor) !== -1;
+        && data.creator.user.email.indexOf(searchTerms.creator) !== -1
+        && data.executor.user.email.indexOf(searchTerms.executor) !== -1;
+      if (data.accept !== null) {
+        result = result && data.accept.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
+      }
+      if (data.complete !== null) {
+        result = result && data.complete.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
+      }
+      return result;
     };
     return filterFunction;
   }
