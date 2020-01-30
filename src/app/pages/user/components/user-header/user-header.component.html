@@ -1,0 +1,45 @@
+<div class="container">
+  <nav>
+
+    <div class="logo">
+      <img src="../../../assets/img/logo.png" />
+    </div>
+
+    <div class="menu">
+      <a href="#home"><button mat-button>Home</button></a>
+      <a href="#apartments"><button mat-button>Apartments</button></a>
+      <a href="#reviews"><button mat-button>Reviews</button></a>
+      <a href="#services"><button mat-button>Services</button></a>
+      <a href="#contacts"><button mat-button>Contacts</button></a>
+    </div>
+
+    <ng-template *ngIf="authenticated; then signed else signWelcome"></ng-template>
+    <ng-template #signWelcome>
+      <div class="sign-welcome">
+        <button mat-button (click)="activeOption='register'">Sign up</button>
+        <button mat-button (click)="activeOption='login'">Sign in</button>
+      </div>
+    </ng-template>
+
+    <ng-template #signed>
+      <div class="signed" >
+        <p (click)="onUsernameClick()">{{ username }}</p>
+        <button mat-button (click) = "logout()">Logout</button>
+      </div>
+    </ng-template>
+
+  </nav>
+</div>
+
+<div [ngSwitch]="activeOption" class="auth-reg-container" *ngIf="activeOption != 'hidden'">
+  <div class="close-btn"><img src="../../../../../assets/img/icons/close-button-clipart-6.jpg" (click)="activeOption = 'hidden'"/></div>
+  <ng-template ngSwitchCase="register">
+    <app-registration-form></app-registration-form>
+  </ng-template>
+  <ng-template ngSwitchCase="login">
+    <app-login-form></app-login-form>
+  </ng-template>
+  <ng-template ngSwitchCase="watchBookings">
+    <app-user-booking-history></app-user-booking-history>
+  </ng-template>
+</div>

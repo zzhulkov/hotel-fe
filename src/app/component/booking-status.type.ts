@@ -1,1 +1,1 @@
-export type BookingStatus = 'Created' | 'CheckedIn' | 'Closed' | 'Canceled';
+export type BookingStatus = 'Created' | 'Confirmed' | 'CheckedIn' | 'Closed' | 'Canceled';
