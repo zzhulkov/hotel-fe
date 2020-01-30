@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
@@ -55,21 +55,20 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
     super(selectService);
     this.getAllApartmentsClasses();
     this.booking = dataTransfer.getData();
-    this.getFreeApartments(this.booking.startDate, this.booking.endDate, this.booking.apartmentClass.id);
     console.log(this.booking);
   }
 
   ngOnInit(): void {
     this.addForm = this.formBuilder.group({
-      startDate: [this.booking.startDate],
-      endDate: [this.booking.endDate],
+      startDate: [this.booking.startDate, Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')],
+      endDate: [this.booking.endDate, Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')],
       // totalPrice: [this.booking.totalPrice],
       comment: [this.booking.comment],
       review: [this.booking.review],
-      bookingStatus: [this.booking.bookingStatus],
-      email: [this.booking.user.email],
-      nameClass: [this.booking.apartmentClass.nameClass],
-      roomNumber: [this.getRoomNumber(this.booking.apartment)]
+      bookingStatus: [this.booking.bookingStatus, Validators.required],
+      email: [this.booking.user.email, Validators.pattern('^[a-zA-Z0-9.!#$%&’*+=?^_`{|}~-]+\\@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+$')],
+      nameClass: [this.booking.apartmentClass.nameClass, Validators.required],
+      roomNumber: [this.getRoomNumber(this.booking.apartment), Validators.required]
     });
 
     this.getUserByEmail();
@@ -86,6 +85,8 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
         this.selectedApartmentsClass = this.booking.apartmentClass;
         if (this.booking.apartment !== null) {
           this.selectedApartment = this.booking.apartment;
+        } else {
+          this.getFreeApartments(this.booking.startDate, this.booking.endDate, this.booking.apartmentClass.id);
         }
         this.fillForm(row);
       });

@@ -22,7 +22,7 @@
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <mat-select placeholder="Status" formControlName="bookingStatus">
+      <mat-select required="required" placeholder="Status" formControlName="bookingStatus">
         <mat-option *ngFor="let bookingStatus of status"
                     (click)="onSelectStatus(bookingStatus)"
                     value={{bookingStatus}}>
@@ -33,12 +33,13 @@
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput formControlName="email" class="full-width" placeholder="Booked by(user email)">
+      <input matInput required="required" formControlName="email" class="full-width"
+             placeholder="Booked by(user email)">
     </mat-form-field>
     <br/>
     <mat-form-field>
       <mat-label>Apartments</mat-label>
-      <mat-select placeholder="Apartment room number" formControlName="roomNumber">
+      <mat-select required="required" placeholder="Apartment room number" formControlName="roomNumber">
         <mat-option *ngFor="let apartments of apartmentsList"
                     (click)="onSelectAprtmnt(apartments)"
                     value={{apartments?.roomNumber}}>
@@ -50,7 +51,7 @@
     <br/>
     <mat-form-field>
       <mat-label>Apartments Class</mat-label>
-      <mat-select placeholder="Class name" formControlName="nameClass">
+      <mat-select required="required" placeholder="Class name" formControlName="nameClass">
         <mat-option *ngFor="let apartmentClass of apartmentsClassesList"
                     (click)="onSelectAprtmntClass(apartmentClass)"
                     value={{apartmentClass?.nameClass}}>
