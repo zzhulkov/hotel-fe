@@ -1,9 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
-import {DataTransferService} from '../../../../../services/data-transfer.service';
-import {Service} from '../../../../../component/service';
 import {SelectService} from "../../../../../services/select.service";
 import {take} from "rxjs/operators";
 
@@ -19,7 +16,7 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './delete-services-dialog.html',
 })
-export class DeleteServicesDialogComponent  {
+export class DeleteServicesDialogComponent {
 
   constructor(private http: HttpClient, private selectService: SelectService) {
   }
@@ -27,7 +24,7 @@ export class DeleteServicesDialogComponent  {
   deleteService() {
     this.selectService.selectAnnounced$
       .pipe(take(1))
-      .subscribe( id => {
+      .subscribe(id => {
         this.http.delete(URL + 'bookingAddServices/' + id.id)
           .subscribe(res => this.selectService.announceSelect(null));
       });

@@ -3,6 +3,13 @@
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
   <table mat-table [dataSource]="taskList">
+    <ng-container matColumnDef="id">
+      <th class="header" mat-header-cell [hidden]="true" *matHeaderCellDef>
+        ID:
+      </th>
+      <td mat-cell [hidden]="true" *matCellDef="let selectedTask"> {{selectedTask?.id}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="start">
       <th mat-header-cell *matHeaderCellDef>
         Start date
@@ -105,7 +112,10 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selectRow(row)" [ngClass]="{'highlightRow': selectedRow == row.id}"></tr>
+    <tr mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="selectRow(row)"
+        [ngClass]="{'highlightRow': selectedRow == row.id}"></tr>
 
   </table>
 </div>

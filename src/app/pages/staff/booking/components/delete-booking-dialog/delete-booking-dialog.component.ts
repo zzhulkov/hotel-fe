@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
-import {DataTransferService} from '../../../../../services/data-transfer.service';
-import {Booking} from '../../../../../component/booking';
+import {take} from "rxjs/operators";
+import {SelectService} from "../../../../../services/select.service";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -16,41 +15,17 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './delete-booking-dialog.html',
 })
-export class DeleteBookingDialogComponent implements OnInit {
+export class DeleteBookingDialogComponent {
 
-  deleteBookingForm: FormGroup;
-  booking = {} as Booking;
-
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, dataTransfer: DataTransferService) {
-    this.booking = dataTransfer.getData();
-  }
-
-  ngOnInit(): void {
-    this.deleteBookingForm = this.formBuilder.group({
-      id: ['', Validators.pattern('^\\d{1,3}$')]
-    });
-  }
-
-  checkValid() {
-    this.deleteBookingForm.markAllAsTouched();
-    console.log('FormGroup: ', this.deleteBookingForm.valid);
-  }
-
-  isSubmitDisabled(): boolean {
-    return !this.deleteBookingForm.valid ;
-  }
-
-  onSubmit() {
-    if (this.deleteBookingForm.valid) {
-      console.log(this.deleteBookingForm.value);
-      this.deleteBooking();
-    }
+  constructor(private http: HttpClient, private selectService: SelectService) {
   }
 
   deleteBooking() {
-    this.http.delete(URL + 'bookings/' + this.booking.id, this.deleteBookingForm.value).subscribe(
-      res => {
-        console.log(res);
+    this.selectService.selectAnnounced$
+      .pipe(take(1))
+      .subscribe(id => {
+        this.http.delete(URL + 'bookings/' + id.id)
+          .subscribe(res => this.selectService.announceSelect(null));
       });
   }
 }

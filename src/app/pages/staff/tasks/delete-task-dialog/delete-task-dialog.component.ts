@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from "../../../../services/constants.service";
 import {take} from "rxjs/operators";
@@ -31,7 +31,7 @@ export class DeleteTaskDialogComponent extends Unsubscribable {
   deleteApartment() {
     this.selectService.selectAnnounced$
       .pipe(take(1))
-      .subscribe( id => {
+      .subscribe(id => {
         this.http.delete(URL + 'tasks/' + id.id)
           .subscribe(res => this.selectService.announceSelect(null));
       });

@@ -1,6 +1,5 @@
-import {Component, Injectable, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Apartments} from '../../../../../component/apartments';
+import {Component, Injectable, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
@@ -48,7 +47,11 @@ export class ChangeApartmentsClassesDialogComponent extends Unsubscribable imple
     });
     this.checkValid();
     this.subscription = this.selectService.selectAnnounced$
-      .subscribe(row => { console.log(row); this.apartmentClass = row; this.fillForm(row); });
+      .subscribe(row => {
+        console.log(row);
+        this.apartmentClass = row;
+        this.fillForm(row);
+      });
   }
 
   fillForm(row: ApartmentsClass) {

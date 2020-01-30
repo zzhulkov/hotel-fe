@@ -6,7 +6,6 @@ import {DataTransferService} from '../../../../../services/data-transfer.service
 import {Service} from '../../../../../component/service';
 import {Unsubscribable} from "../../../../../component/Unsubscribable";
 import {SelectService} from "../../../../../services/select.service";
-import {ApartmentsClass} from "../../../../../component/apartments-class";
 import {Subscription} from "rxjs";
 import {DeleteServicesDialogComponent} from "../delete-services-dialog/delete-services-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -47,7 +46,11 @@ export class ChangeServicesDialogComponent extends Unsubscribable implements OnI
     });
     this.checkValid();
     this.subscription = this.selectService.selectAnnounced$
-      .subscribe(row => { console.log(row); this.service = row; this.fillForm(row); });
+      .subscribe(row => {
+        console.log(row);
+        this.service = row;
+        this.fillForm(row);
+      });
   }
 
   fillForm(row: Service) {

@@ -3,7 +3,6 @@ import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from 
 import {Unsubscribable} from "../../../../component/Unsubscribable";
 import {DataTransferService} from "../../../../services/data-transfer.service";
 import {MatPaginator} from "@angular/material/paginator";
-import {Booking} from "../../../../component/booking";
 import {FormControl} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {Task} from "../../../../component/task";
@@ -27,7 +26,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   taskList = new MatTableDataSource<Task>();
   selectedTask: Task;
-  displayedColumns = ['start', 'end', 'accept', 'complete', 'description', 'status', 'apartmentsRoomNumber', 'creatorEmail', 'executorEmail'];
+  displayedColumns = ['id', 'start', 'end', 'accept', 'complete', 'description', 'status', 'apartmentsRoomNumber', 'creatorEmail', 'executorEmail'];
   dataSource = this.taskList;
   startDateFilter = new FormControl('');
   endDateFilter = new FormControl('');
@@ -40,6 +39,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   executorFilter = new FormControl('');
 
   filterValues = {
+    id: '',
     start: '',
     end: '',
     accept: '',
@@ -62,11 +62,12 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   }
 
   selectRow(row: any): void {
-    this.selectedRow = row.description;
+    this.selectedRow = row.id;
     console.log(row);
     this.dataTransfer.setData(row);
     this.selectService.announceSelect(row);
   }
+
   onSelect(task: Task): void {
     this.selectedTask = task;
   }

@@ -9,7 +9,6 @@ import {Unsubscribable} from "../../../../../component/Unsubscribable";
 import {Speciality} from "../../../../../component/speciality.type";
 import {Subscription} from "rxjs";
 import {SelectService} from "../../../../../services/select.service";
-import {ApartmentsClass} from "../../../../../component/apartments-class";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -54,7 +53,11 @@ export class ChangeStaffDialogComponent extends Unsubscribable implements OnInit
     });
     this.checkValid();
     this.subscription = this.selectService.selectAnnounced$
-      .subscribe(row => { console.log(row); this.staff = row; this.fillForm(row); });
+      .subscribe(row => {
+        console.log(row);
+        this.staff = row;
+        this.fillForm(row);
+      });
   }
 
   fillForm(row: Staff) {

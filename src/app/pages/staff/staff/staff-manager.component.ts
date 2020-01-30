@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {HttpService} from '../../../http.service';
 import {MatDialog} from '@angular/material/dialog';
 import {AddStaffDialogComponent} from './components/add-staff-dialog/add-staff-dialog.component';
@@ -16,7 +16,7 @@ import {Unsubscribable} from "../../../component/Unsubscribable";
   viewProviders: [MatExpansionPanel]
 })
 
-export class StaffManagerComponent extends Unsubscribable{
+export class StaffManagerComponent extends Unsubscribable {
   row$: Observable<any>;
   subscription: Subscription;
 
