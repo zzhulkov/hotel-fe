@@ -33,7 +33,8 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
 
   booking = {} as Booking;
   subscription: Subscription;
-
+  userList: User[];
+  selectedUser: User;
   apartmentsClassesList: ApartmentsClass[];
   apartmentsList: Apartments[];
   selectedApartmentsClass: ApartmentsClass;
@@ -57,6 +58,7 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
               private datePipe: DatePipe) {
     super(selectService);
     this.getAllApartmentsClasses();
+    this.getAllUsers();
     this.booking = dataTransfer.getData();
     this.getFreeApartments(this.booking.startDate.toString(), this.booking.endDate.toString(), this.booking.apartmentClass.id.toString());
     console.log(this.booking);
@@ -183,7 +185,7 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
     this.booking.comment = this.changeForm.value.comment;
     this.booking.review = this.changeForm.value.review;
     this.booking.bookingStatus = this.selectedStatus;
-    this.booking.user = this.user;
+    this.booking.user = this.selectedUser;
     console.log(this.booking);
   }
 
@@ -195,6 +197,10 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
 
   onSelectAprtmnt(apartments: Apartments): void {
     this.selectedApartment = apartments;
+  }
+
+  onSelectEmail(user: User): void {
+    this.selectedUser = user;
   }
 
   onSelectStatus(status: any): void {
@@ -216,6 +222,13 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
     this.http.get(URL + 'apartmentsClasses').subscribe(res => {
       console.log(res);
       this.apartmentsClassesList = (res as ApartmentsClass[]);
+    });
+  }
+
+  getAllUsers() {
+    this.http.get(URL + 'users').subscribe(res => {
+      console.log(res);
+      this.userList = (res as User[]);
     });
   }
 

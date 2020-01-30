@@ -29,13 +29,13 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
   booking = {} as Booking;
   subscription: Subscription;
 
-
+  userList: User[];
   apartmentsClassesList: ApartmentsClass[];
   apartmentsList: Apartments[];
   selectedApartmentsClass: ApartmentsClass;
   selectedApartment: Apartments;
   user: User;
-
+  selectedUser: User;
   status = [
     'Created',
     'CheckedIn',
@@ -49,6 +49,7 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
               private http: HttpClient, public selectService: SelectService) {
     super(selectService);
     this.getAllApartmentsClasses();
+    this.getAllUsers();
   }
 
   ngOnInit(): void {
@@ -68,6 +69,10 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
     this.checkValid();
   }
 
+  onSelectEmail(user: User): void {
+    this.selectedUser = user;
+  }
+
   checkValid() {
     this.addForm.markAllAsTouched();
     console.log('FormGroup: ', this.addForm.valid);
@@ -79,8 +84,15 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
 
   onSubmit() {
     if (this.addForm.valid) {
-      this.getUserByEmail();
+      this.setBooking();
     }
+  }
+
+  getAllUsers() {
+    this.http.get(URL + 'users').subscribe(res => {
+      console.log(res);
+      this.userList = (res as User[]);
+    });
   }
 
   setBooking() {
@@ -92,7 +104,7 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
     this.booking.comment = this.addForm.value.comment;
     this.booking.review = this.addForm.value.review;
     this.booking.bookingStatus = this.selectedStatus;
-    this.booking.user = this.user;
+    this.booking.user = this.selectedUser;
     console.log(this.booking);
     this.createBooking();
 

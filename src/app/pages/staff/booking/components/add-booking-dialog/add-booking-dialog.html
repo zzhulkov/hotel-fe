@@ -44,7 +44,15 @@
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput formControlName="email" class="full-width" placeholder="Booked by(user email)">
+      <mat-label>Email</mat-label>
+      <mat-select placeholder="Booked by(user email)" formControlName="email" required>
+        <mat-option *ngFor="let user of userList"
+                    (click)="onSelectEmail(user)"
+                    value={{user?.email}}>
+
+          {{user?.email}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <br/>
     <mat-form-field>
