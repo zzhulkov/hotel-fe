@@ -1,17 +1,20 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {MatButtonModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {EventEmitter, NgModule} from '@angular/core';
+import {MatButtonModule, MatFormFieldModule, MatInputModule, MatPaginatorModule} from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from '../../../http.service';
 import {ApartmentsManagerComponent} from './apartments-manager.component';
-import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog-component';
-import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog-component';
+import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog.component';
+import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog.component';
 import {ApartmentsTableComponent} from './components/apartments-table/apartments-table.component';
-import {MatPaginatorModule} from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
+import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dialog/delete-apartments-dialog.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+
 
 @NgModule({
   imports: [
@@ -24,7 +27,9 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatTableModule,
     MatDialogModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatCheckboxModule
   ],
   exports: [
     MatButtonModule,
@@ -35,10 +40,11 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatTableModule
   ],
   declarations: [
-    ApartmentsManagerComponent, ApartmentsTableComponent, ChangeApartmentsDialogComponent, AddApartmentsDialogComponent
+    ApartmentsManagerComponent, ApartmentsTableComponent, ChangeApartmentsDialogComponent,
+    AddApartmentsDialogComponent, DeleteApartmentsDialogComponent
   ],
-  providers: [HttpService],
-  entryComponents: [ ChangeApartmentsDialogComponent, AddApartmentsDialogComponent],
+  providers: [HttpService, EventEmitter],
+  entryComponents: [ ChangeApartmentsDialogComponent, AddApartmentsDialogComponent, DeleteApartmentsDialogComponent],
 })
 export class ApartmentsManagerModule {
 }

@@ -3,13 +3,15 @@ import {NgModule} from '@angular/core';
 import {MatButtonModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import {BookingManagerModule} from './booking/booking-manager.module';
-import {ServicesManagerModule} from './services/services.manager.module';
 import {TaskManagerModule} from './tasks/task.manager.module';
 import {StaffComponent} from './staff.component';
 import {HttpService} from '../../http.service';
 import {RouterModule} from '@angular/router';
 import {ApartmentsManagerModule} from './apartments/apartments-manager.module';
 import {StaffManagerModule} from './staff/staff-manager.module';
+import {ApartmentsClassesManagerModule} from './apartments-classes/apartments-classes-manager.module';
+import {UserManagerModule} from './user/user-manager.module';
+import {ServicesManagerModule} from "./services/services-manager.module";
 
 @NgModule({
   imports: [
@@ -17,7 +19,9 @@ import {StaffManagerModule} from './staff/staff-manager.module';
     HttpClientModule,
     MatButtonModule,
     ApartmentsManagerModule,
+    ApartmentsClassesManagerModule,
     BookingManagerModule,
+    UserManagerModule,
     ServicesManagerModule,
     StaffManagerModule,
     TaskManagerModule,

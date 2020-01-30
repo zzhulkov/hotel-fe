@@ -1,12 +1,25 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {takeUntil} from 'rxjs/operators';
+import {
+  AfterViewInit, ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input, OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
+import {take, takeUntil} from 'rxjs/operators';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {HttpClient} from '@angular/common/http';
 import {Apartments} from '../../../../../component/apartments';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {FormControl} from '@angular/forms';
+import {ConstantsService} from '../../../../../services/constants.service';
+import {DataTransferService} from "../../../../../services/data-transfer.service";
+import {SelectService} from "../../../../../services/select.service";
+import {Observable, Subscription} from "rxjs";
 
-const URL = 'http://localhost:8090';
+const URL = new ConstantsService().BASE_URL;
 
 /**
  * @title Table with sticky header
@@ -16,17 +29,18 @@ const URL = 'http://localhost:8090';
   selector: 'apartments-table-component',
   styleUrls: ['../../../styles/table.css'],
   templateUrl: 'apartments-table.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApartmentsTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
-
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-
+  subscription: Subscription;
+  private dataTransfer: DataTransferService;
+  selectedRow: any;
   apartmentsList = new MatTableDataSource<Apartments>();
   selectedApartments: Apartments;
   displayedColumns = ['roomNumber', 'photo', 'description', 'status', 'apartmentClass.id',
     'apartmentClass.nameClass', 'apartmentClass.numberOfRooms', 'apartmentClass.numberOfCouchette'];
 
-  dataSource = this.apartmentsList;
   roomNumberFilter = new FormControl('');
   photoFilter = new FormControl('');
   descriptionFilter = new FormControl('');
@@ -48,19 +62,27 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
   };
 
 
-  constructor(private http: HttpClient) {
-    super();
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
+    super(selectService);
+    this.subscription = this.selectService.selectAnnounced$.subscribe();
     this.getAllApartments();
+    this.dataTransfer = dataTransfer;
     this.apartmentsList.filterPredicate = this.createFilter();
+  }
+
+  selectRow(row: any): void {
+    this.selectedRow = row.id;
+    console.log(row);
+    this.dataTransfer.setData(row);
+    this.selectService.announceSelect(row);
   }
 
   onSelect(apartments: Apartments): void {
     this.selectedApartments = apartments;
+    console.log(this.selectedApartments);
   }
 
-  // TODO form control, закрывать форму после успешного подтверждеия транзакции, отправлять запросы, пофиксить верстку, прикрутить bootstrap css
   ngOnInit() {
-
     this.roomNumberFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         roomNumber => {
@@ -124,7 +146,7 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
   }
 
   public getAllApartments = () => {
-    this.http.get(URL + '/apartments').subscribe(res => {
+    this.http.get(URL + 'apartments').subscribe(res => {
       console.log(res);
       this.apartmentsList.data = (res as Apartments[]);
     });
@@ -132,15 +154,15 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
 
   createFilter(): (data: any, filter: string) => boolean {
     // tslint:disable-next-line:only-arrow-functions
-    let filterFunction = function (data, filter): boolean {
+    let filterFunction = function(data, filter): boolean {
       let searchTerms = JSON.parse(filter);
       return data.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1
         && data.photo.toLowerCase().indexOf(searchTerms.photo) !== -1
-        && data.description.toLowerCase().indexOf(searchTerms.description) !== -1
-        && data.status.toLowerCase().indexOf(searchTerms.status) !== -1
+        && data.description.indexOf(searchTerms.description) !== -1
+        && data.status.indexOf(searchTerms.status) !== -1
         && data.apartmentClass.numberOfCouchette.toString().toLowerCase().indexOf(searchTerms.numberOfCouchette) !== -1
         && data.apartmentClass.numberOfRooms.toString().toLowerCase().indexOf(searchTerms.numberOfRooms) !== -1
-        && data.apartmentClass.nameClass.toLowerCase().indexOf(searchTerms.nameClass) !== -1
+        && data.apartmentClass.nameClass.indexOf(searchTerms.nameClass) !== -1
         && data.apartmentClass.id.toString().toLowerCase().indexOf(searchTerms.classId) !== -1;
     };
     return filterFunction;

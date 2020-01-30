@@ -1,0 +1,187 @@
+import {ConstantsService} from "../../../../services/constants.service";
+import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from "@angular/core";
+import {Unsubscribable} from "../../../../component/Unsubscribable";
+import {DataTransferService} from "../../../../services/data-transfer.service";
+import {MatPaginator} from "@angular/material/paginator";
+import {FormControl} from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
+import {Task} from "../../../../component/task";
+import {MatTableDataSource} from '@angular/material/table';
+import {takeUntil} from 'rxjs/operators';
+import {SelectService} from "../../../../services/select.service";
+
+const URL = new ConstantsService().BASE_URL;
+
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'task-table-component',
+  styleUrls: ['../../styles/table.css'],
+  templateUrl: 'task-table.html',
+})
+export class TaskTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  taskList = new MatTableDataSource<Task>();
+  selectedTask: Task;
+  displayedColumns = ['id', 'start', 'end', 'accept', 'complete', 'description', 'status', 'apartmentsRoomNumber', 'creatorEmail', 'executorEmail'];
+  dataSource = this.taskList;
+  startFilter = new FormControl('');
+  endFilter = new FormControl('');
+  acceptFilter = new FormControl('');
+  completeFilter = new FormControl('');
+  descriptionFilter = new FormControl('');
+  statusFilter = new FormControl('');
+  apartmentsRoomNumberFilter = new FormControl('');
+  creatorFilter = new FormControl('');
+  executorFilter = new FormControl('');
+
+  filterValues = {
+    id: '',
+    start: '',
+    end: '',
+    accept: '',
+    complete: '',
+    description: '',
+    status: '',
+    apartmentsRoomNumber: '',
+    creatorEmail: '',
+    executorEmail: ''
+  };
+
+  private dataTransfer: DataTransferService;
+  selectedRow: any;
+
+  constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
+    super(selectService);
+    this.getAllTask();
+    this.dataTransfer = dataTransfer;
+    this.taskList.filterPredicate = this.createFilter();
+  }
+
+  selectRow(row: any): void {
+    this.selectedRow = row.id;
+    console.log(row);
+    this.dataTransfer.setData(row);
+    this.selectService.announceSelect(row);
+  }
+
+  onSelect(task: Task): void {
+    this.selectedTask = task;
+  }
+
+  haveTaskAccept(task: Task): boolean {
+    if (task.accept == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  haveTaskComplete(task: Task): boolean {
+    if (task.complete == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  ngOnInit() {
+    this.startFilter.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(
+        start => {
+          this.filterValues.start = start;
+          this.taskList.filter = JSON.stringify(this.filterValues);
+        }
+      );
+    this.endFilter.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(
+        end => {
+          this.filterValues.end = end;
+          this.taskList.filter = JSON.stringify(this.filterValues);
+        }
+      );
+    this.acceptFilter.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(
+        accept => {
+          this.filterValues.accept = accept;
+          this.taskList.filter = JSON.stringify(this.filterValues);
+        }
+      );
+    this.completeFilter.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(
+        complete => {
+          this.filterValues.complete = complete;
+          this.taskList.filter = JSON.stringify(this.filterValues);
+        }
+      );
+    this.descriptionFilter.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(
+        description => {
+          this.filterValues.description = description;
+          this.taskList.filter = JSON.stringify(this.filterValues);
+        }
+      );
+    this.statusFilter.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(
+        status => {
+          this.filterValues.status = status;
+          this.taskList.filter = JSON.stringify(this.filterValues);
+        }
+      );
+    this.apartmentsRoomNumberFilter.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(
+        apartmentsRoomNumber => {
+          this.filterValues.apartmentsRoomNumber = apartmentsRoomNumber;
+          this.taskList.filter = JSON.stringify(this.filterValues);
+        }
+      );
+    this.creatorFilter.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(
+        creatorEmail => {
+          this.filterValues.creatorEmail = creatorEmail;
+          this.taskList.filter = JSON.stringify(this.filterValues);
+        }
+      );
+    this.executorFilter.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(
+        executorEmail => {
+          this.filterValues.executorEmail = executorEmail;
+          this.taskList.filter = JSON.stringify(this.filterValues);
+        }
+      );
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  public getAllTask = () => {
+    this.http.get(URL + 'tasks/').subscribe(res => {
+      console.log(res);
+      this.dataSource.data = (res as Task[]);
+    });
+  }
+
+  createFilter(): (data: any, filter: string) => boolean {
+    // tslint:disable-next-line:only-arrow-functions
+    const filterFunction = function(data, filter): boolean {
+      const searchTerms = JSON.parse(filter);
+      let result = data.start.toString().toLowerCase().indexOf(searchTerms.start) !== -1
+        && data.end.toString().toLowerCase().indexOf(searchTerms.end) !== -1
+        && data.description.indexOf(searchTerms.description) !== -1
+        && data.status.indexOf(searchTerms.status) !== -1
+        && data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1
+        && data.creator.user.email.indexOf(searchTerms.creator) !== -1
+        && data.executor.user.email.indexOf(searchTerms.executor) !== -1;
+      if (data.accept !== null) {
+        result = result && data.accept.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
+      }
+      if (data.complete !== null) {
+        result = result && data.complete.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
+      }
+      return result;
+    };
+    return filterFunction;
+  }
+
+}

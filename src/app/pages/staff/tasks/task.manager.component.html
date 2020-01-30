@@ -1,2 +1,17 @@
-<!-- TODO for tasks page-->
+<section class="task-list">
+  <div class="buttons"> Task list &nbsp;
+    <button class="mat-button" mat-raised-button (click)="addDialog()">Add</button>
+  </div>
+  <div class="wrap">
+    <div class="table">
+      <task-table-component></task-table-component>
+    </div>
+    <div class="tools">
+      <div class="change">
+        <app-change-task-dialog *ngIf="row$ | async"></app-change-task-dialog>
+      </div>
+    </div>
+  </div>
+</section>
+
 

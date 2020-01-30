@@ -1,27 +1,33 @@
-import {Component} from '@angular/core';
-import {HttpService} from '../../../http.service';
-import {ChangeApartmentsDialogComponent} from './components/change-apartment-dialog/change-apartments-dialog-component';
-import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog-component';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AddApartmentsDialogComponent} from './components/add-apartment-dialog/add-apartments-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dialog/delete-apartments-dialog.component';
+import {SelectService} from "../../../services/select.service";
+import {Observable, Subscription} from "rxjs";
+import {MatExpansionPanel} from "@angular/material/expansion";
+import {Unsubscribable} from "../../../component/Unsubscribable";
 
 
 @Component({
   selector: 'app-apartments-manager',
   templateUrl: './apartments-manager.component.html',
   styleUrls: ['../styles/page.css'],
-  providers: [HttpService]
+   viewProviders: [MatExpansionPanel]
 })
 
-export class ApartmentsManagerComponent {
-  constructor(public dialog: MatDialog) {}
+export class ApartmentsManagerComponent extends Unsubscribable implements OnInit {
+  id$: Observable<string>;
+  subscription: Subscription;
 
-  openDialog() {
-    const dialogRef = this.dialog.open(ChangeApartmentsDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+  constructor(public dialog: MatDialog, public selectService: SelectService) {
+    super(selectService);
+    this.subscription = this.selectService.selectAnnounced$
+      .subscribe(id => this.id$ = this.selectService.selectAnnounced$);
   }
+
+  ngOnInit(): void {
+  }
+
   addApartmentDialog() {
     const dialogRef = this.dialog.open(AddApartmentsDialogComponent);
 

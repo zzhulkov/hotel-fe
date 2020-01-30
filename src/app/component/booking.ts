@@ -1,8 +1,9 @@
 import {ApartmentsClass} from './apartments-class';
 import {User} from './user';
 import {Apartments} from './apartments';
+import {BookingStatus} from './booking-status.type';
 
-export class Booking {
+export interface Booking {
   id: number;
   startDate: Date;
   endDate: Date;
@@ -10,8 +11,8 @@ export class Booking {
   comment: string;
   createdDate: Date;
   review: string;
-  bookingStatus: string;
+  bookingStatus: BookingStatus;
   user: User;
   apartmentClass: ApartmentsClass;
-  apartments: Apartments;
+  apartment: Apartments;
 }

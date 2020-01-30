@@ -1,37 +1,51 @@
-<section class="change-staff">
-<h2 mat-dialog-title>Edit Staff</h2>
-<mat-dialog-content class="mat-typography">
-  <mat-form-field>
-    <input matInput class="full-width" placeholder="First name">
-  </mat-form-field>
-  <br/><mat-form-field>
-    <input matInput class="full-width" placeholder="Last name">
-  </mat-form-field>
-  <br/> <mat-form-field>
-    <input matInput class="full-width" placeholder="Email">
-  </mat-form-field>
-  <br/><mat-form-field>
-    <input matInput class="full-width" placeholder="Phone">
-  </mat-form-field>
-  <br/><mat-form-field>
-    <input matInput class="full-width" placeholder="Login">
-  </mat-form-field>
-  <br/><mat-form-field>
-    <input matInput placeholder="Is active" class="full-width">
-  </mat-form-field>
-  <br/><mat-form-field>
-    <mat-label>Speciality</mat-label>
-    <mat-select placeholder="Select me">
-      <mat-option value="Client">Client</mat-option>
-      <mat-option value="Manager">Manager</mat-option>
-      <mat-option value="Worker">Worker</mat-option>
-      <mat-option value="Administrator">Administrator</mat-option>
-    </mat-select>
-  </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Change</button>
-</mat-dialog-actions>
-</section>
+<div class="change-component">
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Change
+        </mat-panel-title>
+        <mat-panel-description>
+          Staff
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <form [formGroup]="changeStaffFrom" (ngSubmit)="onSubmit()" class="change-apartment">
+        <mat-form-field>
+          <input required="required" matInput formControlName="firstname" class="full-width" placeholder="First name">
+        </mat-form-field>
+        <br/>
+        <mat-form-field>
+          <input required="required" matInput formControlName="lastname" class="full-width" placeholder="Last name">
+        </mat-form-field>
+        <br/>
+        <mat-label>is Active?</mat-label>
+        <mat-checkbox class="full-width" formControlName="active" aria-placeholder="isActive" checked></mat-checkbox>
+        <br/>
+        <mat-form-field>
+          <mat-select formControlName="speciality" placeholder="Speciality" required>
+            <mat-option *ngFor="let speciality of specialities"
+                        (click)="onSelectSpec(speciality)"
+                        value={{speciality}}>
 
+              {{speciality}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br/>
+        <mat-action-row align="end">
+          <button mat-raised-button
+                  mat-dialog-close
+                  [mat-dialog-close]="true">
+            Cancel
+          </button>
+          <button mat-raised-button
+                  type="submit"
+                  (click)="checkValid()"
+                  [disabled]="isSubmitDisabled()" mat-button>
+            Change
+          </button>
+        </mat-action-row>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

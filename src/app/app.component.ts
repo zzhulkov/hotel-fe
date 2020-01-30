@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Unsubscribable} from './component/Unsubscribable';
-import { Location } from '@angular/common';
+import {Location} from '@angular/common';
 import {HttpService} from './http.service';
-
-
+import {SelectService} from "./services/select.service";
 
 
 @Component({
@@ -16,8 +15,8 @@ import {HttpService} from './http.service';
 export class AppComponent extends Unsubscribable implements OnInit {
   page: string;
 
-  constructor(private location: Location) {
-    super();
+  constructor(private location: Location, public selectService: SelectService) {
+    super(selectService);
   }
 
   ngOnInit(): void {

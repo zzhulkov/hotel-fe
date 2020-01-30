@@ -1,21 +1,33 @@
 import {Component} from '@angular/core';
 import {HttpService} from '../../../http.service';
 import {MatDialog} from '@angular/material/dialog';
-import {ChangeStaffDialogComponent} from './components/change-staff-dialog/change-staff-dialog-component';
+import {AddStaffDialogComponent} from './components/add-staff-dialog/add-staff-dialog.component';
+import {MatExpansionPanel} from "@angular/material/expansion";
+import {Observable, Subscription} from "rxjs";
+import {SelectService} from "../../../services/select.service";
+import {Unsubscribable} from "../../../component/Unsubscribable";
 
 
 @Component({
   selector: 'app-staff-manager',
   templateUrl: './staff-manager.component.html',
   styleUrls: ['../styles/page.css'],
-  providers: [HttpService]
+  providers: [HttpService],
+  viewProviders: [MatExpansionPanel]
 })
 
-export class StaffManagerComponent {
-  constructor(public dialog: MatDialog) {}
+export class StaffManagerComponent extends Unsubscribable {
+  row$: Observable<any>;
+  subscription: Subscription;
 
-  openDialog() {
-    const dialogRef = this.dialog.open(ChangeStaffDialogComponent);
+  constructor(public dialog: MatDialog, public selectService: SelectService) {
+    super(selectService);
+    this.subscription = this.selectService.selectAnnounced$
+      .subscribe(id => this.row$ = this.selectService.selectAnnounced$);
+  }
+
+  addDialog() {
+    const dialogRef = this.dialog.open(AddStaffDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

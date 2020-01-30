@@ -1,27 +1,16 @@
-<section class="staff-list">
-Staff list
+<section class="apartment-list">
+  <div class="buttons">
+    Staff list
+    <button class="mat-button" mat-raised-button (click)="addDialog()">Add</button>
+  </div>
   <div class="wrap">
     <div class="table">
       <staff-table-component></staff-table-component>
     </div>
     <div class="tools">
-      <div class="buttons">
-        <button class="mat-button" mat-raised-button>Add</button>
-      </div>
-      <div class="buttons">
-        <button class="mat-button" mat-raised-button (click)="openDialog()">Change</button>
-      </div>
-      <div class="buttons">
-        <mat-form-field>
-          <mat-label>Speciality</mat-label>
-          <mat-select>
-            <mat-option value="All">All</mat-option>
-            <mat-option value="Client">Client</mat-option>
-            <mat-option value="Worker">Worker</mat-option>
-            <mat-option value="Manager">Manager</mat-option>
-            <mat-option value="Administrator">Administrator</mat-option>
-          </mat-select>
-        </mat-form-field>
+
+      <div class="change">
+        <app-change-staff-dialog *ngIf="row$ | async"></app-change-staff-dialog>
       </div>
     </div>
   </div>

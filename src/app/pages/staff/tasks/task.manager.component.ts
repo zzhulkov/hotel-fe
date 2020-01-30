@@ -1,15 +1,34 @@
 import {Component} from '@angular/core';
 import {HttpService} from '../../../http.service';
+import {MatDialog} from "@angular/material/dialog";
+import {AddTaskDialogComponent} from "./add-task-dialog/add-task-dialog.component";
+import {Observable} from "rxjs";
+import {SelectService} from "../../../services/select.service";
+import {Unsubscribable} from "../../../component/Unsubscribable";
 
 
 @Component({
   selector: 'app-staff-tasks',
   templateUrl: './task.manager.component.html',
-  styleUrls: ['./task.manager.component.css'],
+  styleUrls: ['../styles/page.css'],
   providers: [HttpService]
 })
 
-export class TaskManagerComponent {
+export class TaskManagerComponent extends Unsubscribable {
+  row$: Observable<any>;
 
+  constructor(public dialog: MatDialog, public selectService: SelectService) {
+    super(selectService);
+    this.selectService.selectAnnounced$
+      .subscribe(id => this.row$ = this.selectService.selectAnnounced$);
+  }
+
+  addDialog() {
+    const dialogRef = this.dialog.open(AddTaskDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 }
 

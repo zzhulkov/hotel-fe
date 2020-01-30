@@ -1,12 +1,25 @@
+<div class="change-component" >
+  <mat-accordion>
+  <mat-expansion-panel  [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Change
+      </mat-panel-title>
+      <mat-panel-description>
+        Apartment
+      </mat-panel-description>
+    </mat-expansion-panel-header>
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="change-apartment">
-  <h2 mat-dialog-title>Edit Apartment</h2>
-  <mat-dialog-content class="mat-typography">
     <mat-form-field>
-      <input matInput formControlName="roomNumber" class="full-width" placeholder="Room number">
+      <input matInput required="required" formControlName="id" class="full-width" placeholder="ID">
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput formControlName="photo" class="full-width" placeholder="Photo">
+      <input matInput required="required" formControlName="roomNumber" class="full-width" placeholder="Room number">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <input matInput required="required" formControlName="photo" class="full-width" placeholder="Photo">
     </mat-form-field>
     <br/>
     <mat-form-field>
@@ -14,26 +27,42 @@
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput formControlName="status" class="full-width" placeholder="Status">
+      <mat-select placeholder="Status" formControlName="status">
+        <mat-label>Status</mat-label>
+        <mat-option *ngFor="let apartmentStatus of statusList"
+                    (click)="onSelectStatus(apartmentStatus)"
+                    value={{apartmentStatus}}>
+
+          {{apartmentStatus}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
-    <br/>
+  <br/>
     <mat-form-field>
-      <input matInput formControlName="className" class="full-width" placeholder="Class name">
+      <mat-label>Apartments Class</mat-label>
+      <mat-select placeholder="Apartments Class" formControlName="nameClass">
+        <mat-option *ngFor="let apartmentClass of apartmentsClassesList"
+                    (click)="onSelect(apartmentClass)"
+                    value={{apartmentClass?.nameClass}}>
+
+          {{apartmentClass?.nameClass}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <br/>
-    <mat-form-field>
-      <input matInput formControlName="numberOfRooms" class="full-width" placeholder="Number of rooms">
-    </mat-form-field>
-    <br/>
-    <mat-form-field>
-      <input matInput formControlName="numberOfCouchette" class="full-width" placeholder="Number of couchette">
-    </mat-form-field>
-    <br/>
-  </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]
-      ="true" mat-dialog-close>Cancel</button>
-    <button mat-button type="submit" cdkFocusInitial>Change</button>
+    <button style="background-color: tomato" class="mat-button" mat-raised-button (click)="deleteApartment()">Delete</button>
+    <button mat-button
+            [mat-dialog-close]="true">
+      Cancel
+    </button>
+    <button type="submit"
+            (click)="checkValid()"
+            [disabled]="isSubmitDisabled()" mat-button>
+      Change
+    </button>
   </mat-dialog-actions>
 </form>
-
+  </mat-expansion-panel>
+  </mat-accordion>
+</div>
