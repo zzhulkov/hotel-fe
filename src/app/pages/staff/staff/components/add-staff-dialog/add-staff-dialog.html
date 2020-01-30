@@ -27,7 +27,7 @@
   </mat-form-field>
   <br/>
   <mat-form-field>
-    <mat-select formControlName="role" placeholder="Role">
+    <mat-select formControlName="role" placeholder="Role" required>
       <mat-option *ngFor="let roles of roles"
                   (click)="onSelectRole(roles)"
                   value="Client">
@@ -41,7 +41,7 @@
   <mat-checkbox class="full-width" formControlName="active" aria-placeholder="isActive" checked></mat-checkbox>
   <br/>
   <mat-form-field>
-    <mat-select formControlName="speciality" placeholder="Speciality">
+    <mat-select formControlName="speciality" placeholder="Speciality" required>
       <mat-option *ngFor="let speciality of specialities"
                   (click)="onSelectSpec(speciality)"
                   value="Cleaner">

@@ -26,7 +26,7 @@ export class AddServicesDialogComponent implements OnInit {
   ngOnInit(): void {
     this.addServiceForm = this.formBuilder.group({
       serviceName: ['', Validators.required],
-      price: ['', Validators.required]
+      price: ['', Validators.pattern('^\\d{1,5}$')]
     });
   }
 

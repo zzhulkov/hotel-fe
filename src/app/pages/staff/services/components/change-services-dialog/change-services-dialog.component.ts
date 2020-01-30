@@ -43,7 +43,7 @@ export class ChangeServicesDialogComponent extends Unsubscribable implements OnI
   ngOnInit(): void {
     this.changeForm = this.formBuilder.group({
       serviceName: [this.service.serviceName, Validators.required],
-      price: [this.service.price, Validators.required],
+      price: ['', Validators.pattern('^\\d{1,5}$')]
     });
     this.checkValid();
     this.subscription = this.selectService.selectAnnounced$
