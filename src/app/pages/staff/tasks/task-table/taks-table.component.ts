@@ -20,18 +20,15 @@ const URL = new ConstantsService().BASE_URL;
 })
 export class TaskTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
 
-  @Output() selectedRowClicked: EventEmitter<any> = new EventEmitter();
-  @Output() reselectRow: EventEmitter<any> = new EventEmitter();
-
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   taskList = new MatTableDataSource<Task>();
   selectedTask: Task;
   displayedColumns = ['id', 'start', 'end', 'accept', 'complete', 'description', 'status', 'apartmentsRoomNumber', 'creatorEmail', 'executorEmail'];
   dataSource = this.taskList;
-  startDateFilter = new FormControl('');
-  endDateFilter = new FormControl('');
-  acceptDateFilter = new FormControl('');
-  completeDateFilter = new FormControl('');
+  startFilter = new FormControl('');
+  endFilter = new FormControl('');
+  acceptFilter = new FormControl('');
+  completeFilter = new FormControl('');
   descriptionFilter = new FormControl('');
   statusFilter = new FormControl('');
   apartmentsRoomNumberFilter = new FormControl('');
@@ -73,28 +70,28 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   }
 
   ngOnInit() {
-    this.startDateFilter.valueChanges.pipe(takeUntil(this.destroy$))
+    this.startFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         start => {
           this.filterValues.start = start;
           this.taskList.filter = JSON.stringify(this.filterValues);
         }
       );
-    this.endDateFilter.valueChanges.pipe(takeUntil(this.destroy$))
+    this.endFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         end => {
           this.filterValues.end = end;
           this.taskList.filter = JSON.stringify(this.filterValues);
         }
       );
-    this.acceptDateFilter.valueChanges.pipe(takeUntil(this.destroy$))
+    this.acceptFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         accept => {
           this.filterValues.accept = accept;
           this.taskList.filter = JSON.stringify(this.filterValues);
         }
       );
-    this.completeDateFilter.valueChanges.pipe(takeUntil(this.destroy$))
+    this.completeFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         complete => {
           this.filterValues.complete = complete;
@@ -153,10 +150,10 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
     // tslint:disable-next-line:only-arrow-functions
     const filterFunction = function (data, filter): boolean {
       const searchTerms = JSON.parse(filter);
-      return data.startDate.toString().toLowerCase().indexOf(searchTerms.startDate) !== -1
-        && data.endDate.toString().toLowerCase().indexOf(searchTerms.endDate) !== -1
-        && data.acceptDate.toString().toLowerCase().indexOf(searchTerms.acceptDate) !== -1
-        && data.completeDate.toString().toLowerCase().indexOf(searchTerms.completeDate) !== -1
+      return data.start.toString().toLowerCase().indexOf(searchTerms.start) !== -1
+        && data.end.toString().toLowerCase().indexOf(searchTerms.end) !== -1
+        && data.accept.toString().toLowerCase().indexOf(searchTerms.accept) !== -1
+        && data.complete.toString().toLowerCase().indexOf(searchTerms.complete) !== -1
         && data.description.toLowerCase().indexOf(searchTerms.description) !== -1
         && data.status.toLowerCase().indexOf(searchTerms.status) !== -1
         && data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1

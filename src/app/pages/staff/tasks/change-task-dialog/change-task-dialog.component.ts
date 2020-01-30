@@ -9,6 +9,7 @@ import {DeleteTaskDialogComponent} from "../delete-task-dialog/delete-task-dialo
 import {Staff} from "../../../../component/staff";
 import {Apartments} from "../../../../component/apartments";
 import {SelectService} from "../../../../services/select.service";
+import {TaskStatus} from "../../../../component/task-status.type";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -26,12 +27,13 @@ export class ChangeTaskDialogComponent implements OnInit {
 
   changeForm: FormGroup;
   task = {} as Task;
-
+  taskStatus = {} as TaskStatus[];
   staffList: Staff[];
   selectedCreator: Staff;
   selectedExecutor: Staff;
   apartmentList: Apartments[];
   selectedApartment: Apartments;
+  selectedStatus: TaskStatus;
 
 
   constructor(public dialog: MatDialog, private formBuilder: FormBuilder,
@@ -45,12 +47,19 @@ export class ChangeTaskDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeForm = this.formBuilder.group({
-      start: [this.task.start, Validators.required],
-      end: [this.task.end, Validators.required],
-      accept: [this.task.accept, Validators.required],
-      complete: [this.task.complete, Validators.required],
+      start: [this.task.start,
+        Validators.pattern('^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$')],
+      end: [this.task.end,
+        Validators.pattern('^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$')],
+      accept: [this.task.accept,
+        Validators.pattern('^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$')],
+      complete: [this.task.complete,
+        Validators.pattern('^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$')],
       description: [this.task.description, Validators.required],
       taskStatus: [this.task.status, Validators.required],
+      apartment: [this.task.apartment, Validators.required],
+      creator: [this.task.creator, Validators.required],
+      executor: [this.task.executor, Validators.required],
       apartmentsRoomNumber: [this.task.apartment.roomNumber],
       creatorEmail: [this.task.creator.user.email],
       executorEmail: [this.task.executor.user.email]
@@ -72,10 +81,16 @@ export class ChangeTaskDialogComponent implements OnInit {
       complete: row.complete,
       description: row.description,
       taskStatus: row.status,
+      apartment: row.apartment,
+      creator: row.creator,
+      executor: row.executor,
       apartmentsRoomNumber: row.apartment.roomNumber,
       creatorEmail: row.creator.user.email,
       executorEmail: row.executor.user.email
     });
+    this.onSelectApartment(row.apartment);
+    this.onSelectCreator(row.creator);
+    this.onSelectExecutor(row.executor);
   }
 
   checkValid() {
@@ -106,10 +121,10 @@ export class ChangeTaskDialogComponent implements OnInit {
     this.task.creator = this.selectedCreator;
     this.task.executor = this.selectedExecutor;
     this.task.apartment = this.selectedApartment;
-    this.task.start = this.changeForm.value.startDate;
-    this.task.end = this.changeForm.value.endDate;
-    this.task.accept = this.changeForm.value.acceptDate;
-    this.task.complete = this.changeForm.value.completeDate;
+    this.task.start = this.changeForm.value.start;
+    this.task.end = this.changeForm.value.end;
+    this.task.accept = this.changeForm.value.accept;
+    this.task.complete = this.changeForm.value.complete;
     this.task.description = this.changeForm.value.description;
     this.task.status = this.changeForm.value.taskStatus;
     console.log(this.task);
@@ -139,6 +154,10 @@ export class ChangeTaskDialogComponent implements OnInit {
 
   onSelectApartment(apartment: Apartments): void {
     this.selectedApartment = apartment;
+  }
+
+  onSelectTaskStatus(status: TaskStatus): void {
+    this.selectedStatus = status;
   }
 
   deleteDialog() {

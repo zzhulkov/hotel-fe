@@ -15,7 +15,7 @@
         Start date
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
-          <input matInput [formControl]="startDateFilter">
+          <input matInput [formControl]="startFilter">
         </mat-form-field>
       </th>
       <td mat-cell *matCellDef="let selectedTask"> {{selectedTask?.start}} </td>
@@ -26,7 +26,7 @@
         End date
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
-          <input matInput [formControl]="endDateFilter">
+          <input matInput [formControl]="endFilter">
         </mat-form-field>
       </th>
       <td mat-cell *matCellDef="let selectedTask"> {{selectedTask?.end}} </td>
@@ -37,7 +37,7 @@
         Accept date
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
-          <input matInput [formControl]="acceptDateFilter">
+          <input matInput [formControl]="acceptFilter">
         </mat-form-field>
       </th>
       <td mat-cell *matCellDef="let selectedTask"> {{selectedTask?.accept}} </td>
@@ -48,7 +48,7 @@
         Complete date
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
-          <input matInput [formControl]="completeDateFilter">
+          <input matInput [formControl]="completeFilter">
         </mat-form-field>
       </th>
       <td mat-cell *matCellDef="let selectedTask"> {{selectedTask?.complete}} </td>
