@@ -17,9 +17,10 @@
           <textarea matInput placeholder="Your review" formControlName="review"></textarea>
           <mat-hint align="start">Between 10 and 300 symbols</mat-hint>
         </mat-form-field>
-        <button mat-button (click)="deleteBooking(booking.id)" *ngIf="booking.endDate < currentDate">Send review</button>
+        <button mat-button (click)="sendReview(booking.id)" *ngIf="booking.endDate < currentDate">Send review</button>
       </form>
       <div class="review-text" *ngIf="booking.review != null">
+        <p>Your review: </p>
         <p>{{booking.review}}</p>
       </div>
     </div>

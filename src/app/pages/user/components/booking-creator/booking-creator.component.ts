@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Form, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatHorizontalStepper} from '@angular/material';
 import {DatePipe} from '@angular/common';
@@ -20,7 +20,7 @@ export class BookingCreatorComponent implements OnInit {
   @Input() sDate: string;
   @Input() eDate: string;
 
-  //
+  // Common
   private currentBooking: Booking;
   // FirstStep
   private freeapartmentClasses: FreeApartments[];
@@ -152,7 +152,13 @@ export class BookingCreatorComponent implements OnInit {
   }
 
   onChangeApartmentsClick() {
-    this.http.delete('http://localhost:8090/bookings/' + this.currentBooking.id).subscribe(
+    this.deleteBooking();
+    this.currentBooking = null;
+  }
+
+  deleteBooking() {
+    this.http.delete('http://localhost:8090/bookings/' + this.currentBooking.id)
+      .subscribe(
       data => {
         console.log('booking deleted');
       },
@@ -161,7 +167,6 @@ export class BookingCreatorComponent implements OnInit {
         console.log(error1);
       }
     );
-    this.currentBooking = null;
   }
 
   onServicesFormSubmit() {
@@ -195,7 +200,7 @@ export class BookingCreatorComponent implements OnInit {
       .subscribe(
         (data: Booking) => {
           console.log('got booking from db');
-            this.dbBooking = data;
+          this.dbBooking = data;
         },
         error1 => {
           console.log('cant get booking from db');
@@ -235,8 +240,14 @@ export class BookingCreatorComponent implements OnInit {
       );
   }
 
-  onConfirmBookingClick(){
-    console.log('Eeeeeeeeeeeeeeeeeeeeeee kaef');
+  onConfirmBookingClick() {
+    this.http.patch('http://localhost:8090/bookings/' + this.currentBooking.id, {status: 'Confirmed'})
+      .subscribe(
+        data => {
+          this.currentBooking.bookingStatus = 'Confirmed';
+          console.log('Eeeeeeeeeeeeeeeeeeeeeee kaef');
+        }
+      );
   }
 }
 

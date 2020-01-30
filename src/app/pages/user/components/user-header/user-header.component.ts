@@ -1,7 +1,10 @@
-import {Component} from "@angular/core";
+import {Component, OnDestroy} from "@angular/core";
 import {AuthenticationService} from "../../../../modules/authentication/authentication.service";
 import {Booking} from "../../../../component/booking";
 import {HttpClient} from "@angular/common/http";
+import {InnerSubscriber} from "rxjs/internal-compatibility";
+import {Unsubscribable} from "../../../../component/Unsubscribable";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
     selector: 'app-user-header',
@@ -9,17 +12,17 @@ import {HttpClient} from "@angular/common/http";
     styleUrls: ['./user-header.component.css']
 })
 export class UserHeaderComponent {
-
   authenticated: boolean;
   username: string;
   activeOption = 'hidden';
 
-  constructor(private authService: AuthenticationService, private http: HttpClient) {
-    this.authService.currentUserObservable.subscribe(user => {
+  constructor(private authService: AuthenticationService) {
+    this.authService.currentUserObservable
+      .subscribe(user => {
       if (user === null) {
         this.authenticated = false;
       } else {
-        this.activeOption = 'logged';
+        this.activeOption = 'hidden';
         this.authenticated = true;
         this.username = user.lastname + ' ' + user.firstname;
       }
@@ -33,4 +36,5 @@ export class UserHeaderComponent {
   onUsernameClick() {
     this.activeOption = 'watchBookings';
   }
+
 }

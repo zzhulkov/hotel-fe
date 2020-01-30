@@ -9,6 +9,7 @@ import {HttpService} from './http.service';
 import {StaffModule} from './pages/staff/staff.module';
 import {UserModule} from './pages/user/user.module';
 import {JWTInterceptor} from './modules/authentication/jwt.interceptor';
+import {TaskPageModule} from "./pages/tasks-page/task-page.module";
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import {JWTInterceptor} from './modules/authentication/jwt.interceptor';
     AppRoutingModule,
     StaffModule,
     UserModule,
+    TaskPageModule
   ],
   declarations: [
     AppComponent

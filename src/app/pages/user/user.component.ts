@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AuthenticationService} from "../../modules/authentication/authentication.service";
 
 
 @Component({
@@ -8,7 +9,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./user.css']
 })
 
-export class UserComponent implements OnInit{
+export class UserComponent implements OnInit {
 
   datesForm: FormGroup;
   currentDate = new Date();
@@ -17,17 +18,21 @@ export class UserComponent implements OnInit{
     'https://www3.hilton.com/resources/media/hi/KBPHIHI/en_US/img/shared/full_page_image_gallery/main/HL_sideext_1270x560_FitToBoxSmallDimension_UpperCenter.jpg',
     'https://www3.hilton.com/resources/media/hi/KBPHIHI/en_US/img/shared/full_page_image_gallery/main/HL_pool01_21_1270x560_FitToBoxSmallDimension_Center.jpg'];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private auth: AuthenticationService) {}
 
   ngOnInit(): void {
     this.datesForm = this.fb.group({
-      startDate: [null, Validators.required],
-      endDate: [null, Validators.required]
+      startDate: [{value: null, disabled: true}, Validators.required],
+      endDate: [{value: null, disabled: true}, Validators.required]
     });
   }
 
   onDatesFormClick() {
-    this.openBooking = true;
+    if ( this.auth.currentUserObject ) {
+      this.openBooking = true;
+    } else {
+      alert('You should sign in first');
+    }
   }
 
 }

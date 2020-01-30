@@ -6,10 +6,14 @@ import {ServicesManagerComponent} from './pages/staff/services/services.manager.
 import {TaskManagerComponent} from './pages/staff/tasks/task.manager.component';
 import {StaffManagerComponent} from './pages/staff/staff/staff-manager.component';
 import {UserComponent} from './pages/user/user.component';
+import {TaskPageComponent} from "./pages/tasks-page/task-page.component";
 
 const routes: Routes = [
   {
     path: 'home', component: UserComponent
+  },
+  {
+    path: 'task-page', component: TaskPageComponent
   },
   {
     path: 'manager/apartments', component: ApartmentsManagerComponent

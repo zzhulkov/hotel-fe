@@ -10,7 +10,19 @@
   height: calc(100vw * 0.6 - 5px);
   background-color: rgba(0,0,0,0.1);
 }
-
+.booking-container{
+  display: flex;
+  flex-direction: column;
+}
+.close-btn{
+  align-self: flex-end;
+}
+.close-btn img{
+  width: 25px;
+  background-color: white;
+  margin-right: 30px;
+  cursor: pointer;
+}
 
 .search-date-form{
   display: flex;

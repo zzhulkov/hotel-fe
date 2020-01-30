@@ -13,7 +13,7 @@ import {DatePipe} from "@angular/common";
 })
 export class UserBookingHistoryComponent implements OnInit {
 
-  currentDate = this.dp.transform(new Date, 'yyy-MM-dd');
+  currentDate = this.dp.transform(new Date(), 'yyy-MM-dd');
   userBookingsHistory: Booking[];
   reviewForm: FormGroup;
 
@@ -30,6 +30,18 @@ export class UserBookingHistoryComponent implements OnInit {
 
   deleteBooking(id: number) {
     this.http.delete('http://localhost:8090/bookings/' + id)
+      .subscribe(
+        data => {
+          this.getBookings();
+        },
+        error1 => {
+          console.log(error1);
+        }
+      );
+  }
+
+  sendReview(id: number) {
+    this.http.patch('http://localhost:8090/bookings/' + id, {review: this.reviewForm.get('review').value})
       .subscribe(
         data => {
           this.getBookings();

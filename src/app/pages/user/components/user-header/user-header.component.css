@@ -53,8 +53,19 @@ nav a{
 .auth-reg-container{
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.close-btn{
+  align-self: flex-end;
 }
 
+.close-btn img{
+  width: 25px;
+  background-color: white;
+  margin-right: 30px;
+  cursor: pointer;
+}
 app-registration-form, app-login-form{
   max-width: 400px;
   width: 100%;
