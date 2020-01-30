@@ -4,6 +4,7 @@ import {Apartments} from '../../../../../component/apartments';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {ConstantsService} from '../../../../../services/constants.service';
+import {ApartmentStatus} from '../../../../../component/apartment-status.type';
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -29,6 +30,15 @@ export class AddApartmentsDialogComponent implements OnInit {
 
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
+
+  statusList = [
+    'ReadyToCheckIn',
+    'OnRepair',
+    'NeedCleaning',
+    'Occupied'
+  ];
+
+  private selectedApartmentStatus: ApartmentStatus;
 
   ngOnInit(): void {
     this.addApartmentForm = this.formBuilder.group({
@@ -70,7 +80,7 @@ export class AddApartmentsDialogComponent implements OnInit {
   setApartment() {
     this.apartment.apartmentClass = this.selectedApartmentsClass;
     this.apartment.description = this.addApartmentForm.value.description;
-    this.apartment.status = this.addApartmentForm.value.status;
+    this.apartment.status = this.selectedApartmentStatus;
     this.apartment.photo = this.addApartmentForm.value.photo;
     this.apartment.roomNumber = this.addApartmentForm.value.roomNumber;
     console.log(this.apartment);
@@ -78,6 +88,10 @@ export class AddApartmentsDialogComponent implements OnInit {
 
   onSelect(apartmentsClass: ApartmentsClass): void {
     this.selectedApartmentsClass = apartmentsClass;
+  }
+
+  onSelectStatus(status: any): void {
+    this.selectedApartmentStatus = status;
   }
 
   getAllApartmentsClasses() {

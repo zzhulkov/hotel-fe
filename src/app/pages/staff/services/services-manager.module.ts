@@ -15,19 +15,19 @@ import {DeleteServicesDialogComponent} from './components/delete-services-dialog
 import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
-    imports: [
-        MatPaginatorModule,
-        BrowserModule,
-        HttpClientModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatTableModule,
-        MatDialogModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        MatExpansionModule
-    ],
+  imports: [
+    MatPaginatorModule,
+    BrowserModule,
+    HttpClientModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatTableModule,
+    MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatExpansionModule
+  ],
   exports: [
     MatButtonModule,
     MatDialogModule,

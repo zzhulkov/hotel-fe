@@ -27,18 +27,20 @@
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <mat-label>Status</mat-label>
-      <mat-select required='required' placeholder="Status" formControlName="status">
-        <mat-option value="OnRepair">On repair</mat-option>
-        <mat-option value="NeedCleaning">Need cleaning</mat-option>
-        <mat-option value="Occupied">Occupied</mat-option>
-        <mat-option value="ReadyToCheckIn">Ready to check in</mat-option>
+      <mat-select placeholder="Status" formControlName="status">
+        <mat-label>Status</mat-label>
+        <mat-option *ngFor="let apartmentStatus of statusList"
+                    (click)="onSelectStatus(apartmentStatus)"
+                    value={{apartmentStatus}}>
+
+          {{apartmentStatus}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
-    <br/>
+  <br/>
     <mat-form-field>
       <mat-label>Apartments Class</mat-label>
-      <mat-select required="required" placeholder="Apartments Class" formControlName="nameClass">
+      <mat-select placeholder="Apartments Class" formControlName="nameClass">
         <mat-option *ngFor="let apartmentClass of apartmentsClassesList"
                     (click)="onSelect(apartmentClass)"
                     value={{apartmentClass?.nameClass}}>
@@ -48,20 +50,18 @@
       </mat-select>
     </mat-form-field>
     <br/>
-  <mat-action-row align="end">
+  <mat-dialog-actions align="end">
     <button style="background-color: tomato" class="mat-button" mat-raised-button (click)="deleteApartment()">Delete</button>
-    <button mat-raised-button
-            mat-dialog-close
+    <button mat-button
             [mat-dialog-close]="true">
       Cancel
     </button>
-    <button mat-raised-button
-            type="submit"
+    <button type="submit"
             (click)="checkValid()"
             [disabled]="isSubmitDisabled()" mat-button>
       Change
     </button>
-  </mat-action-row>
+  </mat-dialog-actions>
 </form>
   </mat-expansion-panel>
   </mat-accordion>

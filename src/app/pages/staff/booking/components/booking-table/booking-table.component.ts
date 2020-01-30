@@ -29,7 +29,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
   selectedRow: any;
   bookingList = new MatTableDataSource<Booking>();
   selectedBooking: Booking;
-  displayedColumns = ['id', 'startDate', 'endDate', 'totalPrice', 'comments', 'createdDate', 'review', 'bookingStatus', 'firstname', 'nameClass', 'roomNumber'];
+  displayedColumns = ['id', 'startDate', 'endDate', 'totalPrice', 'comments', 'createdDate', 'review', 'bookingStatus', 'email', 'nameClass', 'roomNumber'];
   dataSource = this.bookingList;
   startDateFilter = new FormControl('');
   endDateFilter = new FormControl('');
@@ -51,7 +51,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     createdDate: '',
     review: '',
     bookingStatus: '',
-    firstname: '',
+    email: '',
     nameClass: '',
     roomNumber: '',
   };
@@ -75,6 +75,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     this.selectedRow = row.id;
     console.log(row);
     this.dataTransfer.setData(row);
+    this.selectService.announceSelect(row);
   }
 
   onSelect(booking: Booking): void {
@@ -133,8 +134,8 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
       );
     this.bookedByFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        firstname => {
-          this.filterValues.firstname = firstname;
+        email => {
+          this.filterValues.email = email;
           this.bookingList.filter = JSON.stringify(this.filterValues);
         }
       );

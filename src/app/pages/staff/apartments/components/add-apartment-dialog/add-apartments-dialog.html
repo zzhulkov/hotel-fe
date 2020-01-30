@@ -14,12 +14,14 @@
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <mat-label>Status</mat-label>
-      <mat-select  placeholder="Status" formControlName="status" required>
-        <mat-option value="OnRepair">On repair</mat-option>
-        <mat-option value="NeedCleaning">Need cleaning</mat-option>
-        <mat-option value="Occupied">Occupied</mat-option>
-        <mat-option value="ReadyToCheckIn">Ready to check in</mat-option>
+      <mat-select placeholder="Status" formControlName="status">
+        <mat-label>Status</mat-label>
+        <mat-option *ngFor="let apartmentStatus of statusList"
+                    (click)="onSelectStatus(apartmentStatus)"
+                    value={{apartmentStatus}}>
+
+          {{apartmentStatus}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
     <br/>

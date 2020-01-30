@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Apartments} from '../../../../../component/apartments';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
@@ -6,10 +6,11 @@ import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
-import {Observable, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {SelectService} from "../../../../../services/select.service";
 import {DeleteApartmentsDialogComponent} from "../delete-apartment-dialog/delete-apartments-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {ApartmentStatus} from "../../../../../component/apartment-status.type";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -31,6 +32,15 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
   subscription: Subscription;
+
+  statusList = [
+    'ReadyToCheckIn',
+    'OnRepair',
+    'NeedCleaning',
+    'Occupied'
+  ];
+
+  private selectedApartmentStatus: ApartmentStatus;
 
   constructor(public dialog: MatDialog,
               private formBuilder: FormBuilder,
@@ -57,6 +67,7 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
       .subscribe(row => {
         this.apartment = row;
         this.selectedApartmentsClass = this.apartment.apartmentClass;
+        this.selectedApartmentStatus = this.apartment.status;
         this.fillForm(row);
       });
   }
@@ -107,7 +118,7 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
   setApartment() {
     this.apartment.apartmentClass = this.selectedApartmentsClass;
     this.apartment.description = this.profileForm.value.description;
-    this.apartment.status = this.profileForm.value.status;
+    this.apartment.status = this.selectedApartmentStatus;
     this.apartment.photo = this.profileForm.value.photo;
     this.apartment.roomNumber = this.profileForm.value.roomNumber;
     this.apartment.id = this.profileForm.value.id;
@@ -116,6 +127,10 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
 
   onSelect(apartmentsClass: ApartmentsClass): void {
     this.selectedApartmentsClass = apartmentsClass;
+  }
+
+  onSelectStatus(status: any): void {
+    this.selectedApartmentStatus = status;
   }
 
   getAllApartmentsClasses() {

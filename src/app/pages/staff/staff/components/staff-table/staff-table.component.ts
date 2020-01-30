@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Staff} from '../../../../../component/staff';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {HttpClient} from '@angular/common/http';
@@ -109,7 +109,7 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
 
   createFilter(): (data: any, filter: string) => boolean {
     // tslint:disable-next-line:only-arrow-functions
-    const filterFunction = function(data, filter): boolean {
+    const filterFunction = function (data, filter): boolean {
       const searchTerms = JSON.parse(filter);
       return data.user.lastname.indexOf(searchTerms.lastname) !== -1
         && data.user.email.indexOf(searchTerms.email) !== -1

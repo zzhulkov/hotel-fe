@@ -1,7 +1,7 @@
 import {ApartmentsClass} from './apartments-class';
 import {User} from './user';
 import {Apartments} from './apartments';
-import {BookingStatus} from "./booking-status.type";
+import {BookingStatus} from './booking-status.type';
 
 export interface Booking {
   id: number;
@@ -13,6 +13,6 @@ export interface Booking {
   review: string;
   bookingStatus: BookingStatus;
   user: User;
-  apartmentsClass: ApartmentsClass;
-  apartments: Apartments;
+  apartmentClass: ApartmentsClass;
+  apartment: Apartments;
 }

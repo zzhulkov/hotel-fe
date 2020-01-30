@@ -4,13 +4,11 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
 import {DataTransferService} from "../../../../services/data-transfer.service";
-import {DeleteApartmentsClassesDialogComponent} from "../../apartments-classes/components/delete-apartment-class-dialog/delete-apartments-classes-dialog.component";
 import {Task} from "../../../../component/task";
 import {DeleteTaskDialogComponent} from "../delete-task-dialog/delete-task-dialog.component";
 import {Staff} from "../../../../component/staff";
 import {Apartments} from "../../../../component/apartments";
 import {SelectService} from "../../../../services/select.service";
-import {ApartmentsClass} from "../../../../component/apartments-class";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -70,7 +68,7 @@ export class ChangeTaskDialogComponent implements OnInit {
     this.changeForm.setValue({
       start: row.start,
       end: row.end,
-      accept:  row.accept,
+      accept: row.accept,
       complete: row.complete,
       description: row.description,
       taskStatus: row.status,

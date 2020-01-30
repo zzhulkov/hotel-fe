@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {HttpService} from '../../../http.service';
 import {MatDialog} from "@angular/material/dialog";
 import {AddTaskDialogComponent} from "./add-task-dialog/add-task-dialog.component";

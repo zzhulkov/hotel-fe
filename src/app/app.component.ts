@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Unsubscribable} from './component/Unsubscribable';
 import {Location} from '@angular/common';
 import {HttpService} from './http.service';
-import {take} from "rxjs/operators";
 import {SelectService} from "./services/select.service";
 
 
