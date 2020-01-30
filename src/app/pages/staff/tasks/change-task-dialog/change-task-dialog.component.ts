@@ -27,7 +27,13 @@ export class ChangeTaskDialogComponent implements OnInit {
 
   changeForm: FormGroup;
   task = {} as Task;
-  taskStatus = {} as TaskStatus[];
+  taskStatus = [
+    'OPEN',
+    'Started',
+    'Complete',
+    'Failed',
+    'Canceled'
+  ];
   staffList: Staff[];
   selectedCreator: Staff;
   selectedExecutor: Staff;
@@ -156,7 +162,7 @@ export class ChangeTaskDialogComponent implements OnInit {
     this.selectedApartment = apartment;
   }
 
-  onSelectTaskStatus(status: TaskStatus): void {
+  onSelectTaskStatus(status: any): void {
     this.selectedStatus = status;
   }
 

@@ -5,7 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from '../../../http.service';
 import {TaskManagerComponent} from './task.manager.component';
 import {AddTaskDialogComponent} from './add-task-dialog/add-task-dialog.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -16,6 +16,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {DeleteTaskDialogComponent} from "./delete-task-dialog/delete-task-dialog.component";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {TextMaskModule} from "angular2-text-mask";
+import {NgxMaskModule} from "ngx-mask";
 
 @NgModule({
   imports: [
@@ -29,7 +31,12 @@ import {MatExpansionModule} from "@angular/material/expansion";
     MatSelectModule,
     MatPaginatorModule,
     MatTableModule,
-    MatExpansionModule
+    MatExpansionModule,
+    TextMaskModule,
+    FormsModule,
+    NgxMaskModule.forRoot({
+      showMaskTyped : true,
+    })
   ],
   declarations: [
     TaskManagerComponent,
@@ -46,3 +53,4 @@ import {MatExpansionModule} from "@angular/material/expansion";
 })
 export class TaskManagerModule {
 }
+
