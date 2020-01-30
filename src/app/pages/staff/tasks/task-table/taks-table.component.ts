@@ -69,6 +69,22 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
     this.selectedTask = task;
   }
 
+  haveTaskAccept(task: Task): boolean {
+    if (task.accept == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  haveTaskComplete(task: Task): boolean {
+    if (task.complete == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   ngOnInit() {
     this.startFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
@@ -152,8 +168,6 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
       const searchTerms = JSON.parse(filter);
       let result = data.start.toString().toLowerCase().indexOf(searchTerms.start) !== -1
         && data.end.toString().toLowerCase().indexOf(searchTerms.end) !== -1
-        && data.accept.toString().toLowerCase().indexOf(searchTerms.accept) !== -1
-        && data.complete.toString().toLowerCase().indexOf(searchTerms.complete) !== -1
         && data.description.indexOf(searchTerms.description) !== -1
         && data.status.indexOf(searchTerms.status) !== -1
         && data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1
