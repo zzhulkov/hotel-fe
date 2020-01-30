@@ -5,6 +5,9 @@ import {HttpClient} from "@angular/common/http";
 import {InnerSubscriber} from "rxjs/internal-compatibility";
 import {Unsubscribable} from "../../../../component/Unsubscribable";
 import {takeUntil} from "rxjs/operators";
+import {ConstantsService} from "../../../../services/constants.service";
+
+const BASE_URL = new ConstantsService().BASE_URL;
 
 @Component({
     selector: 'app-user-header',

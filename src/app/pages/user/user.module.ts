@@ -18,6 +18,7 @@ import {BookingCreatorComponent} from "./components/booking-creator/booking-crea
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AnimationsModule} from "../../modules/animations/animations.module";
 import {UserBookingHistoryComponent} from "./components/user-booking-history/user-booking-history.component";
+import {ConstantsService} from "../../services/constants.service";
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import {UserBookingHistoryComponent} from "./components/user-booking-history/use
     UserBookingHistoryComponent
   ],
   providers: [
+    ConstantsService,
     HttpService,
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}

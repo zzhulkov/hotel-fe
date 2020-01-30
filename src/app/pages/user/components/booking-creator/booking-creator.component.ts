@@ -9,6 +9,9 @@ import {Booking} from "../../../../component/booking";
 import {AuthenticationService} from "../../../../modules/authentication/authentication.service";
 import {User} from "../../../../component/user";
 import {BookingAddService} from "../../../../component/bookingAddService";
+import {ConstantsService} from "../../../../services/constants.service";
+
+const BASE_URL = new ConstantsService().BASE_URL;
 
 @Component({
   selector: 'app-booking-creator',
@@ -118,7 +121,7 @@ export class BookingCreatorComponent implements OnInit {
     booking.startDate = this.datePipe.transform(this.startDate().value, 'yyyy-MM-dd');
     booking.endDate = this.datePipe.transform(this.endDate().value, 'yyyy-MM-dd');
     booking.user = {id: this.authService.currentUserObject.id};
-    this.http.post('http://localhost:8090/bookings', booking)
+    this.http.post(BASE_URL + 'bookings', booking)
       .subscribe(
         (data: Booking) => {
             this.currentBooking = data;
@@ -131,7 +134,7 @@ export class BookingCreatorComponent implements OnInit {
         }
       );
 
-    this.http.get('http://localhost:8090/bookingAddServices')
+    this.http.get(BASE_URL + 'bookingAddServices')
       .subscribe(
         (data: BookingAddService[]) => {
           console.log('got booking services');
@@ -155,7 +158,7 @@ export class BookingCreatorComponent implements OnInit {
   }
 
   deleteBooking() {
-    this.http.delete('http://localhost:8090/bookings/' + this.currentBooking.id)
+    this.http.delete(BASE_URL + 'bookings/' + this.currentBooking.id)
       .subscribe(
       data => {
         console.log('booking deleted');
@@ -179,7 +182,7 @@ export class BookingCreatorComponent implements OnInit {
       });
     console.log(this.currentServices);
 
-    this.http.post('http://localhost:8090/bookings/' + this.currentBooking.id + '/servicesList', this.currentServices)
+    this.http.post(BASE_URL + 'bookings/' + this.currentBooking.id + '/servicesList', this.currentServices)
       .subscribe(
         data => {
           console.log('booking services added');
@@ -194,7 +197,7 @@ export class BookingCreatorComponent implements OnInit {
   }
 
   getBookingFromDB() {
-    this.http.get('http://localhost:8090/bookings/' + this.currentBooking.id)
+    this.http.get(BASE_URL + 'bookings/' + this.currentBooking.id)
       .subscribe(
         (data: Booking) => {
           console.log('got booking from db');
@@ -207,7 +210,7 @@ export class BookingCreatorComponent implements OnInit {
       );
   }
   getCurrentBookingServicesFromDB() {
-    this.http.get('http://localhost:8090/bookingAddServicesShip?booking=' + this.currentBooking.id)
+    this.http.get(BASE_URL + 'bookingAddServicesShip?booking=' + this.currentBooking.id)
       .subscribe(
         (data: BookingAddServicesWithCount[]) => {
           console.log('got current booking services from db');
@@ -223,7 +226,7 @@ export class BookingCreatorComponent implements OnInit {
   }
 
   onChangeServicesClick() {
-    this.http.delete('http://localhost:8090/bookings/' + this.currentBooking.id + '/services')
+    this.http.delete(BASE_URL + 'bookings/' + this.currentBooking.id + '/services')
       .subscribe(
         data => {
           console.log('current booking services deleted');
@@ -239,7 +242,7 @@ export class BookingCreatorComponent implements OnInit {
   }
 
   onConfirmBookingClick() {
-    this.http.patch('http://localhost:8090/bookings/' + this.currentBooking.id, {status: 'Confirmed'})
+    this.http.patch(BASE_URL + 'bookings/' + this.currentBooking.id, {status: 'Confirmed'})
       .subscribe(
         data => {
           this.currentBooking.bookingStatus = 'Confirmed';
@@ -252,6 +255,7 @@ export class BookingCreatorComponent implements OnInit {
 class FreeApartments {
   countOfApartments: number;
   apartmentClass: ApartmentsClass;
+  apartmentPriceOnDates: number;
 }
 
 class BookingAddServicesWithCount {
