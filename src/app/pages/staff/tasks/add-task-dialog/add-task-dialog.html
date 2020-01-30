@@ -2,19 +2,19 @@
   <h2 mat-dialog-title>Add Task</h2>
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
-      <input matInput required="required" formControlName="startDate" class="full-width" placeholder="Start date">
+      <input matInput required="required" formControlName="start" class="full-width" placeholder="Start date">
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput required="required" formControlName="endDate" class="full-width" placeholder="End date">
+      <input matInput required="required" formControlName="end" class="full-width" placeholder="End date">
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput required="required" formControlName="acceptDate" class="full-width" placeholder="Accept date">
+      <input matInput required="required" formControlName="accept" class="full-width" placeholder="Accept date">
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput required="required" formControlName="completeDate" class="full-width" placeholder="Complete date">
+      <input matInput required="required" formControlName="complete" class="full-width" placeholder="Complete date">
     </mat-form-field>
     <br/>
     <mat-form-field>
@@ -35,7 +35,7 @@
     <mat-form-field>
       <mat-label>
         Apartment </mat-label>
-      <mat-select>
+      <mat-select required="required" placeholder="Apartment" formControlName="apartmentRoomNumber">
         <mat-option *ngFor="let apartment of apartmentList"
                     (click)="onSelectApartment(apartment)"
                     value={{apartment?.roomNumber}}>
@@ -48,7 +48,7 @@
     <mat-form-field>
       <mat-label>
         Creator </mat-label>
-      <mat-select>
+      <mat-select required="required"  placeholder="Creator" formControlName="staffCreator">
         <mat-option *ngFor="let staff of staffList"
                     (click)="onSelectCreator(staff)"
                     value={{staff?.user.email}}>
@@ -61,7 +61,7 @@
     <mat-form-field>
       <mat-label>
         Executor </mat-label>
-      <mat-select>
+      <mat-select required="required" placeholder="Executor" formControlName="staffExecutor">
         <mat-option *ngFor="let staff of staffList"
                     (click)="onSelectExecutor(staff)"
                     value={{staff?.user.email}}>

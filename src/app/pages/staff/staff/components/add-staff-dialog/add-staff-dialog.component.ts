@@ -47,7 +47,7 @@ export class AddStaffDialogComponent implements OnInit {
       email: ['', Validators.pattern('^[a-zA-Z0-9.!#$%&’*+=?^_`{|}~-]+\\@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+$')],
       phoneNumber: ['', Validators.pattern('(^\\+{1}\\d{7,13}$)|(^\\d{7,13}$)')],
       login: ['', Validators.pattern('^([a-zA-Z])\\S+$')],
-      password: ['', Validators.required],
+      password: ['', Validators.pattern('^\\S{1,20}$')],
       role: ['', Validators.required],
       active: ['true'],
       speciality: ['', Validators.required],

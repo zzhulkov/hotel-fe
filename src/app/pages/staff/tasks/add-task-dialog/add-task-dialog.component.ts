@@ -37,10 +37,14 @@ export class AddTaskDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.addTaskForm = this.formBuilder.group({
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      acceptDate: ['', Validators.required],
-      completeDate: ['', Validators.required],
+      start: [this.task.start,
+        Validators.pattern('^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$')],
+      end: [this.task.end,
+        Validators.pattern('^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$')],
+      accept: [this.task.accept,
+        Validators.pattern('^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$')],
+      complete: [this.task.complete,
+        Validators.pattern('^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$')],
       description: ['', Validators.required],
       taskStatus: [''],
       apartmentRoomNumber: [''],
@@ -77,10 +81,10 @@ export class AddTaskDialogComponent implements OnInit {
     this.task.creator = this.selectedCreator;
     this.task.executor = this.selectedExecutor;
     this.task.apartment = this.selectedApartment;
-    this.task.start = this.addTaskForm.value.startDate;
-    this.task.end = this.addTaskForm.value.endDate;
-    this.task.accept = this.addTaskForm.value.acceptDate;
-    this.task.complete = this.addTaskForm.value.completeDate;
+    this.task.start = this.addTaskForm.value.start;
+    this.task.end = this.addTaskForm.value.end;
+    this.task.accept = this.addTaskForm.value.accept;
+    this.task.complete = this.addTaskForm.value.complete;
     this.task.description = this.addTaskForm.value.description;
     this.task.status = this.addTaskForm.value.taskStatus;
     console.log(this.task);
