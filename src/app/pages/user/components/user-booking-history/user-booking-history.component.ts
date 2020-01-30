@@ -4,6 +4,9 @@ import {HttpClient} from "@angular/common/http";
 import {AuthenticationService} from "../../../../modules/authentication/authentication.service";
 import {Form, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DatePipe} from "@angular/common";
+import {ConstantsService} from "../../../../services/constants.service";
+
+const BASE_URL = new ConstantsService().BASE_URL;
 
 @Component({
   selector: 'app-user-booking-history',
@@ -29,7 +32,7 @@ export class UserBookingHistoryComponent implements OnInit {
 
 
   deleteBooking(id: number) {
-    this.http.delete('http://localhost:8090/bookings/' + id)
+    this.http.delete(BASE_URL + 'bookings/' + id)
       .subscribe(
         data => {
           this.getBookings();
@@ -41,7 +44,7 @@ export class UserBookingHistoryComponent implements OnInit {
   }
 
   sendReview(id: number) {
-    this.http.patch('http://localhost:8090/bookings/' + id, {review: this.reviewForm.get('review').value})
+    this.http.patch(BASE_URL + 'bookings/' + id, {review: this.reviewForm.get('review').value})
       .subscribe(
         data => {
           this.getBookings();
@@ -53,7 +56,7 @@ export class UserBookingHistoryComponent implements OnInit {
   }
 
   getBookings() {
-    this.http.get('http://localhost:8090/bookings?user=' + this.authService.currentUserObject.id)
+    this.http.get(BASE_URL + 'bookings?user=' + this.authService.currentUserObject.id)
       .subscribe(
         (data: Booking[]) => {
           this.userBookingsHistory =

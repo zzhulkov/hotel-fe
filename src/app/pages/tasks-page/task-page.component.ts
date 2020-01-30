@@ -4,6 +4,11 @@ import {LoginFormComponent} from "../../modules/authentication/login-form/login-
 import {Task} from "../../component/task";
 import {HttpClient} from "@angular/common/http";
 import {TaskStatus} from "../../component/task-status.type";
+import {ConstantsService} from "../../services/constants.service";
+
+
+const BASE_URL = new ConstantsService().BASE_URL;
+
 
 @Component({
   selector: 'app-task-page',
@@ -45,7 +50,7 @@ export class TaskPageComponent {
   }
 
   changeTaskStatus(id: number, newStatus: string) {
-    this.http.patch('http://localhost:8090/tasks/' + id, {status: newStatus})
+    this.http.patch( BASE_URL + 'tasks/' + id, {status: newStatus})
       .subscribe(
         data => {
           this.workerTasks
@@ -62,7 +67,7 @@ export class TaskPageComponent {
 
   getTasks() {
     if (this.canAccess) {
-      this.http.get('http://localhost:8090/tasks?executor=' + this.auth.currentUserObject.id)
+      this.http.get(BASE_URL + 'tasks?executor=' + this.auth.currentUserObject.id)
         .subscribe(
           (data: Task[]) => {
             this.workerTasks = data
