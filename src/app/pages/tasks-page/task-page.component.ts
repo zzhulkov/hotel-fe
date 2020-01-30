@@ -9,6 +9,7 @@ import {ConstantsService} from "../../services/constants.service";
 
 const BASE_URL = new ConstantsService().BASE_URL;
 
+
 @Component({
   selector: 'app-task-page',
   templateUrl: './task-page.component.html',
