@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {ConstantsService} from '../../../../../services/constants.service';
@@ -10,6 +10,7 @@ import {User} from "../../../../../component/user";
 import {BookingStatus} from "../../../../../component/booking-status.type";
 import {SelectService} from "../../../../../services/select.service";
 import {Unsubscribable} from "../../../../../component/Unsubscribable";
+import {DatePipe} from "@angular/common";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -25,7 +26,6 @@ const URL = new ConstantsService().BASE_URL;
 export class AddBookingDialogComponent extends Unsubscribable implements OnInit {
 
   addForm: FormGroup;
-
   booking = {} as Booking;
   subscription: Subscription;
 
@@ -45,7 +45,8 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
   private selectedStatus: BookingStatus;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, public selectService: SelectService) {
+  constructor(private formBuilder: FormBuilder, private datePipe: DatePipe,
+              private http: HttpClient, public selectService: SelectService) {
     super(selectService);
     this.getAllApartmentsClasses();
   }
@@ -57,27 +58,14 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
       totalPrice: [''],
       comment: [''],
       review: [''],
-      bookingStatus: [''],
-      email: [''],
+      bookingStatus: ['', Validators.required],
+      email: ['',
+        Validators.pattern('^[a-zA-Z0-9.!#$%&’*+=?^_`{|}~-]+\\@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+$')],
       nameClass: ['', Validators.required],
       roomNumber: ['']
     });
 
     this.checkValid();
-  }
-
-  fillForm(row: Booking) {
-    this.addForm.setValue({
-      startDate: row.startDate,
-      endDate: row.endDate,
-      totalPrice: row.totalPrice,
-      comment: row.comment,
-      review: row.review,
-      bookingStatus: row.bookingStatus,
-      email: row.user.email,
-      nameClass: row.apartmentClass.nameClass,
-      roomNumber: row.apartment.roomNumber
-    });
   }
 
   checkValid() {
@@ -112,13 +100,14 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
 
   onSelectAprtmntClass(apartmentsClass: ApartmentsClass): void {
     this.selectedApartmentsClass = apartmentsClass;
-    this.getFreeApartments(this.addForm.value.startDate, this.addForm.value.endDate, apartmentsClass.id);
-    this.addForm.setValue({
-      roomNumber: ''
-    });
+    const startDateTemp = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
+    const endDateTemp = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
+    console.log(this.addForm.value.startDate.toString());
+    this.getFreeApartments(startDateTemp.toString(), endDateTemp.toString(), apartmentsClass.id.toString());
+
   }
 
-  onSelectAprtmnt(apartments: Apartments): void {
+  onSelectApartment(apartments: Apartments): void {
     this.selectedApartment = apartments;
   }
 
@@ -145,7 +134,7 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
     });
   }
 
-  getFreeApartments(startDate: Date, endDate: Date, classId: number) {
+  getFreeApartments(startDate: string, endDate: string, classId: string) {
     this.http.get(URL + 'bookings' + '/findList?' + 'startDate=' + startDate +
       // 2020-04-19
       '&endDate=' + endDate +
@@ -157,6 +146,19 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
   }
 
   createBooking() {
+    const startDateCleaned = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
+    const endDateCleaned = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
+    this.addForm.setValue({
+      startDate: startDateCleaned,
+      endDate: endDateCleaned,
+      totalPrice: this.addForm.value.totalPrice,
+      comment: this.addForm.value.comment,
+      review: this.addForm.value.review,
+      bookingStatus: this.addForm.value.bookingStatus,
+      email: this.addForm.value.email,
+      nameClass: this.addForm.value.nameClass,
+      roomNumber: this.addForm.value.roomNumber
+    });
     this.http.post(URL + 'bookings/', this.booking).subscribe(
       res => {
         console.log(res);

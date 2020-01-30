@@ -9,14 +9,26 @@
           Apartment
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="change-apartment">
-    <mat-form-field>
-      <input matInput required="required" formControlName="startDate" class="full-width" placeholder="Start date">
-    </mat-form-field>
-    <br/>
-    <mat-form-field>
-      <input matInput required="required" formControlName="endDate" class="full-width" placeholder="End date">
-    </mat-form-field>
+      <form [formGroup]="changeForm" (ngSubmit)="onSubmit()" class="change-apartment">
+        <mat-form-field>
+          <input matInput [matDatepicker]="pickerStart"
+                 (dateChange)="onClickStartPicker()"
+                 required="required" formControlName="startDate"
+                 class="full-width" placeholder="Start date">
+          <mat-datepicker-toggle  matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+          <mat-datepicker #pickerStart></mat-datepicker>
+          <!--<input matInput required="required" formControlName="startDate" class="full-width" placeholder="Start date"> -->
+        </mat-form-field>
+        <br/>
+        <mat-form-field>
+          <input matInput [matDatepicker]="pickerEnd"
+                 (dateChange)="onClickEndPicker()"
+                 required="required" formControlName="endDate"
+                 class="full-width" placeholder="End date">
+          <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+          <mat-datepicker #pickerEnd></mat-datepicker>
+          <!-- <input matInput required="required" formControlName="endDate" class="full-width" placeholder="End date"> -->
+        </mat-form-field>
     <br/>
         <!--    <mat-form-field>-->
         <!--      <input matInput formControlName="totalPrice" class="full-width" placeholder="Total price">-->
@@ -47,7 +59,7 @@
     <br/>
     <mat-form-field>
       <mat-label>Apartments</mat-label>
-      <mat-select placeholder="Apartment room number" formControlName="roomNumber">
+      <mat-select placeholder="Apartment room number" formControlName="roomNumber" [disabled]="!selectedApartmentsClass">
         <mat-option *ngFor="let apartment of apartmentsList"
                     (click)="onSelectAprtmnt(apartment)"
                     value={{apartment?.roomNumber}}>
@@ -70,7 +82,8 @@
     </mat-form-field>
         <mat-dialog-actions align="end">
           <p></p>
-          <button style="background-color: tomato" class="mat-button" mat-raised-button (click)="deleteBooking()">Delete</button>
+          <button style="background-color: tomato" class="mat-button"
+                  mat-raised-button (click)="deleteBooking()">Delete</button>
           <button mat-button
                   [mat-dialog-close]="true">
             Cancel
