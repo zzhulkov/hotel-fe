@@ -3,13 +3,13 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {ConstantsService} from '../../../../../services/constants.service';
-import {Booking} from "../../../../../component/booking";
-import {Subscription} from "rxjs";
-import {Apartments} from "../../../../../component/apartments";
-import {User} from "../../../../../component/user";
-import {BookingStatus} from "../../../../../component/booking-status.type";
-import {SelectService} from "../../../../../services/select.service";
-import {Unsubscribable} from "../../../../../component/Unsubscribable";
+import {Booking} from '../../../../../component/booking';
+import {Subscription} from 'rxjs';
+import {Apartments} from '../../../../../component/apartments';
+import {User} from '../../../../../component/user';
+import {BookingStatus} from '../../../../../component/booking-status.type';
+import {SelectService} from '../../../../../services/select.service';
+import {Unsubscribable} from '../../../../../component/Unsubscribable';
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -52,15 +52,15 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
 
   ngOnInit(): void {
     this.addForm = this.formBuilder.group({
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      totalPrice: [''],
+      startDate: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')],
+      endDate: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')],
+      // totalPrice: [''],
       comment: [''],
       review: [''],
-      bookingStatus: [''],
-      email: [''],
+      bookingStatus: ['', Validators.required],
+      email: ['', Validators.pattern('^[a-zA-Z0-9.!#$%&’*+=?^_`{|}~-]+\\@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+$')],
       nameClass: ['', Validators.required],
-      roomNumber: ['']
+      roomNumber: ['', Validators.required]
     });
 
     this.checkValid();
@@ -100,7 +100,7 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
     this.booking.apartment = this.selectedApartment;
     this.booking.startDate = this.addForm.value.startDate;
     this.booking.endDate = this.addForm.value.endDate;
-    //this.booking.totalPrice = this.addForm.value.totalPrice;
+    // this.booking.totalPrice = this.addForm.value.totalPrice;
     this.booking.comment = this.addForm.value.comment;
     this.booking.review = this.addForm.value.review;
     this.booking.bookingStatus = this.selectedStatus;
