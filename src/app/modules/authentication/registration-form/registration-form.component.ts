@@ -11,13 +11,12 @@ import {Unsubscribable} from "../../../component/Unsubscribable";
   templateUrl: './registration-form.component.html',
   styleUrls: ['./registration-form.component.css']
 })
-export class RegistrationFormComponent extends Unsubscribable implements OnInit, OnDestroy {
+export class RegistrationFormComponent implements OnInit {
 
   private registrationForm: FormGroup;
   private isValid: boolean;
 
   constructor(private fb: FormBuilder, private authService: AuthenticationService) {
-    super();
   }
 
   ngOnInit() {
@@ -71,7 +70,7 @@ export class RegistrationFormComponent extends Unsubscribable implements OnInit,
     const user: User =  this.registrationForm.value;
     user.userRole = 'Client';
     console.log(user);
-    this.authService.registration(user).pipe(takeUntil(super.destroy$))
+    this.authService.registration(user)
       .subscribe(data => {
         if (data !== null) {
           this.isValid = false;

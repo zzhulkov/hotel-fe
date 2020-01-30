@@ -113,13 +113,11 @@ export class BookingCreatorComponent implements OnInit {
     if (!this.isApartmentClassFormComplete) return;
     console.log(this.apartmentClassId().value);
     const booking = new BookingToSend();
-    booking.apartmentClass = new ApartmentsClass();
-    booking.apartmentClass.id = this.apartmentClassId().value;
+    booking.apartmentClass = {id: this.apartmentClassId().value};
     booking.bookingStatus = 'Created';
     booking.startDate = this.datePipe.transform(this.startDate().value, 'yyyy-MM-dd');
     booking.endDate = this.datePipe.transform(this.endDate().value, 'yyyy-MM-dd');
-    booking.user = new User();
-    booking.user.id = this.authService.currentUserObject.id;
+    booking.user = {id: this.authService.currentUserObject.id};
     this.http.post('http://localhost:8090/bookings', booking)
       .subscribe(
         (data: Booking) => {
@@ -209,7 +207,7 @@ export class BookingCreatorComponent implements OnInit {
       );
   }
   getCurrentBookingServicesFromDB() {
-    this.http.get('http://localhost:8090/bookings/' + this.currentBooking.id + '/services')
+    this.http.get('http://localhost:8090/bookingAddServicesShip?booking=' + this.currentBooking.id)
       .subscribe(
         (data: BookingAddServicesWithCount[]) => {
           console.log('got current booking services from db');
@@ -270,7 +268,11 @@ class BookingToSend {
   createdDate: string;
   review: string;
   bookingStatus: string;
-  user: User;
-  apartmentClass: ApartmentsClass;
+  user: {
+    id: number;
+  };
+  apartmentClass: {
+    id: number;
+  };
   apartments: Apartments;
 }

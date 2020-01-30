@@ -16,17 +16,20 @@ export class TaskPageComponent {
   workerTasks: Task[];
 
   constructor(private auth: AuthenticationService, private http: HttpClient) {
-    console.log(auth.currentUserObject.userRole);
-    if (this.auth.currentUserObject !== null) {
-      if (this.auth.currentUserObject.userRole === 'Worker'
-        || this.auth.currentUserObject.userRole === 'Manager'
-        || this.auth.currentUserObject.userRole === 'Administrator'
-      ) {
-        this.canAccess = true;
-      }
-    }
-
-    this.getTasks();
+    this.auth.currentUserObservable
+      .subscribe(
+        data => {
+          if (data !== null) {
+            if (data.userRole === 'Worker'
+              || data.userRole === 'Manager'
+              || data.userRole === 'Administrator'
+            ) {
+              this.canAccess = true;
+            }
+          }
+          this.getTasks();
+        }
+      );
   }
 
   accept(id: number) {
