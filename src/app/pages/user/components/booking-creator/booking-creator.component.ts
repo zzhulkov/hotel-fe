@@ -85,7 +85,7 @@ export class BookingCreatorComponent implements OnInit {
     if (!this.isDatesFromComplete) return;
     const sd = this.datePipe.transform(this.startDate().value, 'yyyy-MM-dd');
     const ed = this.datePipe.transform(this.endDate().value, 'yyyy-MM-dd');
-    this.http.get(`http://localhost:8090/bookings/find?startDate=${sd}&endDate=${ed}`)
+    this.http.get( BASE_URL + `bookings/find?startDate=${sd}&endDate=${ed}`)
       .subscribe(
         (data: FreeApartments[]) => {
           this.freeapartmentClasses = data.filter(cl => {return cl.countOfApartments > 0});
