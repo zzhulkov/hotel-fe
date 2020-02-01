@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<section class="booking-list">
+  <div class="buttons">
+    Apartment prices &nbsp;
+    <!--<button class="mat-button" mat-raised-button (click)="addApartmentDialog()">Add</button>-->
+  </div>
+  <div class="wrap">
+    <div class="table">
+      <apartment-prices-table-component></apartment-prices-table-component>
+    </div>
+    <div class="tools">
+      <div class="change">
+       <!-- <app-change-booking-dialog *ngIf="id$ | async; else loading"></app-change-booking-dialog>-->
+      </div>
+      <ng-template #loading></ng-template>
+    </div>
+  </div>
+</section>

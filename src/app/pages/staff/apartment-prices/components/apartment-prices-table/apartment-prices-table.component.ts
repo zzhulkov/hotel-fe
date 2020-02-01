@@ -29,7 +29,7 @@ export class ApartmentPricesTableComponent extends Unsubscribable implements OnI
   selectedRow: any;
   apartmentPricesList = new MatTableDataSource<ApartmentPrice>();
   selectedApartmentPrice: ApartmentPrice;
-  displayedColumns = ['id', 'nameClass', 'price', 'startDate', 'endDate'];
+  displayedColumns = ['id', 'nameClass', 'price', 'startPeriod', 'endPeriod'];
   dataSource = this.apartmentPricesList;
   totalPriceFilter = new FormControl('');
   startDateFilter = new FormControl('');
