@@ -16,7 +16,7 @@ import {ApartmentPricesManagerComponent} from './apartment-prices-manager.compon
 import {ApartmentPricesTableComponent} from './components/apartment-prices-table/apartment-prices-table.component';
 //import {DeleteBookingDialogComponent} from './components/delete-booking-dialog/delete-booking-dialog.component';
 //import {ChangeBookingDialogComponent} from './components/change-booking-dialog/change-booking-dialog.component';
-//import {AddBookingDialogComponent} from './components/add-booking-dialog/add-booking-dialog.component';
+import {AddApartmentPricesDialogComponent} from './components/add-apartment-prices-dialog/add-apartment-prices-dialog.component';
 import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
@@ -44,15 +44,15 @@ import {ReactiveFormsModule} from '@angular/forms';
   declarations: [
     ApartmentPricesManagerComponent,
     ApartmentPricesTableComponent,
+    AddApartmentPricesDialogComponent
     //DeleteBookingDialogComponent,
     //ChangeBookingDialogComponent,
-    //AddBookingDialogComponent
   ],
   providers: [HttpService, EventEmitter],
   entryComponents: [
     //DeleteBookingDialogComponent,
     //ChangeBookingDialogComponent,
-    //AddBookingDialogComponent
+    AddApartmentPricesDialogComponent
   ],
 })
 export class ApartmentPricesManagerModule {

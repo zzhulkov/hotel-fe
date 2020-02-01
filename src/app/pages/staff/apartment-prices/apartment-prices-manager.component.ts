@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../../../http.service';
 import {MatDialog} from '@angular/material/dialog';
-//import {AddBookingDialogComponent} from './components/add-booking-dialog/add-booking-dialog.component';
+import {AddApartmentPricesDialogComponent} from './components/add-apartment-prices-dialog/add-apartment-prices-dialog.component';
 import {SelectService} from '../../../services/select.service';
 import {Observable, Subscription} from 'rxjs';
 import {Unsubscribable} from '../../../component/Unsubscribable';
@@ -27,12 +27,12 @@ export class ApartmentPricesManagerComponent extends Unsubscribable implements O
   ngOnInit(): void {
   }
 
-  /*addApartmentDialog() {
-    const dialogRef = this.dialog.open(AddBookingDialogComponent);
+  addApartmentPriceDialog() {
+    const dialogRef = this.dialog.open(AddApartmentPricesDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
-  }*/
+  }
 }
 

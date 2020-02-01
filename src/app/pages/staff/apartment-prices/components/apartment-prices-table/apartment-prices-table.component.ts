@@ -38,9 +38,9 @@ export class ApartmentPricesTableComponent extends Unsubscribable implements OnI
 
   filterValues = {
     id: '',
-    totalPrice: '',
-    startDate: '',
-    endDate: '',
+    price: '',
+    startPeriod: '',
+    endPeriod: '',
     nameClass: ''
   };
 
@@ -74,22 +74,22 @@ export class ApartmentPricesTableComponent extends Unsubscribable implements OnI
   ngOnInit() {
     this.totalPriceFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        totalPrice => {
-          this.filterValues.totalPrice = totalPrice;
+        price => {
+          this.filterValues.price = price;
           this.apartmentPricesList.filter = JSON.stringify(this.filterValues);
         }
       );
     this.startDateFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        startDate => {
-          this.filterValues.startDate = startDate;
+        startPeriod => {
+          this.filterValues.startPeriod = startPeriod;
           this.apartmentPricesList.filter = JSON.stringify(this.filterValues);
         }
       );
     this.endDateFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
-        endDate => {
-          this.filterValues.endDate = endDate;
+        endPeriod => {
+          this.filterValues.endPeriod = endPeriod;
           this.apartmentPricesList.filter = JSON.stringify(this.filterValues);
         }
       );
@@ -117,9 +117,9 @@ export class ApartmentPricesTableComponent extends Unsubscribable implements OnI
     // tslint:disable-next-line:only-arrow-functions
     const filterFunction = function(data, filter): boolean {
       const searchTerms = JSON.parse(filter);
-      let result = data.startDate.toString().toLowerCase().indexOf(searchTerms.startDate) !== -1
-        && data.endDate.toString().toLowerCase().indexOf(searchTerms.endDate) !== -1
-        && data.totalPrice.toString().toLowerCase().indexOf(searchTerms.totalPrice) !== -1
+      let result = data.startPeriod.toString().toLowerCase().indexOf(searchTerms.startPeriod) !== -1
+        && data.endPeriod.toString().toLowerCase().indexOf(searchTerms.endPeriod) !== -1
+        && data.price.toString().toLowerCase().indexOf(searchTerms.price) !== -1
         && data.apartmentClass.nameClass.indexOf(searchTerms.nameClass) !== -1;
       return result;
     };
