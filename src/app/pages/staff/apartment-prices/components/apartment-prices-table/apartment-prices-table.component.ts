@@ -51,24 +51,11 @@ export class ApartmentPricesTableComponent extends Unsubscribable implements OnI
     this.apartmentPricesList.filterPredicate = this.createFilter();
   }
 
-  /*TODO delete haveApartments*/
-  haveApartments(apartmentPrice: any): boolean {
-    if (apartmentPrice.apartment == null) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   selectRow(row: any): void {
     this.selectedRow = row.id;
     console.log(row);
     this.dataTransfer.setData(row);
     this.selectService.announceSelect(row);
-  }
-
-  onSelect(apartmentPrice: ApartmentPrice): void {
-    this.selectedApartmentPrice = apartmentPrice;
   }
 
   ngOnInit() {
