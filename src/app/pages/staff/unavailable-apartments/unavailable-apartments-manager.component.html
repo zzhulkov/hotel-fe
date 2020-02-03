@@ -1,0 +1,17 @@
+<section class="booking-list">
+  <div class="buttons">
+    Unavailable Apartments&nbsp;
+    <button class="mat-button" mat-raised-button (click)="addUnavailableApartmentDialog()">Add</button>
+  </div>
+  <div class="wrap">
+    <div class="table">
+      <unavailable-apartments-table-component></unavailable-apartments-table-component>
+    </div>
+    <div class="tools">
+      <div class="change">
+        <app-change-unavailable-apartment-dialog *ngIf="id$ | async; else loading"></app-change-unavailable-apartment-dialog>
+      </div>
+      <ng-template #loading></ng-template>
+    </div>
+  </div>
+</section>
