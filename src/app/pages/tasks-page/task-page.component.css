@@ -1,0 +1,54 @@
+.img-div{
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+}
+
+img{
+  width: 200px;
+}
+
+.loading{
+  display: flex;
+  justify-content: center;
+}
+
+.task-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  flex-direction: row;
+  padding: 30px;
+}
+
+.task{
+  padding: 15px;
+  margin: 10px 5px;
+}
+
+span{
+  color: #023EBC;
+}
+
+.task button:nth-of-type(2){
+  float: right;
+}
+
+.mat-button{
+  margin: 0 10px;
+}
+
+.mat-button.red-button{
+  background-color: crimson;
+  color: white;
+}
+
+.mat-button.blue-button{
+  background-color: #023EBC;
+  color: white;
+}
+
+.mat-button.green-button{
+  background-color: green;
+  color: white;
+}

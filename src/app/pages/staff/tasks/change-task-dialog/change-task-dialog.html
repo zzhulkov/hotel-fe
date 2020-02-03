@@ -64,9 +64,9 @@
           <mat-select required="required" placeholder="Apartment" formControlName="apartmentsRoomNumber">
             <mat-option *ngFor="let apartments of apartmentList"
                         (click)="onSelectApartment(apartments)"
-                        value="{{apartments.roomNumber}}">
+                        value="{{apartments?.roomNumber}}">
 
-              {{apartments.roomNumber}}
+              {{apartments?.roomNumber}}
             </mat-option>
           </mat-select>
         </mat-form-field>

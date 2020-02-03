@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
@@ -13,6 +13,7 @@ import {Apartments} from '../../../../../component/apartments';
 import {BookingStatus} from '../../../../../component/booking-status.type';
 import {MatDialog} from '@angular/material';
 import {DeleteBookingDialogComponent} from '../delete-booking-dialog/delete-booking-dialog.component';
+import {DatePipe} from "@angular/common";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -26,12 +27,14 @@ const URL = new ConstantsService().BASE_URL;
   templateUrl: './change-booking-dialog.html',
 })
 export class ChangeBookingDialogComponent extends Unsubscribable implements OnInit {
-
-  addForm: FormGroup;
+  isChangedStartPicker = false;
+  isChangedEndPicker = false;
+  changeForm: FormGroup;
 
   booking = {} as Booking;
   subscription: Subscription;
-
+  userList: User[];
+  selectedUser: User;
   apartmentsClassesList: ApartmentsClass[];
   apartmentsList: Apartments[];
   selectedApartmentsClass: ApartmentsClass;
@@ -51,24 +54,27 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
               private formBuilder: FormBuilder,
               private http: HttpClient,
               private dataTransfer: DataTransferService,
-              public selectService: SelectService) {
+              public selectService: SelectService,
+              private datePipe: DatePipe) {
     super(selectService);
     this.getAllApartmentsClasses();
+    this.getAllUsers();
     this.booking = dataTransfer.getData();
+    this.getFreeApartments(this.booking.startDate.toString(), this.booking.endDate.toString(), this.booking.apartmentClass.id.toString());
     console.log(this.booking);
   }
 
   ngOnInit(): void {
-    this.addForm = this.formBuilder.group({
-      startDate: [this.booking.startDate, Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')],
-      endDate: [this.booking.endDate, Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')],
+    this.changeForm = this.formBuilder.group({
+      startDate: [this.booking.startDate],
+      endDate: [this.booking.endDate],
       // totalPrice: [this.booking.totalPrice],
       comment: [this.booking.comment],
       review: [this.booking.review],
-      bookingStatus: [this.booking.bookingStatus, Validators.required],
-      email: [this.booking.user.email, Validators.pattern('^[a-zA-Z0-9.!#$%&’*+=?^_`{|}~-]+\\@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+$')],
-      nameClass: [this.booking.apartmentClass.nameClass, Validators.required],
-      roomNumber: [this.getRoomNumber(this.booking.apartment), Validators.required]
+      bookingStatus: [this.booking.bookingStatus],
+      email: [this.booking.user.email],
+      nameClass: [this.booking.apartmentClass.nameClass],
+      roomNumber: [this.getRoomNumber(this.booking.apartment)]
     });
 
     this.getUserByEmail();
@@ -85,8 +91,6 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
         this.selectedApartmentsClass = this.booking.apartmentClass;
         if (this.booking.apartment !== null) {
           this.selectedApartment = this.booking.apartment;
-        } else {
-          this.getFreeApartments(this.booking.startDate, this.booking.endDate, this.booking.apartmentClass.id);
         }
         this.fillForm(row);
       });
@@ -101,7 +105,7 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   }
 
   fillForm(row: Booking) {
-    this.addForm.setValue({
+    this.changeForm.setValue({
       startDate: row.startDate,
       endDate: row.endDate,
       // totalPrice: row.totalPrice,
@@ -115,23 +119,49 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   }
 
   checkValid() {
-    this.addForm.markAllAsTouched();
-    console.log('FormGroup: ', this.addForm.valid);
-  }
-
-  isValidForAprtmnt(): boolean {
-    if ((this.addForm.value.startDate !== '') && (this.addForm.value.endDate !== '') && (this.selectedApartmentsClass !== null)) {
-      return true;
-    }
-    return false;
+    this.changeForm.markAllAsTouched();
+    console.log('FormGroup: ', this.changeForm.valid);
   }
 
   isSubmitDisabled(): boolean {
-    return !this.addForm.valid;
+    return !this.changeForm.valid;
+  }
+
+  onClickStartPicker(): void {
+    const startDateClean = this.datePipe.transform(this.changeForm.value.startDate, 'yyyy-MM-dd');
+    console.log(startDateClean.toString());
+    this.changeForm.setValue({
+      startDate: startDateClean,
+      endDate: this.changeForm.value.endDate,
+      comment: this.changeForm.value.comment,
+      review: this.changeForm.value.review,
+      bookingStatus: this.changeForm.value.bookingStatus,
+      email: this.changeForm.value.email,
+      nameClass: this.changeForm.value.nameClass,
+      roomNumber: this.changeForm.value.roomNumber
+    });
+    console.log(this.changeForm.value.startDate);
+    this.isChangedStartPicker = true;
+  }
+
+  onClickEndPicker(): void {
+    const endDateClean = this.datePipe.transform(this.changeForm.value.endDate, 'yyyy-MM-dd');
+    console.log(this.changeForm.value.endDate.getDate());
+    this.changeForm.setValue({
+      startDate: this.changeForm.value.startDate,
+      endDate: endDateClean,
+      comment: this.changeForm.value.comment,
+      review: this.changeForm.value.review,
+      bookingStatus: this.changeForm.value.bookingStatus,
+      email: this.changeForm.value.email,
+      nameClass: this.changeForm.value.nameClass,
+      roomNumber: this.changeForm.value.roomNumber
+    });
+    this.isChangedEndPicker = true;
   }
 
   onSubmit() {
-    if (this.addForm.valid) {
+    if (this.changeForm.valid) {
       this.getUserByEmail();
       this.setBooking();
       this.createBooking();
@@ -149,26 +179,28 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   setBooking() {
     this.booking.apartmentClass = this.selectedApartmentsClass;
     this.booking.apartment = this.selectedApartment;
-    this.booking.startDate = this.addForm.value.startDate;
-    this.booking.endDate = this.addForm.value.endDate;
+    this.booking.startDate = this.changeForm.value.startDate;
+    this.booking.endDate = this.changeForm.value.endDate;
     // this.booking.totalPrice = this.addForm.value.totalPrice;
-    this.booking.comment = this.addForm.value.comment;
-    this.booking.review = this.addForm.value.review;
+    this.booking.comment = this.changeForm.value.comment;
+    this.booking.review = this.changeForm.value.review;
     this.booking.bookingStatus = this.selectedStatus;
-    this.booking.user = this.user;
+    this.booking.user = this.selectedUser;
     console.log(this.booking);
   }
 
   onSelectAprtmntClass(apartmentsClass: ApartmentsClass): void {
     this.selectedApartmentsClass = apartmentsClass;
-    this.getFreeApartments(this.addForm.value.startDate, this.addForm.value.endDate, apartmentsClass.id);
-    this.addForm.setValue({
-      roomNumber: ''
-    });
+    this.getFreeApartments(this.changeForm.value.startDate.toString(), this.changeForm.value.endDate.toString(), apartmentsClass.id.toString());
+    console.log(this.changeForm.value.startDate.toString());
   }
 
   onSelectAprtmnt(apartments: Apartments): void {
     this.selectedApartment = apartments;
+  }
+
+  onSelectEmail(user: User): void {
+    this.selectedUser = user;
   }
 
   onSelectStatus(status: any): void {
@@ -177,7 +209,7 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
 
   getUserByEmail() {
     let uList: User[];
-    this.http.get(URL + 'users' + '?email=' + this.addForm.value.email).subscribe(
+    this.http.get(URL + 'users' + '?email=' + this.changeForm.value.email).subscribe(
       res => {
         console.log(res);
         uList = (res as User[]);
@@ -193,7 +225,14 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
     });
   }
 
-  getFreeApartments(startDate: Date, endDate: Date, classId: number) {
+  getAllUsers() {
+    this.http.get(URL + 'users').subscribe(res => {
+      console.log(res);
+      this.userList = (res as User[]);
+    });
+  }
+
+  getFreeApartments(startDate: string, endDate: string, classId: string) {
     this.http.get(URL + 'bookings' + '/findList?'
       + 'startDate=' + startDate
       + '&endDate=' + endDate
