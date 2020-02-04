@@ -6,8 +6,8 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {FormControl} from '@angular/forms';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
-import {DataTransferService} from "../../../../../services/data-transfer.service";
-import {SelectService} from "../../../../../services/select.service";
+import {DataTransferService} from '../../../../../services/data-transfer.service';
+import {SelectService} from '../../../../../services/select.service';
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -93,7 +93,7 @@ export class ApartmentsClassesTableComponent extends Unsubscribable implements O
     // tslint:disable-next-line:only-arrow-functions
     let filterFunction = function(data, filter): boolean {
       let searchTerms = JSON.parse(filter);
-      return data.nameClass.indexOf(searchTerms.nameClass) !== -1
+      return data.nameClass.toString().toLowerCase().indexOf(searchTerms.nameClass) !== -1
         && data.numberOfRooms.toString().toLowerCase().indexOf(searchTerms.numberOfRooms) !== -1
         && data.numberOfCouchette.toString().toLowerCase().indexOf(searchTerms.numberOfCouchette) !== -1;
     };

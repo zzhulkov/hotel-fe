@@ -37,7 +37,6 @@ export class ApartmentPricesTableComponent extends Unsubscribable implements OnI
   apartmentClassFilter = new FormControl('');
 
   filterValues = {
-    id: '',
     price: '',
     startPeriod: '',
     endPeriod: '',
@@ -107,7 +106,7 @@ export class ApartmentPricesTableComponent extends Unsubscribable implements OnI
       let result = data.startPeriod.toString().toLowerCase().indexOf(searchTerms.startPeriod) !== -1
         && data.endPeriod.toString().toLowerCase().indexOf(searchTerms.endPeriod) !== -1
         && data.price.toString().toLowerCase().indexOf(searchTerms.price) !== -1
-        && data.apartmentClass.nameClass.indexOf(searchTerms.nameClass) !== -1;
+        && data.apartmentClass.nameClass.toString().toLowerCase().indexOf(searchTerms.nameClass) !== -1;
       return result;
     };
     return filterFunction;
