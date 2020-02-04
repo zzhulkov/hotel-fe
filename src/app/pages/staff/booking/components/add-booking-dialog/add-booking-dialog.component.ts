@@ -24,7 +24,8 @@ const URL = new ConstantsService().BASE_URL;
   templateUrl: './add-booking-dialog.html',
 })
 export class AddBookingDialogComponent extends Unsubscribable implements OnInit {
-
+  isChangedStartPicker = false;
+  isChangedEndPicker = false;
   addForm: FormGroup;
   booking = {} as Booking;
   subscription: Subscription;
@@ -96,6 +97,12 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
   }
 
   setBooking() {
+    const startDateCleaned = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
+    const endDateCleaned = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
+    this.addForm.patchValue({
+      startDate: startDateCleaned,
+      endDate: endDateCleaned
+    });
     this.booking.apartmentClass = this.selectedApartmentsClass;
     this.booking.apartment = this.selectedApartment;
     this.booking.startDate = this.addForm.value.startDate;
@@ -158,25 +165,32 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
   }
 
   createBooking() {
-    const startDateCleaned = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
-    const endDateCleaned = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
-    this.addForm.setValue({
-      startDate: startDateCleaned,
-      endDate: endDateCleaned,
-      totalPrice: this.addForm.value.totalPrice,
-      comment: this.addForm.value.comment,
-      review: this.addForm.value.review,
-      bookingStatus: this.addForm.value.bookingStatus,
-      email: this.addForm.value.email,
-      nameClass: this.addForm.value.nameClass,
-      roomNumber: this.addForm.value.roomNumber
-    });
     this.http.post(URL + 'bookings/', this.booking).subscribe(
       res => {
         console.log(res);
         this.booking = (res as Booking);
       });
   }
+
+  onClickStartPicker(): void {
+    const startDateClean = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
+    console.log(startDateClean.toString());
+    this.addForm.patchValue({
+      startDate: startDateClean
+    });
+    console.log(this.addForm.value.startDate);
+    this.isChangedStartPicker = true;
+  }
+
+  onClickEndPicker(): void {
+    const endDateClean = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
+    console.log(this.addForm.value.endDate.getDate());
+    this.addForm.patchValue({
+      endDate: endDateClean
+    });
+    this.isChangedEndPicker = true;
+  }
+
 }
 
 

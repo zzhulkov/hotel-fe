@@ -3,6 +3,7 @@
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
         <input matInput [matDatepicker]="pickerStart"
+               (dateChange)="onClickStartPicker()"
                required="required" formControlName="startDate"
                class="full-width" placeholder="Start date">
         <mat-datepicker-toggle  matSuffix [for]="pickerStart"></mat-datepicker-toggle>
@@ -12,6 +13,7 @@
     <br/>
     <mat-form-field>
       <input matInput [matDatepicker]="pickerEnd"
+             (dateChange)="onClickEndPicker()"
              required="required" formControlName="endDate"
              class="full-width" placeholder="End date"
       [disabled]="!addForm.value.startDate">

@@ -89,11 +89,6 @@ export class ChangeApartmentPricesDialogComponent extends Unsubscribable impleme
   }
 
   createApartmentPrice() {
-    const startDateCleaned = this.datePipe.transform(this.addForm.value.startPeriod, 'yyyy-MM-dd');
-    const endDateCleaned = this.datePipe.transform(this.addForm.value.endPeriod, 'yyyy-MM-dd');
-    this.addForm.patchValue({
-      startPeriod: startDateCleaned,
-      endPeriod: endDateCleaned});
     this.http.put(URL + 'apartmentPrices/' + this.apartmentPrice.id, this.apartmentPrice).subscribe(
       res => {
         console.log(res);
@@ -102,6 +97,13 @@ export class ChangeApartmentPricesDialogComponent extends Unsubscribable impleme
   }
 
   setApartmentPrice() {
+    const startDateCleaned = this.datePipe.transform(this.addForm.value.startPeriod, 'yyyy-MM-dd');
+    const endDateCleaned = this.datePipe.transform(this.addForm.value.endPeriod, 'yyyy-MM-dd');
+    this.addForm.setValue({
+      startPeriod: startDateCleaned,
+      endPeriod: endDateCleaned,
+      nameClass: this.addForm.value.nameClass,
+      price: this.addForm.value.price});
     this.apartmentPrice.apartmentClass = this.selectedApartmentsClass;
     this.apartmentPrice.startPeriod = this.addForm.value.startPeriod;
     this.apartmentPrice.endPeriod = this.addForm.value.endPeriod;

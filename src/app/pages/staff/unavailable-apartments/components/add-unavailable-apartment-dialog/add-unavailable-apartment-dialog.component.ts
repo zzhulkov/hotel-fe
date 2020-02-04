@@ -65,6 +65,11 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
   }
 
   setUnavailableApartment() {
+    const startDateCleaned = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
+    const endDateCleaned = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
+    this.addForm.patchValue({
+      startDate: startDateCleaned,
+      endDate: endDateCleaned});
     this.unavailableApartment.apartment = this.selectedApartment;
     this.unavailableApartment.startDate = this.addForm.value.startDate;
     this.unavailableApartment.endDate = this.addForm.value.endDate;
@@ -85,11 +90,6 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
   }
 
   createUnavailableApartment() {
-    const startDateCleaned = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
-    const endDateCleaned = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
-    this.addForm.patchValue({
-      startDate: startDateCleaned,
-      endDate: endDateCleaned});
     this.http.post(URL + 'unavailableApartments/', this.unavailableApartment).subscribe(
       res => {
         console.log(res);

@@ -91,6 +91,11 @@ export class ChangeUnavailableApartmentDialogComponent extends Unsubscribable im
   }
 
   setUnavailableApartment() {
+    const startDateCleaned = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
+    const endDateCleaned = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
+    this.addForm.patchValue({
+      startDate: startDateCleaned,
+      endDate: endDateCleaned});
     this.unavailableApartment.apartment = this.selectedApartments;
     this.unavailableApartment.startDate = this.addForm.value.startDate;
     this.unavailableApartment.endDate = this.addForm.value.endDate;
@@ -99,11 +104,6 @@ export class ChangeUnavailableApartmentDialogComponent extends Unsubscribable im
   }
 
   createUnavailableApartment() {
-    const startDateCleaned = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
-    const endDateCleaned = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
-    this.addForm.patchValue({
-      startDate: startDateCleaned,
-      endDate: endDateCleaned});
     this.http.put(URL + 'unavailableApartments/' + this.unavailableApartment.id, this.unavailableApartment).subscribe(
       res => {
         console.log(res);
