@@ -10,7 +10,9 @@ import {RouterModule} from '@angular/router';
 import {ApartmentsManagerModule} from './apartments/apartments-manager.module';
 import {StaffManagerModule} from './staff/staff-manager.module';
 import {ApartmentsClassesManagerModule} from './apartments-classes/apartments-classes-manager.module';
+import {UnavailableApartmentsManagerModule} from './unavailable-apartments/unavailable-apartments-manager.module';
 import {UserManagerModule} from './user/user-manager.module';
+import {ApartmentPricesManagerModule} from './apartment-prices/apartment-prices-manager.module';
 import {ServicesManagerModule} from "./services/services-manager.module";
 import {AuthenticationFormsModule} from "../../modules/authentication/authentication-forms.module";
 
@@ -21,7 +23,9 @@ import {AuthenticationFormsModule} from "../../modules/authentication/authentica
     MatButtonModule,
     ApartmentsManagerModule,
     ApartmentsClassesManagerModule,
+    UnavailableApartmentsManagerModule,
     BookingManagerModule,
+    ApartmentPricesManagerModule,
     UserManagerModule,
     ServicesManagerModule,
     StaffManagerModule,

@@ -53,7 +53,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     bookingStatus: '',
     email: '',
     nameClass: '',
-    roomNumber: '',
+    apartmentRoomNumber: '',
   };
 
   constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
@@ -150,7 +150,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     this.apartmentFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         roomNumber => {
-          this.filterValues.roomNumber = roomNumber;
+          this.filterValues.apartmentRoomNumber = roomNumber;
           this.bookingList.filter = JSON.stringify(this.filterValues);
         }
       );

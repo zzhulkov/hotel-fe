@@ -7,6 +7,8 @@ import {StaffManagerComponent} from './pages/staff/staff/staff-manager.component
 import {UserComponent} from './pages/user/user.component';
 import {TaskPageComponent} from "./pages/tasks-page/task-page.component";
 import {ApartmentsClassesManagerComponent} from './pages/staff/apartments-classes/apartments-classes-manager.component';
+import {ApartmentPricesManagerComponent} from './pages/staff/apartment-prices/apartment-prices-manager.component';
+import {UnavailableApartmentsManagerComponent} from './pages/staff/unavailable-apartments/unavailable-apartments-manager.component';
 import {UserManagerComponent} from "./pages/staff/user/user-manager.component";
 import {ServicesManagerComponent} from "./pages/staff/services/services-manager.component";
 
@@ -37,6 +39,12 @@ const routes: Routes = [
   },
   {
     path: 'manager/tasks', component: TaskManagerComponent
+  },
+  {
+    path: 'manager/apartment-prices', component: ApartmentPricesManagerComponent
+  },
+  {
+    path: 'manager/unavailable-apartments', component: UnavailableApartmentsManagerComponent
   }
 ];
 
