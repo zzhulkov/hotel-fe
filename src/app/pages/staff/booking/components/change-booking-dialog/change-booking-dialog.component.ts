@@ -130,15 +130,8 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   onClickStartPicker(): void {
     const startDateClean = this.datePipe.transform(this.changeForm.value.startDate, 'yyyy-MM-dd');
     console.log(startDateClean.toString());
-    this.changeForm.setValue({
-      startDate: startDateClean,
-      endDate: this.changeForm.value.endDate,
-      comment: this.changeForm.value.comment,
-      review: this.changeForm.value.review,
-      bookingStatus: this.changeForm.value.bookingStatus,
-      email: this.changeForm.value.email,
-      nameClass: this.changeForm.value.nameClass,
-      roomNumber: this.changeForm.value.roomNumber
+    this.changeForm.patchValue({
+      startDate: startDateClean
     });
     console.log(this.changeForm.value.startDate);
     this.isChangedStartPicker = true;
@@ -147,15 +140,8 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   onClickEndPicker(): void {
     const endDateClean = this.datePipe.transform(this.changeForm.value.endDate, 'yyyy-MM-dd');
     console.log(this.changeForm.value.endDate.getDate());
-    this.changeForm.setValue({
-      startDate: this.changeForm.value.startDate,
-      endDate: endDateClean,
-      comment: this.changeForm.value.comment,
-      review: this.changeForm.value.review,
-      bookingStatus: this.changeForm.value.bookingStatus,
-      email: this.changeForm.value.email,
-      nameClass: this.changeForm.value.nameClass,
-      roomNumber: this.changeForm.value.roomNumber
+    this.changeForm.patchValue({
+      endDate: endDateClean
     });
     this.isChangedEndPicker = true;
   }
@@ -191,7 +177,8 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
 
   onSelectAprtmntClass(apartmentsClass: ApartmentsClass): void {
     this.selectedApartmentsClass = apartmentsClass;
-    this.getFreeApartments(this.changeForm.value.startDate.toString(), this.changeForm.value.endDate.toString(), apartmentsClass.id.toString());
+    this.getFreeApartments(this.changeForm.value.startDate.toString(),
+      this.changeForm.value.endDate.toString(), apartmentsClass.id.toString());
     console.log(this.changeForm.value.startDate.toString());
   }
 
