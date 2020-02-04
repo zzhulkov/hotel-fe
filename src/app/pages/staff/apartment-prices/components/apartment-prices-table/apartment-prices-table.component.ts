@@ -18,7 +18,7 @@ const URL = new ConstantsService().BASE_URL;
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'apartment-prices-table-component',
-  styleUrls: ['../../../styles/table.css'],
+  styleUrls: ['../../../styles/table.css', '../../../styles/first-row-padding-fix.css'],
   templateUrl: 'apartment-prices-table.html',
 })
 export class ApartmentPricesTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
