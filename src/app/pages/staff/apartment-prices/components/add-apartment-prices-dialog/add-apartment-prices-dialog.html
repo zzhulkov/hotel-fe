@@ -2,11 +2,20 @@
   <h2 mat-dialog-title>Add Booking</h2>
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
-      <input matInput required="required" formControlName="startPeriod" class="full-width" placeholder="Start period">
+      <input matInput [matDatepicker]="pickerStart"
+             required="required" formControlName="startPeriod"
+             class="full-width" placeholder="Start period">
+      <mat-datepicker-toggle  matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput required="required" formControlName="endPeriod" class="full-width" placeholder="End period">
+      <input matInput [matDatepicker]="pickerEnd"
+             required="required" formControlName="endPeriod"
+             class="full-width" placeholder="End period"
+             [disabled]="!addForm.value.startPeriod">
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
     </mat-form-field>
     <br/>
     <mat-form-field>

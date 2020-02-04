@@ -7,6 +7,7 @@ import {ApartmentPrice} from '../../../../../component/apartment-price';
 import {Subscription} from 'rxjs';
 import {SelectService} from '../../../../../services/select.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
+import {DatePipe} from "@angular/common";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -30,7 +31,8 @@ export class AddApartmentPricesDialogComponent extends Unsubscribable implements
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
   // tslint:disable-next-line:max-line-length
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, public selectService: SelectService) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,
+              public selectService: SelectService, private datePipe: DatePipe) {
     super(selectService);
     this.getAllApartmentsClasses();
   }
@@ -39,8 +41,8 @@ export class AddApartmentPricesDialogComponent extends Unsubscribable implements
     this.addForm = this.formBuilder.group({
       nameClass: ['', Validators.required],
       price: ['', Validators.pattern('(\\d+)')],
-      startPeriod: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')],
-      endPeriod: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')]
+      startPeriod: ['', Validators.required],
+      endPeriod: ['', Validators.required]
     });
 
     this.checkValid();
@@ -91,6 +93,11 @@ export class AddApartmentPricesDialogComponent extends Unsubscribable implements
   }
 
   createApartmentPrice() {
+    const startDateCleaned = this.datePipe.transform(this.addForm.value.startPeriod, 'yyyy-MM-dd');
+    const endDateCleaned = this.datePipe.transform(this.addForm.value.endPeriod, 'yyyy-MM-dd');
+    this.addForm.patchValue({
+      startPeriod: startDateCleaned,
+      endPeriod: endDateCleaned});
     this.http.post(URL + 'apartmentPrices/', this.apartmentPrice).subscribe(
       res => {
         console.log(res);

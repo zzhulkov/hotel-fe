@@ -11,6 +11,7 @@ import {SelectService} from '../../../../../services/select.service';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material';
 import {DeleteApartmentPricesDialogComponent} from '../delete-apartment-prices-dialog/delete-apartment-prices-dialog.component';
+import {DatePipe} from "@angular/common";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -38,7 +39,8 @@ export class ChangeApartmentPricesDialogComponent extends Unsubscribable impleme
               private formBuilder: FormBuilder,
               private http: HttpClient,
               private dataTransfer: DataTransferService,
-              public selectService: SelectService) {
+              public selectService: SelectService,
+              private datePipe: DatePipe) {
     super(selectService);
     this.getAllApartmentsClasses();
     this.apartmentPrice = dataTransfer.getData();
@@ -49,8 +51,8 @@ export class ChangeApartmentPricesDialogComponent extends Unsubscribable impleme
     this.addForm = this.formBuilder.group({
       nameClass: ['', Validators.required],
       price: ['', Validators.pattern('(\\d+)')],
-      startPeriod: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')],
-      endPeriod: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')]
+      startPeriod: ['', Validators.required],
+      endPeriod: ['', Validators.required]
     });
     this.checkValid();
     this.subscription = this.selectService.selectAnnounced$
@@ -87,6 +89,11 @@ export class ChangeApartmentPricesDialogComponent extends Unsubscribable impleme
   }
 
   createApartmentPrice() {
+    const startDateCleaned = this.datePipe.transform(this.addForm.value.startPeriod, 'yyyy-MM-dd');
+    const endDateCleaned = this.datePipe.transform(this.addForm.value.endPeriod, 'yyyy-MM-dd');
+    this.addForm.patchValue({
+      startPeriod: startDateCleaned,
+      endPeriod: endDateCleaned});
     this.http.put(URL + 'apartmentPrices/' + this.apartmentPrice.id, this.apartmentPrice).subscribe(
       res => {
         console.log(res);
