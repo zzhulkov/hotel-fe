@@ -27,7 +27,7 @@ const URL = new ConstantsService().BASE_URL;
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'apartments-table-component',
-  styleUrls: ['../../../styles/table.css'],
+  styleUrls: ['../../../styles/table.css', 'apartments-table.component.css'],
   templateUrl: 'apartments-table.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

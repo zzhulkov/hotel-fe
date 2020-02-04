@@ -14,7 +14,7 @@ const URL = new ConstantsService().BASE_URL;
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'staff-table-component',
-  styleUrls: ['../../../styles/table.css'],
+  styleUrls: ['../../../styles/table.css', '../../../styles/first-row-padding-fix.css'],
   templateUrl: 'staff-table.html',
 })
 export class StaffTableComponent extends Unsubscribable implements OnInit, AfterViewInit {

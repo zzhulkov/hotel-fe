@@ -5,7 +5,7 @@
   <table mat-table [dataSource]="apartmentsClassesList">
   <ng-container matColumnDef="nameClass">
       <th mat-header-cell *matHeaderCellDef>
-        Class name
+        <p>Class name</p>
       <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="nameClassFilter">
@@ -16,7 +16,7 @@
 
     <ng-container matColumnDef="numberOfRooms">
       <th mat-header-cell *matHeaderCellDef>
-        Number of rooms
+        <p>Number of rooms</p>
       <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="numberOfRoomsFilter">
@@ -27,7 +27,7 @@
 
     <ng-container matColumnDef="numberOfCouchette">
       <th mat-header-cell *matHeaderCellDef>
-        Number of couchette
+        <p>Number of couchette</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="numberOfCouchetteFilter">

@@ -6,6 +6,15 @@
   width: 100%;
 }
 
+.filter{
+  width: 75%;
+}
+
+th>p{
+  color: coral;
+}
+
 .highlightRow {
   background-color: #ffbd88;
+  color: white;
 }

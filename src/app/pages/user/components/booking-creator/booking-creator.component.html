@@ -115,10 +115,11 @@
       </ul>
 
       <p>Total price: <span>{{dbBooking.totalPrice}}$</span></p>
+      <p *ngIf="currentBooking.bookingStatus == 'Confirmed'" style="color: #023EBC">Booking confirmed, you can close this window</p>
     </div>
     <form>
       <button mat-button type="reset" matStepperPrevious (click)="onChangeServicesClick()">Change services</button>
-      <button mat-button matStepperNext (click)="onConfirmBookingClick()">Finish booking</button>
+      <button mat-button matStepperNext (click)="onConfirmBookingClick()">Confirme booking</button>
     </form>
   </mat-step>
 </mat-horizontal-stepper>

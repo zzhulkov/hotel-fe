@@ -6,7 +6,7 @@
 
     <ng-container matColumnDef="roomNumber">
       <th mat-header-cell *matHeaderCellDef>
-        Room number
+        <p>Room number</p>
       <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="roomNumberFilter">
@@ -17,7 +17,7 @@
 
     <ng-container matColumnDef="photo">
       <th mat-header-cell *matHeaderCellDef>
-        Photo url
+        <p>Photo url</p>
       <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="photoFilter">
@@ -28,7 +28,7 @@
 
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef>
-        Description
+        <p>Description</p>
       <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="descriptionFilter">
@@ -39,7 +39,7 @@
 
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef>
-        Status
+        <p>Status</p>
       <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="statusFilter">
@@ -50,7 +50,7 @@
 
     <ng-container matColumnDef="apartmentClass.id">
       <th mat-header-cell *matHeaderCellDef>
-        Class id
+        <p>Class id</p>
       <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="classIdFilter">
@@ -61,7 +61,7 @@
 
     <ng-container matColumnDef="apartmentClass.nameClass">
       <th mat-header-cell *matHeaderCellDef>
-        Class name
+        <p>Class name</p>
       <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="nameClassFilter">
@@ -72,7 +72,7 @@
 
     <ng-container matColumnDef="apartmentClass.numberOfRooms">
       <th mat-header-cell *matHeaderCellDef>
-        Number of rooms
+        <p>Number of rooms</p>
       <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="numberOfRoomsFilter">
@@ -83,7 +83,7 @@
 
     <ng-container matColumnDef="apartmentClass.numberOfCouchette">
       <th mat-header-cell *matHeaderCellDef>
-        Number of couchette
+        <p>Number of couchette</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="numberOfCouchetteFilter">
