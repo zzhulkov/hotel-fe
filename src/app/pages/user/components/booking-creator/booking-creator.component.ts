@@ -50,6 +50,7 @@ export class BookingCreatorComponent implements OnInit {
       endDate: [{value: this.eDate, disabled: true}, [Validators.required]]
     });
 
+    // Check dates inputed from parent component
     if(this.sDate != null && this.eDate != null)
       this.isDatesFromComplete = true;
 
@@ -85,7 +86,9 @@ export class BookingCreatorComponent implements OnInit {
     if (!this.isDatesFromComplete) return;
     const sd = this.datePipe.transform(this.startDate().value, 'yyyy-MM-dd');
     const ed = this.datePipe.transform(this.endDate().value, 'yyyy-MM-dd');
-    this.http.get( BASE_URL + `bookings/find?startDate=${sd}&endDate=${ed}`)
+
+    // Get info about free apartmentsClasse
+    this.http.get(BASE_URL + `bookings/find?startDate=${sd}&endDate=${ed}`)
       .subscribe(
         (data: FreeApartments[]) => {
           this.freeapartmentClasses = data.filter(cl => {return cl.countOfApartments > 0});
@@ -114,7 +117,10 @@ export class BookingCreatorComponent implements OnInit {
 
   onApartmentClassFormSubmit() {
     if (!this.isApartmentClassFormComplete) return;
+
     console.log(this.apartmentClassId().value);
+
+    // send booking
     const booking = new BookingToSend();
     booking.apartmentClass = {id: this.apartmentClassId().value};
     booking.bookingStatus = 'Created';
@@ -134,6 +140,7 @@ export class BookingCreatorComponent implements OnInit {
         }
       );
 
+    // get services list
     this.http.get(BASE_URL + 'bookingAddServices')
       .subscribe(
         (data: BookingAddService[]) => {
@@ -171,6 +178,7 @@ export class BookingCreatorComponent implements OnInit {
   }
 
   onServicesFormSubmit() {
+    // get choosed services from html
     let servicesCount = 0;
     this.currentServices = [];
     const values =  document.getElementsByName('service-checkbox')
@@ -182,6 +190,7 @@ export class BookingCreatorComponent implements OnInit {
       });
     console.log(this.currentServices);
 
+    // send choosed services
     this.http.post(BASE_URL + 'bookings/' + this.currentBooking.id + '/servicesList', this.currentServices)
       .subscribe(
         data => {

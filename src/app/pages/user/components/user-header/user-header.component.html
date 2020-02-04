@@ -32,7 +32,7 @@
 </div>
 
 <div [ngSwitch]="activeOption" class="auth-reg-container" *ngIf="activeOption != 'hidden'">
-  <div class="close-btn"><img src="../../../../../assets/img/icons/close-button-clipart-6.jpg" (click)="activeOption = 'hidden'"/></div>
+  <div class="close-btn"><img src="../../../../../assets/img/icons/close-button-clipart-6.png" (click)="activeOption = 'hidden'"/></div>
   <ng-template ngSwitchCase="register">
     <app-registration-form></app-registration-form>
   </ng-template>

@@ -4,6 +4,7 @@
     <input matInput type="text" formControlName="firstname" id="firstname" required (ngModelChange)="onChange()">
     <mat-error *ngIf="firstname().errors">
       <span *ngIf="firstname().errors.required">This field must be filled</span>
+      <span *ngIf="firstname().errors.pattern">This field can contain only letters, spaces or `</span>
     </mat-error>
   </mat-form-field>
 
@@ -12,6 +13,7 @@
     <input matInput type="text" formControlName="lastname" id="lastname" required (ngModelChange)="onChange()">
     <mat-error *ngIf="lastname().errors">
       <span *ngIf="lastname().errors.required">This field must be filled</span>
+      <span *ngIf="lastname().errors.pattern">This field can contain only letters, spaces or `</span>
     </mat-error>
   </mat-form-field>
 
@@ -23,6 +25,7 @@
       <span *ngIf="login().errors?.minlength">Minimal length 5 symbols</span>
       <span *ngIf="login().errors?.maxlength">Msximal length 20 symbols</span>
       <span *ngIf="login().errors?.unique">Login is already reserved</span>
+      <span *ngIf="login().errors.pattern">This field can contain only letters, numbers or _ </span>
     </mat-error>
   </mat-form-field>
 
@@ -33,6 +36,7 @@
       <span *ngIf="password().errors.required">This field must be filled</span>
       <span *ngIf="password().errors?.minlength">Minimal length 8 symbols</span>
       <span *ngIf="password().errors?.maxlength">Msximal length 20 symbols</span>
+      <span *ngIf="password().errors.pattern">This field can contain only letters, numbers or _ </span>
     </mat-error>
   </mat-form-field>
 
@@ -51,6 +55,7 @@
     <input matInput type="tel" formControlName="phoneNumber" id="phoneNumber" required (ngModelChange)="onChange()">
     <mat-error *ngIf="phoneNumber().errors">
       <span *ngIf="phoneNumber().errors.required">This field must be filled</span>
+      <span *ngIf="phoneNumber().errors.pattern">This field can contain only numbers, - or + </span>
     </mat-error>
   </mat-form-field>
 

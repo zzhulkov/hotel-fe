@@ -1,14 +1,20 @@
-<div class="img-div"><img src="https://cs8.pikabu.ru/images/previews_comm/2016-03_6/14592464771100688822.png" alt="Готов вкалывать"></div>
+<!--<div class="img-div"><img src="https://cs8.pikabu.ru/images/previews_comm/2016-03_6/14592464771100688822.png" alt="Готов вкалывать"></div>-->
 
-<div *ngIf="!canAccess"><app-login-form></app-login-form></div>
+<div *ngIf="logged" class="logged">
+  <p>You are logged in as <span style="color: #023EBC">{{username}}</span></p>
+  <p *ngIf="!canAccess" style="color: crimson">You can't use this page, because you aren't Worker</p>
+  <button mat-button (click)="logout()">Logout</button>
+</div>
+<div *ngIf="!logged" class="login"><app-login-form></app-login-form></div>
 
-<div class="loading">
-  <app-loading-animation *ngIf="canAccess && workerTasks == null"></app-loading-animation>
+
+<div class="loading" *ngIf="canAccess && workerTasks == null">
+  <app-loading-animation></app-loading-animation>
 </div>
 
-<mat-tab-group *ngIf="canAccess && workerTasks != null">
+<mat-tab-group *ngIf="canAccess && workerTasks != null" mat-align-tabs="center">
   <mat-tab label="Opened">
-    <div class="task-container">
+    <div class="task-container opened">
       <div *ngFor="let t of workerTasks">
       <div *ngIf="t.status == 'OPEN'" class="task">
         <p>Created: <span>{{t.start}}</span></p>
@@ -23,7 +29,7 @@
     </div>
   </mat-tab>
   <mat-tab label="Started">
-    <div class="task-container">
+    <div class="task-container started">
       <div *ngFor="let t of workerTasks">
       <div *ngIf="t.status == 'Started'" class="task">
         <p>Created: <span>{{t.start}}</span></p>
@@ -39,7 +45,7 @@
     </div>
   </mat-tab>
   <mat-tab label="Complete">
-    <div class="task-container">
+    <div class="task-container complete">
       <div *ngFor="let t of workerTasks">
       <div *ngIf="t.status == 'Complete'" class="task">
         <p>Created: <span>{{t.start}}</span></p>
@@ -53,8 +59,8 @@
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="Failed">
-    <div class="task-container">
+  <mat-tab label="Failed" >
+    <div class="task-container failed">
       <div *ngFor="let t of workerTasks">
       <div *ngIf="t.status == 'Failed'" class="task">
         <p>Created: <span>{{t.start}}</span></p>
@@ -68,8 +74,8 @@
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="Canceled">
-    <div class="task-container">
+  <mat-tab label="Canceled" >
+    <div class="task-container canceled">
       <div *ngFor="let t of workerTasks">
       <div *ngIf="t.status == 'Canceled'" class="task">
         <p>Created: <span>{{t.start}}</span></p>

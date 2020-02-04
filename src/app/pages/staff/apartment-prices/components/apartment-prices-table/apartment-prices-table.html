@@ -13,7 +13,7 @@
 
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef>
-        Price
+        <p>Price</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="totalPriceFilter">
@@ -24,7 +24,7 @@
 
     <ng-container matColumnDef="startPeriod">
       <th mat-header-cell *matHeaderCellDef>
-        Start period
+        <p>Start period</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="startDateFilter">
@@ -35,7 +35,7 @@
 
     <ng-container matColumnDef="endPeriod">
       <th mat-header-cell *matHeaderCellDef>
-        End period
+        <p>End period</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="endDateFilter">
@@ -46,7 +46,7 @@
 
     <ng-container matColumnDef="nameClass">
       <th mat-header-cell *matHeaderCellDef>
-        Apartment class name
+        <p>Apartment class name</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="apartmentClassFilter">

@@ -13,7 +13,7 @@
 
     <ng-container matColumnDef="causeDescription">
       <th mat-header-cell *matHeaderCellDef>
-        Cause description
+        <p>Cause description</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="causeDescriptionFilter">
@@ -24,7 +24,7 @@
 
     <ng-container matColumnDef="startDate">
       <th mat-header-cell *matHeaderCellDef>
-        Start date
+        <p>Start date</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="startDateFilter">
@@ -35,7 +35,7 @@
 
     <ng-container matColumnDef="endDate">
       <th mat-header-cell *matHeaderCellDef>
-        End date
+        <p>End date</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="endDateFilter">
@@ -46,7 +46,7 @@
 
     <ng-container matColumnDef="roomNumber">
       <th mat-header-cell *matHeaderCellDef>
-        Room number
+        <p>Room number</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="apartmentFilter">

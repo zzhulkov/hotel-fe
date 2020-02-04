@@ -2,6 +2,8 @@
   <app-loading-animation></app-loading-animation>
 </div>
 
+<div *ngIf="userBookingsHistory[0] == null"><p>You have not created any orders yet.</p></div>
+
 <div class="userBookingHistory" *ngIf="userBookingsHistory != null">
   <div class="booking" *ngFor="let booking of userBookingsHistory" [ngClass]="{'finished': booking.endDate < currentDate}">
     <div class="info">

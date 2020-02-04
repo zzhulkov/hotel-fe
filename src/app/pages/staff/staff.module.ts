@@ -14,6 +14,7 @@ import {UnavailableApartmentsManagerModule} from './unavailable-apartments/unava
 import {UserManagerModule} from './user/user-manager.module';
 import {ApartmentPricesManagerModule} from './apartment-prices/apartment-prices-manager.module';
 import {ServicesManagerModule} from "./services/services-manager.module";
+import {AuthenticationFormsModule} from "../../modules/authentication/authentication-forms.module";
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import {ServicesManagerModule} from "./services/services-manager.module";
     ServicesManagerModule,
     StaffManagerModule,
     TaskManagerModule,
-    RouterModule
+    RouterModule,
+    AuthenticationFormsModule
   ],
   declarations: [
     StaffComponent
