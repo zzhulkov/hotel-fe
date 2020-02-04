@@ -1,11 +1,7 @@
 import {
   AfterViewInit, ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  EventEmitter,
-  Input, OnDestroy,
   OnInit,
-  Output,
   ViewChild
 } from '@angular/core';
 import {take, takeUntil} from 'rxjs/operators';
@@ -38,14 +34,13 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
   selectedRow: any;
   apartmentsList = new MatTableDataSource<Apartments>();
   selectedApartments: Apartments;
-  displayedColumns = ['roomNumber', 'photo', 'description', 'status', 'apartmentClass.id',
+  displayedColumns = ['roomNumber', 'photo', 'description', 'status',
     'apartmentClass.nameClass', 'apartmentClass.numberOfRooms', 'apartmentClass.numberOfCouchette'];
 
   roomNumberFilter = new FormControl('');
   photoFilter = new FormControl('');
   descriptionFilter = new FormControl('');
   statusFilter = new FormControl('');
-  classIdFilter = new FormControl('');
   nameClassFilter = new FormControl('');
   numberOfRoomsFilter = new FormControl('');
   numberOfCouchetteFilter = new FormControl('');
@@ -55,7 +50,6 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
     photo: '',
     description: '',
     status: '',
-    classId: '',
     nameClass: '',
     numberOfRooms: '',
     numberOfCouchette: ''
@@ -111,13 +105,6 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
           this.apartmentsList.filter = JSON.stringify(this.filterValues);
         }
       );
-    this.classIdFilter.valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe(
-        classId => {
-          this.filterValues.classId = classId;
-          this.apartmentsList.filter = JSON.stringify(this.filterValues);
-        }
-      );
     this.nameClassFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         nameClass => {
@@ -159,11 +146,10 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
       return data.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1
         && data.photo.toLowerCase().indexOf(searchTerms.photo) !== -1
         && data.description.indexOf(searchTerms.description) !== -1
-        && data.status.indexOf(searchTerms.status) !== -1
+        && data.status.toString().toLowerCase().indexOf(searchTerms.status) !== -1
         && data.apartmentClass.numberOfCouchette.toString().toLowerCase().indexOf(searchTerms.numberOfCouchette) !== -1
         && data.apartmentClass.numberOfRooms.toString().toLowerCase().indexOf(searchTerms.numberOfRooms) !== -1
-        && data.apartmentClass.nameClass.indexOf(searchTerms.nameClass) !== -1
-        && data.apartmentClass.id.toString().toLowerCase().indexOf(searchTerms.classId) !== -1;
+        && data.apartmentClass.nameClass.toString().toLowerCase().indexOf(searchTerms.nameClass) !== -1;
     };
     return filterFunction;
   }
