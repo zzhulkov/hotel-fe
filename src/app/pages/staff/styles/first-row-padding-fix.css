@@ -1,0 +1,5 @@
+td.mat-cell:nth-of-type(2),
+td.mat-footer-cell:nth-of-type(2),
+th.mat-header-cell:nth-of-type(2){
+  padding-left: 24px;
+}

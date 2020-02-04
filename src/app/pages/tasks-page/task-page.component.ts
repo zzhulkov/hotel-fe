@@ -1,10 +1,11 @@
-import {Component} from "@angular/core";
-import {AuthenticationService} from "../../modules/authentication/authentication.service";
-import {LoginFormComponent} from "../../modules/authentication/login-form/login-form.component";
-import {Task} from "../../component/task";
-import {HttpClient} from "@angular/common/http";
-import {TaskStatus} from "../../component/task-status.type";
-import {ConstantsService} from "../../services/constants.service";
+import {Component} from '@angular/core';
+import {AuthenticationService} from '../../modules/authentication/authentication.service';
+import {LoginFormComponent} from '../../modules/authentication/login-form/login-form.component';
+import {Task} from '../../component/task';
+import {HttpClient} from '@angular/common/http';
+import {TaskStatus} from '../../component/task-status.type';
+import {ConstantsService} from '../../services/constants.service';
+import {User} from '../../component/user';
 
 
 const BASE_URL = new ConstantsService().BASE_URL;
@@ -17,20 +18,19 @@ const BASE_URL = new ConstantsService().BASE_URL;
 })
 export class TaskPageComponent {
 
+  logged = false;
   canAccess = false;
+  username: string;
   workerTasks: Task[];
 
   constructor(private auth: AuthenticationService, private http: HttpClient) {
     this.auth.currentUserObservable
       .subscribe(
-        data => {
-          if (data !== null) {
-            if (data.userRole === 'Worker'
-              || data.userRole === 'Manager'
-              || data.userRole === 'Administrator'
-            ) {
-              this.canAccess = true;
-            }
+        (user: User) => {
+          this.logged = user === null;
+          if (this.logged) {
+            this.username = user.firstname + ' ' + user.lastname;
+            this.canAccess = user.userRole === 'Manager' || user.userRole === 'Administrator' || user.userRole === 'Worker';
           }
           this.getTasks();
         }
@@ -57,7 +57,6 @@ export class TaskPageComponent {
             .find((v: Task, i: number, obj: Task[]) => {
               return v.id === id;
             }).status = (newStatus as TaskStatus);
-          console.log('newSrrr');
         },
         error1 => {
           console.log(error1);
@@ -80,5 +79,9 @@ export class TaskPageComponent {
           }
         );
     }
+  }
+
+  logout() {
+    this.auth.logout();
   }
 }

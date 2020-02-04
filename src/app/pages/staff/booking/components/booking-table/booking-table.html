@@ -11,9 +11,9 @@
       <td mat-cell [hidden]="true" *matCellDef="let booking"> {{booking?.id}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="startDate">
+    <ng-container matColumnDef="startDate" style="padding-left: 30px">
       <th mat-header-cell *matHeaderCellDef>
-        Start date
+        <p>Start date</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="startDateFilter">
@@ -24,7 +24,7 @@
 
     <ng-container matColumnDef="endDate">
       <th mat-header-cell *matHeaderCellDef>
-        End date
+        <p>End date</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="endDateFilter">
@@ -35,7 +35,7 @@
 
     <ng-container matColumnDef="totalPrice">
       <th mat-header-cell *matHeaderCellDef>
-        Total price
+        <p>Total price</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="totalPriceFilter">
@@ -46,7 +46,7 @@
 
     <ng-container matColumnDef="comments">
       <th mat-header-cell *matHeaderCellDef>
-        Comments
+        <p>Comments</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="commentsFilter">
@@ -57,7 +57,7 @@
 
     <ng-container matColumnDef="createdDate">
       <th mat-header-cell *matHeaderCellDef>
-        Created date
+        <p>Created date</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="createdDateFilter">
@@ -68,7 +68,7 @@
 
     <ng-container matColumnDef="review">
       <th mat-header-cell *matHeaderCellDef>
-        Review
+        <p>Review</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="reviewFilter">
@@ -79,7 +79,7 @@
 
     <ng-container matColumnDef="bookingStatus">
       <th mat-header-cell *matHeaderCellDef>
-        Booking status
+        <p>Booking status</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="bookingStatusFilter">
@@ -90,7 +90,7 @@
 
     <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef>
-        Booked by
+        <p>Booked by</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="bookedByFilter">
@@ -101,7 +101,7 @@
 
     <ng-container matColumnDef="nameClass">
       <th mat-header-cell *matHeaderCellDef>
-        Apartment class name
+        <p>Apartment class name</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="apartmentClassFilter">
@@ -112,7 +112,7 @@
 
     <ng-container matColumnDef="roomNumber">
       <th mat-header-cell *matHeaderCellDef>
-        Apartment room number
+        <p>Apartment room number</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="apartmentFilter">

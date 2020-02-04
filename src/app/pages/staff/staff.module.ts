@@ -12,6 +12,7 @@ import {StaffManagerModule} from './staff/staff-manager.module';
 import {ApartmentsClassesManagerModule} from './apartments-classes/apartments-classes-manager.module';
 import {UserManagerModule} from './user/user-manager.module';
 import {ServicesManagerModule} from "./services/services-manager.module";
+import {AuthenticationFormsModule} from "../../modules/authentication/authentication-forms.module";
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import {ServicesManagerModule} from "./services/services-manager.module";
     ServicesManagerModule,
     StaffManagerModule,
     TaskManagerModule,
-    RouterModule
+    RouterModule,
+    AuthenticationFormsModule
   ],
   declarations: [
     StaffComponent

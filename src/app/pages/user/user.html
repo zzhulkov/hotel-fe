@@ -2,7 +2,7 @@
 <app-user-header></app-user-header>
 
 <div style="width: 100%" *ngIf="openBooking" class="booking-container">
-  <div class="close-btn"><img src="../../../assets/img/icons/close-button-clipart-6.jpg" (click)="openBooking = false"/></div>
+  <div class="close-btn"><img src="../../../assets/img/icons/close-button-clipart-6.png" (click)="openBooking = false"/></div>
   <app-booking-creator [sDate]="datesForm.get('startDate').value" [eDate]="datesForm.get('endDate').value"></app-booking-creator>
 </div>
 <div class="carousel-container">

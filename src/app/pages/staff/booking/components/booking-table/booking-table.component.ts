@@ -18,7 +18,7 @@ const URL = new ConstantsService().BASE_URL;
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'booking-table-component',
-  styleUrls: ['../../../styles/table.css'],
+  styleUrls: ['../../../styles/table.css', '../../../styles/first-row-padding-fix.css'],
   templateUrl: 'booking-table.html',
 })
 export class BookingTableComponent extends Unsubscribable implements OnInit, AfterViewInit {

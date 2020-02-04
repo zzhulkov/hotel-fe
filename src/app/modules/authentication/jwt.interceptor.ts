@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {AuthenticationService} from './authentication.service';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
+import {catchError} from "rxjs/operators";
 
 @Injectable()
 export class JWTInterceptor implements HttpInterceptor {
@@ -22,7 +23,18 @@ export class JWTInterceptor implements HttpInterceptor {
         }
       });
     }
-    return next.handle(req);
+    return next.handle(req)
+      .pipe(
+        catchError(
+          (error: HttpErrorResponse) => {
+            if (error.status === 403) {
+              this.authService.logout();
+              alert('Your token is expired, re-login please');
+            }
+            return throwError(error);
+          }
+        )
+      );
   }
 
 }

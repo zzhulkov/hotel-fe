@@ -1,17 +1,17 @@
 <section class="booking-list">
-  <div class="buttons">
-    Booking list &nbsp;
-    <button class="mat-button" mat-raised-button (click)="addApartmentDialog()">Add</button>
-  </div>
   <div class="wrap">
-    <div class="table">
-      <booking-table-component></booking-table-component>
-    </div>
     <div class="tools">
+      <div class="buttons">
+        <p>Booking list</p>
+        <button class="mat-button" mat-raised-button (click)="addApartmentDialog()">Add</button>
+      </div>
       <div class="change">
         <app-change-booking-dialog *ngIf="id$ | async; else loading"></app-change-booking-dialog>
       </div>
       <ng-template #loading></ng-template>
+    </div>
+    <div class="table">
+      <booking-table-component></booking-table-component>
     </div>
   </div>
 </section>
