@@ -1,3 +1,11 @@
-<div *ngIf="condition; then userBlock else staffBlock"></div>
-<ng-template #userBlock><app-user></app-user></ng-template>
-<ng-template #staffBlock><app-staff></app-staff></ng-template>
+<div [ngSwitch]="page">
+  <ng-template [ngSwitchCase]="'user'">
+    <app-user></app-user>
+  </ng-template>
+  <ng-template [ngSwitchCase]="'manager'">
+    <app-staff></app-staff>
+  </ng-template>
+  <ng-template [ngSwitchCase]="'task-page'">
+    <app-task-page></app-task-page>
+  </ng-template>
+</div>

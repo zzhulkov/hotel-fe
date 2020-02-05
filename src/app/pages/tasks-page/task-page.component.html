@@ -1,0 +1,95 @@
+<!--<div class="img-div"><img src="https://cs8.pikabu.ru/images/previews_comm/2016-03_6/14592464771100688822.png" alt="Готов вкалывать"></div>-->
+
+<div *ngIf="logged" class="logged">
+  <p>You are logged in as <span style="color: #023EBC">{{username}}</span></p>
+  <p *ngIf="!canAccess" style="color: crimson">You can't use this page, because you aren't Worker</p>
+  <button mat-button (click)="logout()">Logout</button>
+</div>
+<div *ngIf="!logged" class="login">
+  <app-login-form></app-login-form>
+</div>
+
+
+<div class="loading" *ngIf="canAccess && workerTasks == null">
+  <app-loading-animation></app-loading-animation>
+</div>
+
+<mat-tab-group *ngIf="canAccess && workerTasks != null" mat-align-tabs="center">
+  <mat-tab label="Opened">
+    <div class="task-container opened">
+      <div *ngFor="let t of workerTasks">
+        <div *ngIf="t.status == 'OPEN'" class="task">
+          <p>Created: <span>{{t.start}}</span></p>
+          <p>End: <span>{{t.end}}</span></p>
+          <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
+          <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
+          <p>Description: <span>{{t.description}}</span></p>
+          <button mat-button (click)="accept(t.id)" class="blue-button">Accept</button>
+          <button mat-button (click)="cancel(t.id)" class="red-button">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Started">
+    <div class="task-container started">
+      <div *ngFor="let t of workerTasks">
+        <div *ngIf="t.status == 'Started'" class="task">
+          <p>Created: <span>{{t.start}}</span></p>
+          <p>End: <span>{{t.end}}</span></p>
+          <p>Accepted: <span>{{t.accept}}</span></p>
+          <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
+          <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
+          <p>Description: <span>{{t.description}}</span></p>
+          <button mat-button (click)="finish(t.id)" class="green-button">Finish</button>
+          <button mat-button (click)="cancel(t.id)" class="red-button">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Complete">
+    <div class="task-container complete">
+      <div *ngFor="let t of workerTasks">
+        <div *ngIf="t.status == 'Complete'" class="task">
+          <p>Created: <span>{{t.start}}</span></p>
+          <p>End: <span>{{t.end}}</span></p>
+          <p>Accepted: <span>{{t.accept}}</span></p>
+          <p>Complete: <span>{{t.complete}}</span></p>
+          <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
+          <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
+          <p>Description: <span>{{t.description}}</span></p>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Failed">
+    <div class="task-container failed">
+      <div *ngFor="let t of workerTasks">
+        <div *ngIf="t.status == 'Failed'" class="task">
+          <p>Created: <span>{{t.start}}</span></p>
+          <p>End: <span>{{t.end}}</span></p>
+          <p>Accepted: <span>{{t.accept}}</span></p>
+          <p>Complete: <span>{{t.complete}}</span></p>
+          <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
+          <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
+          <p>Description: <span>{{t.description}}</span></p>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Canceled">
+    <div class="task-container canceled">
+      <div *ngFor="let t of workerTasks">
+        <div *ngIf="t.status == 'Canceled'" class="task">
+          <p>Created: <span>{{t.start}}</span></p>
+          <p>End: <span>{{t.end}}</span></p>
+          <p>Accepted: <span>{{t.accept}}</span></p>
+          <p>Complete: <span>{{t.complete}}</span></p>
+          <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
+          <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
+          <p>Description: <span>{{t.description}}</span></p>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+

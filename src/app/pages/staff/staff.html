@@ -1,18 +1,55 @@
-<nav>
-  <p class="logo">Logo</p>
-  <ul>
-    <li><a [routerLink]="['/manager/tasks']">Tasks</a></li>
-    <li><a [routerLink]="['/manager/staff']">Staff</a></li>
-    <li><a [routerLink]="['/manager/users']">Users</a></li>
-    <li><a [routerLink]="['/manager/services']">Services</a></li>
-    <li><a [routerLink]="['/manager/booking']">Booking</a></li>
-    <li><a [routerLink]="['/manager/apartments-classes']">Classes</a></li>
-    <li><a [routerLink]="['/manager/apartments']">Apartments</a></li>
-  </ul>
-</nav>
+<div *ngIf="logged && !canAccess" class="logged">
+  <p>You are logged in as <span style="color: #023EBC">{{username}}</span></p>
+  <p style="color: crimson">You can't use this page, because you aren't Worker</p>
+  <button mat-button (click)="logout()">Logout</button>
+</div>
+<div *ngIf="!logged" class="login">
+  <app-login-form></app-login-form>
+</div>
 
-  <router-outlet></router-outlet>
+<div *ngIf="logged && canAccess">
 
-<footer>
-  <p>Copyright © 2019. Created by nc-team-3.</p>
-</footer>
+  <nav>
+    <div class="logo">
+      <img src="../../../assets/img/logo-white.png"/>
+    </div>
+
+    <div class="menu">
+      <a [routerLink]="['/manager/tasks']" routerLinkActive="coral">
+        <button mat-button>Tasks</button>
+      </a>
+      <a [routerLink]="['/manager/staff']" routerLinkActive="coral">
+        <button mat-button>Staff</button>
+      </a>
+      <a [routerLink]="['/manager/users']" routerLinkActive="coral">
+        <button mat-button>Users</button>
+      </a>
+      <a [routerLink]="['/manager/services']" routerLinkActive="coral">
+        <button mat-button>Services</button>
+      </a>
+      <a [routerLink]="['/manager/booking']" routerLinkActive="coral">
+        <button mat-button>Booking</button>
+      </a>
+      <a [routerLink]="['manager/apartment-prices']" routerLinkActive="coral">
+        <button mat-button>Class prices</buttton>
+      </a>
+      <a [routerLink]="['/manager/apartments-classes']" routerLinkActive="coral">
+        <button mat-button>Classes</button>
+      </a>
+      <a [routerLink]="['/manager/unavailable-apartments']" routerLinkActive="coral">
+        <button mat-button>Unavailable apartments</button>
+      </a>
+      <a [routerLink]="['/manager/apartments']" routerLinkActive="coral">
+        <button mat-button>Apartments</button>
+      </a>
+    </div>
+
+    <div class="logout">
+      <button mat-button (click)="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

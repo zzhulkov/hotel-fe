@@ -17,7 +17,7 @@ const URL = new ConstantsService().BASE_URL;
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'services-table-component',
-  styleUrls: ['../../../styles/table.css'],
+  styleUrls: ['../../../styles/table.css', '../../../styles/first-row-padding-fix.css'],
   templateUrl: 'services-table.html',
 })
 export class ServicesTableComponent extends Unsubscribable implements OnInit, AfterViewInit {

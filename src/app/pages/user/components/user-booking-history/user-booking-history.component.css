@@ -1,0 +1,51 @@
+
+.userBookingHistory {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+.booking {
+  margin: 10px 5px;
+  padding: 15px;
+}
+
+.info button {
+  margin: 0 auto;
+}
+
+.info .mat-button {
+  background-color: crimson;
+  color: white;
+}
+
+.finished {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.booking.finished .info {
+  float: right;
+  margin-right: 30px;
+}
+
+.review {
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.review textarea {
+  width: 200px;
+  height: 70px;
+}
+
+.review .mat-button {
+  background-color: #023EBC;
+  color: white;
+  margin-top: 10px;
+  display: block;
+}

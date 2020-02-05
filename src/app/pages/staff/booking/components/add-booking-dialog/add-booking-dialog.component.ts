@@ -3,13 +3,14 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {ConstantsService} from '../../../../../services/constants.service';
-import {Booking} from '../../../../../component/booking';
-import {Subscription} from 'rxjs';
-import {Apartments} from '../../../../../component/apartments';
-import {User} from '../../../../../component/user';
-import {BookingStatus} from '../../../../../component/booking-status.type';
-import {SelectService} from '../../../../../services/select.service';
-import {Unsubscribable} from '../../../../../component/Unsubscribable';
+import {Booking} from "../../../../../component/booking";
+import {Subscription} from "rxjs";
+import {Apartments} from "../../../../../component/apartments";
+import {User} from "../../../../../component/user";
+import {BookingStatus} from "../../../../../component/booking-status.type";
+import {SelectService} from "../../../../../services/select.service";
+import {Unsubscribable} from "../../../../../component/Unsubscribable";
+import {DatePipe} from "@angular/common";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -25,17 +26,16 @@ const URL = new ConstantsService().BASE_URL;
 export class AddBookingDialogComponent extends Unsubscribable implements OnInit {
 
   addForm: FormGroup;
-
   booking = {} as Booking;
   subscription: Subscription;
 
-
+  userList: User[];
   apartmentsClassesList: ApartmentsClass[];
   apartmentsList: Apartments[];
   selectedApartmentsClass: ApartmentsClass;
   selectedApartment: Apartments;
   user: User;
-
+  selectedUser: User;
   status = [
     'Created',
     'CheckedIn',
@@ -45,39 +45,32 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
   private selectedStatus: BookingStatus;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, public selectService: SelectService) {
+  constructor(private formBuilder: FormBuilder, private datePipe: DatePipe,
+              private http: HttpClient, public selectService: SelectService) {
     super(selectService);
     this.getAllApartmentsClasses();
+    this.getAllUsers();
   }
 
   ngOnInit(): void {
     this.addForm = this.formBuilder.group({
-      startDate: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')],
-      endDate: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')],
-      // totalPrice: [''],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      totalPrice: [''],
       comment: [''],
       review: [''],
       bookingStatus: ['', Validators.required],
-      email: ['', Validators.pattern('^[a-zA-Z0-9.!#$%&’*+=?^_`{|}~-]+\\@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+$')],
+      email: ['',
+        Validators.pattern('^[a-zA-Z0-9.!#$%&’*+=?^_`{|}~-]+\\@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-]+$')],
       nameClass: ['', Validators.required],
-      roomNumber: ['', Validators.required]
+      roomNumber: ['']
     });
 
     this.checkValid();
   }
 
-  fillForm(row: Booking) {
-    this.addForm.setValue({
-      startDate: row.startDate,
-      endDate: row.endDate,
-      totalPrice: row.totalPrice,
-      comment: row.comment,
-      review: row.review,
-      bookingStatus: row.bookingStatus,
-      email: row.user.email,
-      nameClass: row.apartmentClass.nameClass,
-      roomNumber: row.apartment.roomNumber
-    });
+  onSelectEmail(user: User): void {
+    this.selectedUser = user;
   }
 
   checkValid() {
@@ -91,8 +84,15 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
 
   onSubmit() {
     if (this.addForm.valid) {
-      this.getUserByEmail();
+      this.setBooking();
     }
+  }
+
+  getAllUsers() {
+    this.http.get(URL + 'users').subscribe(res => {
+      console.log(res);
+      this.userList = (res as User[]);
+    });
   }
 
   setBooking() {
@@ -100,11 +100,11 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
     this.booking.apartment = this.selectedApartment;
     this.booking.startDate = this.addForm.value.startDate;
     this.booking.endDate = this.addForm.value.endDate;
-    // this.booking.totalPrice = this.addForm.value.totalPrice;
+    //this.booking.totalPrice = this.addForm.value.totalPrice;
     this.booking.comment = this.addForm.value.comment;
     this.booking.review = this.addForm.value.review;
     this.booking.bookingStatus = this.selectedStatus;
-    this.booking.user = this.user;
+    this.booking.user = this.selectedUser;
     console.log(this.booking);
     this.createBooking();
 
@@ -112,13 +112,14 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
 
   onSelectAprtmntClass(apartmentsClass: ApartmentsClass): void {
     this.selectedApartmentsClass = apartmentsClass;
-    this.getFreeApartments(this.addForm.value.startDate, this.addForm.value.endDate, apartmentsClass.id);
-    this.addForm.setValue({
-      roomNumber: ''
-    });
+    const startDateTemp = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
+    const endDateTemp = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
+    console.log(this.addForm.value.startDate.toString());
+    this.getFreeApartments(startDateTemp.toString(), endDateTemp.toString(), apartmentsClass.id.toString());
+
   }
 
-  onSelectAprtmnt(apartments: Apartments): void {
+  onSelectApartment(apartments: Apartments): void {
     this.selectedApartment = apartments;
   }
 
@@ -145,7 +146,7 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
     });
   }
 
-  getFreeApartments(startDate: Date, endDate: Date, classId: number) {
+  getFreeApartments(startDate: string, endDate: string, classId: string) {
     this.http.get(URL + 'bookings' + '/findList?' + 'startDate=' + startDate +
       // 2020-04-19
       '&endDate=' + endDate +
@@ -157,6 +158,19 @@ export class AddBookingDialogComponent extends Unsubscribable implements OnInit 
   }
 
   createBooking() {
+    const startDateCleaned = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
+    const endDateCleaned = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
+    this.addForm.setValue({
+      startDate: startDateCleaned,
+      endDate: endDateCleaned,
+      totalPrice: this.addForm.value.totalPrice,
+      comment: this.addForm.value.comment,
+      review: this.addForm.value.review,
+      bookingStatus: this.addForm.value.bookingStatus,
+      email: this.addForm.value.email,
+      nameClass: this.addForm.value.nameClass,
+      roomNumber: this.addForm.value.roomNumber
+    });
     this.http.post(URL + 'bookings/', this.booking).subscribe(
       res => {
         console.log(res);

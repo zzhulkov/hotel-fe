@@ -14,7 +14,7 @@
 
     <ng-container class="column" matColumnDef="firstname">
       <th mat-header-cell *matHeaderCellDef>
-        First name
+        <p>First name</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="firstNameFilter">
@@ -25,7 +25,7 @@
 
     <ng-container class="column" matColumnDef="lastname">
       <th mat-header-cell *matHeaderCellDef>
-        Last name
+        <p>Last name</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="lastNameFilter">
@@ -36,7 +36,7 @@
 
     <ng-container class="column" matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef>
-        Email
+        <p>Email</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="emailFilter">
@@ -47,7 +47,7 @@
 
     <ng-container class="column" matColumnDef="speciality">
       <th class="header" mat-header-cell *matHeaderCellDef>
-        Speciality
+        <p>Speciality</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="specialityFilter">
@@ -58,7 +58,7 @@
 
     <ng-container class="column" matColumnDef="active">
       <th class="header" mat-header-cell *matHeaderCellDef>
-        Active
+        <p>Active</p>
         <mat-form-field class="filter" floatLabel="never">
           <mat-label>Search</mat-label>
           <input matInput [formControl]="activeFilter">

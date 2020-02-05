@@ -1,5 +1,5 @@
 import {ConstantsService} from "../../../../services/constants.service";
-import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
 import {Unsubscribable} from "../../../../component/Unsubscribable";
 import {DataTransferService} from "../../../../services/data-transfer.service";
 import {MatPaginator} from "@angular/material/paginator";
@@ -15,7 +15,7 @@ const URL = new ConstantsService().BASE_URL;
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'task-table-component',
-  styleUrls: ['../../styles/table.css'],
+  styleUrls: ['../../styles/table.css', '../../styles/first-row-padding-fix.css', './task-table.component.css'],
   templateUrl: 'task-table.html',
 })
 export class TaskTableComponent extends Unsubscribable implements OnInit, AfterViewInit {

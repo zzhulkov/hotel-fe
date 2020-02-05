@@ -2,11 +2,22 @@
   <h2 mat-dialog-title>Add Booking</h2>
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
-      <input matInput required="required" formControlName="startDate" class="full-width" placeholder="Start date">
+      <input matInput [matDatepicker]="pickerStart"
+             required="required" formControlName="startDate"
+             class="full-width" placeholder="Start date">
+      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
+      <!--<input matInput required="required" formControlName="startDate" class="full-width" placeholder="Start date"> -->
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput required="required" formControlName="endDate" class="full-width" placeholder="End date">
+      <input matInput [matDatepicker]="pickerEnd"
+             required="required" formControlName="endDate"
+             class="full-width" placeholder="End date"
+             [disabled]="!addForm.value.startDate">
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
+      <!-- <input matInput required="required" formControlName="endDate" class="full-width" placeholder="End date"> -->
     </mat-form-field>
     <br/>
     <!--    <mat-form-field>-->
@@ -22,7 +33,7 @@
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <mat-select required="required" placeholder="Status" formControlName="bookingStatus">
+      <mat-select placeholder="Status" formControlName="bookingStatus">
         <mat-option *ngFor="let bookingStatus of status"
                     (click)="onSelectStatus(bookingStatus)"
                     value={{bookingStatus}}>
@@ -33,25 +44,34 @@
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput required="required" formControlName="email" class="full-width"
-             placeholder="Booked by(user email)">
+      <mat-label>Email</mat-label>
+      <mat-select placeholder="Booked by(user email)" formControlName="email" required>
+        <mat-option *ngFor="let user of userList"
+                    (click)="onSelectEmail(user)"
+                    value={{user?.email}}>
+
+          {{user?.email}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <br/>
     <mat-form-field>
       <mat-label>Apartments</mat-label>
-      <mat-select required="required" placeholder="Apartment room number" formControlName="roomNumber">
-        <mat-option *ngFor="let apartments of apartmentsList"
-                    (click)="onSelectAprtmnt(apartments)"
+      <mat-select placeholder="Apartment room number" formControlName="roomNumber"
+                  [disabled]="!selectedApartmentsClass">
+        <mat-option *ngFor="let apartment of apartmentsList"
+                    (click)="onSelectApartment(apartment)"
                     value={{apartments?.roomNumber}}>
 
-          {{apartments?.roomNumber}}
+          {{apartment?.roomNumber}}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <br/>
     <mat-form-field>
       <mat-label>Apartments Class</mat-label>
-      <mat-select required="required" placeholder="Class name" formControlName="nameClass">
+      <mat-select placeholder="Class name" formControlName="nameClass"
+                  [disabled]="!addForm.value.endDate">
         <mat-option *ngFor="let apartmentClass of apartmentsClassesList"
                     (click)="onSelectAprtmntClass(apartmentClass)"
                     value={{apartmentClass?.nameClass}}>

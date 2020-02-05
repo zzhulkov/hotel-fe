@@ -1,35 +1,43 @@
 section {
-  margin: 3em;
-  overflow: auto;
-  overflow-x:hidden;
+  background-color: ghostwhite;
 }
 
 .wrap {
-  margin-top: 1em;
-  position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 
 .table {
+  /*-webkit-box-shadow: 0px 0px 10px -2px #00000042;*/
+  /*box-shadow: 0px 0px 10px -2px #00000042;*/
   overflow-y: scroll;
   float: left;
-  width: 75%;
-  height: 25em;
-  border: 1px solid #000;
-  margin-right: 1.5px;
+  width: 70%;
+  height: calc(100vh - 90px);
+  background-color: white;
+}
+
+.buttons > p {
+  color: coral;
 }
 
 .tools{
-  margin-left: auto;
-  height: auto;
+  margin: 0 auto;
   width: 24%;
-  border: 1px solid #000;
 }
 
 .buttons{
   width: 100%;
-  margin: 1em;
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
 .mat-button{
   width: 100px;
 }
 
+.mat-dialog-actions {
+  justify-content: space-between;
+}

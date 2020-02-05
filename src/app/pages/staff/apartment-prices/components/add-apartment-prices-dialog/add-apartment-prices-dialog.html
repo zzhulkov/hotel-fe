@@ -1,0 +1,35 @@
+<form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="change-apartment">
+  <h2 mat-dialog-title>Add Booking</h2>
+  <mat-dialog-content class="mat-typography">
+    <mat-form-field>
+      <input matInput required="required" formControlName="startPeriod" class="full-width" placeholder="Start period">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <input matInput required="required" formControlName="endPeriod" class="full-width" placeholder="End period">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <input matInput formControlName="price" class="full-width" placeholder="Price">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <mat-label>Apartments Class</mat-label>
+      <mat-select required="required" placeholder="Class name" formControlName="nameClass">
+        <mat-option *ngFor="let apartmentClass of apartmentsClassesList"
+                    (click)="onSelectAprtmntClass(apartmentClass)"
+                    value={{apartmentClass?.nameClass}}>
+
+          {{apartmentClass?.nameClass}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br/>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="true" mat-dialog-close>Cancel</button>
+    <button type="submit" (click)="checkValid()" mat-dialog-close [disabled]="isSubmitDisabled()" mat-button>Add
+    </button>
+  </mat-dialog-actions>
+</form>
+

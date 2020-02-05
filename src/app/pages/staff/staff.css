@@ -1,33 +1,82 @@
-/*styles for navigation*/
-nav {
-  background-color: lightgray;
-  padding: 0.3em;
-}
-
-nav ul {
-  list-style-type: none;
-  overflow: hidden;
-}
-
-nav li {
-  display: block;
-  float: right;
-  text-decoration: none;
-  margin-right: 1em;
-}
-
-/*.account{*/
-/*  margin-left: 2em;*/
-/*}*/
-
-.logo{
-  float: left;
-  margin-left: 1em;
-}
-/*end of styles for navigation*/
-
-footer{
-  background-color: dimgrey;
-  padding: 0.5em;
+.logged {
   text-align: center;
+  justify-content: center;
+  padding: 10px;
 }
+
+.login {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+app-login-form {
+  width: 300px;
+}
+
+nav {
+  height: 70px;
+  display: flex;
+  align-content: center;
+  padding: 10px 30px;
+  background: rgb(2, 62, 188);
+  background: linear-gradient(166deg, rgba(2, 62, 188, 1) 0%, rgba(0, 212, 255, 1) 100%);
+}
+
+.mat-button {
+  color: white;
+}
+
+.logo img {
+  width: 70px;
+}
+
+.menu {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.menu button {
+  margin: 0 5px;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+}
+
+/*colors*/
+.blueviolet {
+  background: rgba(124, 0, 255, 0.3);
+}
+
+.coral {
+  border-bottom: 2px solid coral;
+  /*background-color: coral;*/
+
+}
+
+.cornflowerblue {
+  background-color: cornflowerblue;
+}
+
+.darkorange {
+  background-color: darkorange;
+}
+
+.darkorchid {
+  background-color: darkorchid;
+}
+
+.lightseagreen {
+  background-color: lightseagreen;
+}
+
+.mediumorchid {
+  background-color: mediumorchid;
+}
+
+/*colors end*/
