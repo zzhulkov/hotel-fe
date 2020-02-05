@@ -5,6 +5,8 @@ import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {ApartmentStatus} from '../../../../../component/apartment-status.type';
+import {MatDialogRef} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -19,7 +21,11 @@ const URL = new ConstantsService().BASE_URL;
 })
 export class AddApartmentsDialogComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  isError = false;
+
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,
+              private dialogRef: MatDialogRef<AddApartmentsDialogComponent>,
+              private snackBar: MatSnackBar) {
     this.getAllApartmentsClasses();
   }
 
@@ -63,6 +69,7 @@ export class AddApartmentsDialogComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isError = true;
     if (this.addApartmentForm.valid) {
       this.setApartment();
       this.createApartment();
@@ -74,6 +81,15 @@ export class AddApartmentsDialogComponent implements OnInit {
       res => {
         console.log(res);
         this.apartment = (res as Apartments);
+        this.isError = false;
+        this.snackBar.open('Apartment has been added!', 'Ok',
+          {duration: 5000});
+        this.dialogRef.close();
+      },
+      error => {
+        this.isError = false;
+        this.snackBar.open('Error: '.concat(error.error), 'Ok',
+          {duration: 5000});
       });
   }
 

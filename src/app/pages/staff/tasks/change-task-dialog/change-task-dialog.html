@@ -1,6 +1,11 @@
-<div class="change-component">
+
+  <div *ngIf="staffList == null" class="form-loader">
+    <app-loading-animation></app-loading-animation>
+  </div>
+  <div *ngIf="staffList !== null">
+    <div class="change-component">
   <mat-accordion>
-    <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel [disabled]="!staffList" [expanded]="staffList">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Change
@@ -110,4 +115,4 @@
     </mat-expansion-panel>
   </mat-accordion>
 </div>
-
+</div>

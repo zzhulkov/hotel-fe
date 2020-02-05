@@ -25,6 +25,7 @@ export class ApartmentPricesTableComponent extends Unsubscribable implements OnI
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  isEmptyTable = false;
   private dataTransfer: DataTransferService;
   selectedRow: any;
   apartmentPricesList = new MatTableDataSource<ApartmentPrice>();
@@ -95,6 +96,7 @@ export class ApartmentPricesTableComponent extends Unsubscribable implements OnI
   public getAllApartmentPrices = () => {
     this.http.get(URL + 'apartmentPrices/').subscribe(res => {
       console.log(res);
+      this.isEmptyTable = true;
       this.dataSource.data = (res as ApartmentPrice[]);
     });
   }
