@@ -6,7 +6,7 @@
           Change
         </mat-panel-title>
         <mat-panel-description>
-          Apartment price
+          Class price
         </mat-panel-description>
       </mat-expansion-panel-header>
       <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="change-apartment">
@@ -28,7 +28,7 @@
         </mat-form-field>
         <br/>
         <mat-form-field>
-          <input matInput formControlName="price" class="full-width" placeholder="Price">
+          <input matInput formControlName="price" class="full-width" placeholder="Price" required>
         </mat-form-field>
         <br/>
         <mat-form-field>

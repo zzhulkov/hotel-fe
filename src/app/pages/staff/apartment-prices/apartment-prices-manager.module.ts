@@ -27,6 +27,7 @@ import {
   NativeDateAdapter
 } from "@angular/material/core";
 import {DatePipe} from "@angular/common";
+import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 export class AppDateAdapter extends NativeDateAdapter {
@@ -69,7 +70,8 @@ export const APP_DATE_FORMATS: MatDateFormats = {
         MatInputModule,
         ReactiveFormsModule,
         MatExpansionModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+      MatSnackBarModule
     ],
   exports: [
     MatButtonModule,
@@ -88,6 +90,7 @@ export const APP_DATE_FORMATS: MatDateFormats = {
   ],
   providers: [HttpService, EventEmitter,
     MatDatepickerModule,
+    MatSnackBar,
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}],
   entryComponents: [

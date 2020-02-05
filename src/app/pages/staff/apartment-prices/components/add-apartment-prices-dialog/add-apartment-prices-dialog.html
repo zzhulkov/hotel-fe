@@ -1,5 +1,5 @@
-<form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="change-apartment">
-  <h2 mat-dialog-title>Add Booking</h2>
+<form [formGroup]="addForm" class="change-apartment">
+  <h2 mat-dialog-title>Add Class price</h2>
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
       <input matInput [matDatepicker]="pickerStart"
@@ -19,7 +19,7 @@
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput formControlName="price" class="full-width" placeholder="Price">
+      <input matInput formControlName="price" class="full-width" placeholder="Price" required>
     </mat-form-field>
     <br/>
     <mat-form-field>
@@ -36,8 +36,10 @@
     <br/>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="true" mat-dialog-close>Cancel</button>
-    <button type="submit" (click)="checkValid()" mat-dialog-close [disabled]="isSubmitDisabled()" mat-button>Add</button>
+    <button mat-button [mat-dialog-close]="true">Cancel</button>
+    <button type="submit"
+            (click)="onSubmit()"
+            [disabled]="isSubmitDisabled()" mat-button>Add</button>
   </mat-dialog-actions>
 </form>
 

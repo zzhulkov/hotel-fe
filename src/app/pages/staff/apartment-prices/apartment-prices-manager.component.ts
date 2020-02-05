@@ -28,7 +28,8 @@ export class ApartmentPricesManagerComponent extends Unsubscribable implements O
   }
 
   addApartmentPriceDialog() {
-    const dialogRef = this.dialog.open(AddApartmentPricesDialogComponent);
+    const dialogRef = this.dialog.open(AddApartmentPricesDialogComponent,
+      {disableClose: true, autoFocus: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

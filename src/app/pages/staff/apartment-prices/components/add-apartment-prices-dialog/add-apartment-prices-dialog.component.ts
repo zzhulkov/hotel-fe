@@ -7,7 +7,9 @@ import {ApartmentPrice} from '../../../../../component/apartment-price';
 import {Subscription} from 'rxjs';
 import {SelectService} from '../../../../../services/select.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
-import {DatePipe} from "@angular/common";
+import {DatePipe} from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialogRef} from "@angular/material/dialog";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -21,7 +23,7 @@ const URL = new ConstantsService().BASE_URL;
   templateUrl: './add-apartment-prices-dialog.html',
 })
 export class AddApartmentPricesDialogComponent extends Unsubscribable implements OnInit {
-
+  isError = false;
   addForm: FormGroup;
 
   apartmentPrice = {} as ApartmentPrice;
@@ -32,7 +34,9 @@ export class AddApartmentPricesDialogComponent extends Unsubscribable implements
   selectedApartmentsClass: ApartmentsClass;
   // tslint:disable-next-line:max-line-length
   constructor(private formBuilder: FormBuilder, private http: HttpClient,
-              public selectService: SelectService, private datePipe: DatePipe) {
+              public selectService: SelectService, private datePipe: DatePipe,
+              private snackBar: MatSnackBar,
+              private matDialogRef: MatDialogRef<AddApartmentPricesDialogComponent>) {
     super(selectService);
     this.getAllApartmentsClasses();
   }
@@ -75,11 +79,10 @@ export class AddApartmentPricesDialogComponent extends Unsubscribable implements
   setApartmentPrice() {
     const startDateCleaned = this.datePipe.transform(this.addForm.value.startPeriod, 'yyyy-MM-dd');
     const endDateCleaned = this.datePipe.transform(this.addForm.value.endPeriod, 'yyyy-MM-dd');
-    this.addForm.setValue({
+    this.addForm.patchValue({
       startPeriod: startDateCleaned,
-      endPeriod: endDateCleaned,
-      nameClass: this.addForm.value.nameClass,
-      price: this.addForm.value.price});
+      endPeriod: endDateCleaned
+    });
     this.apartmentPrice.apartmentClass = this.selectedApartmentsClass;
     this.apartmentPrice.startPeriod = this.addForm.value.startPeriod;
     this.apartmentPrice.endPeriod = this.addForm.value.endPeriod;
@@ -102,9 +105,16 @@ export class AddApartmentPricesDialogComponent extends Unsubscribable implements
   createApartmentPrice() {
     this.http.post(URL + 'apartmentPrices/', this.apartmentPrice).subscribe(
       res => {
-        console.log(res);
         this.apartmentPrice = (res as ApartmentPrice);
-      });
+        this.snackBar.open('Class price has been added!', 'Ok',
+          {duration: 5000});
+        this.isError = true;
+        this.matDialogRef.close();
+      },
+        error => {
+        this.isError = false;
+        this.snackBar.open(error.error, 'Ok',
+          { duration: 5000 }); });
   }
 }
 
