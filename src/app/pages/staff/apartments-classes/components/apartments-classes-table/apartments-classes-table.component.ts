@@ -23,6 +23,7 @@ const URL = new ConstantsService().BASE_URL;
 export class ApartmentsClassesTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  isEmptyTable = false;
   private dataTransfer: DataTransferService;
   selectedRow: any;
   apartmentsClassesList = new MatTableDataSource<ApartmentsClass>();
@@ -86,6 +87,7 @@ export class ApartmentsClassesTableComponent extends Unsubscribable implements O
     this.http.get(URL + 'apartmentsClasses/').subscribe(res => {
       console.log(res);
       this.apartmentsClassesList.data = (res as ApartmentsClass[]);
+      this.isEmptyTable = true;
     });
   }
 

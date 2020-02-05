@@ -9,7 +9,7 @@ import {SelectService} from '../../../../../services/select.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {DatePipe} from '@angular/common';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatDialogRef} from "@angular/material/dialog";
+import {MatDialogRef} from '@angular/material/dialog';
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -32,7 +32,7 @@ export class AddApartmentPricesDialogComponent extends Unsubscribable implements
 
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
-  // tslint:disable-next-line:max-line-length
+
   constructor(private formBuilder: FormBuilder, private http: HttpClient,
               public selectService: SelectService, private datePipe: DatePipe,
               private snackBar: MatSnackBar,
@@ -71,6 +71,7 @@ export class AddApartmentPricesDialogComponent extends Unsubscribable implements
   }
 
   onSubmit() {
+    this.isError = true;
     if (this.addForm.valid) {
       this.setApartmentPrice();
     }
@@ -113,7 +114,7 @@ export class AddApartmentPricesDialogComponent extends Unsubscribable implements
       },
         error => {
         this.isError = false;
-        this.snackBar.open(error.error, 'Ok',
+        this.snackBar.open('Error: '.concat(error.error), 'Ok',
           { duration: 5000 }); });
   }
 }

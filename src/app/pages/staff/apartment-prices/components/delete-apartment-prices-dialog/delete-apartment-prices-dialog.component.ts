@@ -29,11 +29,12 @@ export class DeleteApartmentPricesDialogComponent {
         this.http.delete(URL + 'apartmentPrices/' + id.id)
           .subscribe(res => {
             this.snackBar.open('Delete successful', 'Ok', {duration: 6000});
-            this.selectService.announceSelect(null); });
-      },
-        error => {
-        this.snackBar.open('Delete denied', 'Ok', {duration: 6000});
-        });
+            this.selectService.announceSelect(null);
+            },
+              error => {
+            this.snackBar.open('Delete denied', 'Ok', {duration: 6000});
+          } );
+      });
   }
 }
 

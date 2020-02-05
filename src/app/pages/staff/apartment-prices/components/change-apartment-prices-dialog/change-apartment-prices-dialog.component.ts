@@ -11,8 +11,8 @@ import {SelectService} from '../../../../../services/select.service';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material';
 import {DeleteApartmentPricesDialogComponent} from '../delete-apartment-prices-dialog/delete-apartment-prices-dialog.component';
-import {DatePipe} from "@angular/common";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {DatePipe} from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -26,7 +26,7 @@ const URL = new ConstantsService().BASE_URL;
   templateUrl: './change-apartment-prices-dialog.html',
 })
 export class ChangeApartmentPricesDialogComponent extends Unsubscribable implements OnInit {
-
+  isError = false;
   addForm: FormGroup;
 
   apartmentPrice = {} as ApartmentPrice;
@@ -84,6 +84,7 @@ export class ChangeApartmentPricesDialogComponent extends Unsubscribable impleme
   }
 
   onSubmit() {
+    this.isError = true;
     if (this.addForm.valid) {
       this.setApartmentPrice();
       this.createApartmentPrice();
@@ -94,11 +95,13 @@ export class ChangeApartmentPricesDialogComponent extends Unsubscribable impleme
     this.http.put(URL + 'apartmentPrices/' + this.apartmentPrice.id, this.apartmentPrice).subscribe(
       res => {
         this.apartmentPrice = (res as ApartmentPrice);
+        this.isError = false;
         this.snackBar.open('Class price has been changed!', 'Ok',
           {duration: 5000});
       },
       error => {
-        this.snackBar.open(error.error, 'Ok',
+        this.isError = false;
+        this.snackBar.open('Error: '.concat(error.error), 'Ok',
           { duration: 5000 }); });
   }
 
