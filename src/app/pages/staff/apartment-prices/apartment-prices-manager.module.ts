@@ -19,14 +19,7 @@ import {ChangeApartmentPricesDialogComponent} from './components/change-apartmen
 import {AddApartmentPricesDialogComponent} from './components/add-apartment-prices-dialog/add-apartment-prices-dialog.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MatDateFormats,
-  MatNativeDateModule,
-  NativeDateAdapter
-} from "@angular/material/core";
-import {DatePipe} from "@angular/common";
+import {DateAdapter, MAT_DATE_FORMATS, MatDateFormats, NativeDateAdapter} from "@angular/material/core";
 
 
 export class AppDateAdapter extends NativeDateAdapter {
@@ -45,32 +38,33 @@ export class AppDateAdapter extends NativeDateAdapter {
 
 export const APP_DATE_FORMATS: MatDateFormats = {
   parse: {
-    dateInput: { month: 'short', year: 'numeric', day: 'numeric' },
+    dateInput: {month: 'short', year: 'numeric', day: 'numeric'},
   },
   display: {
     dateInput: 'input',
-    monthYearLabel: { year: 'numeric', month: 'numeric' },
-    dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric'
+    monthYearLabel: {year: 'numeric', month: 'numeric'},
+    dateA11yLabel: {
+      year: 'numeric', month: 'long', day: 'numeric'
     },
-    monthYearA11yLabel: { year: 'numeric', month: 'long' },
+    monthYearA11yLabel: {year: 'numeric', month: 'long'},
   }
 };
 
 @NgModule({
-    imports: [
-        MatPaginatorModule,
-        BrowserModule,
-        HttpClientModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatTableModule,
-        MatDialogModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        MatExpansionModule,
-        MatDatepickerModule
-    ],
+  imports: [
+    MatPaginatorModule,
+    BrowserModule,
+    HttpClientModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatTableModule,
+    MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatDatepickerModule
+  ],
   exports: [
     MatButtonModule,
     MatDialogModule,

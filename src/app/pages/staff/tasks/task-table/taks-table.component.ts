@@ -8,7 +8,7 @@ import {HttpClient} from '@angular/common/http';
 import {Task} from '../../../../component/task';
 import {MatTableDataSource} from '@angular/material/table';
 import {takeUntil} from 'rxjs/operators';
-import {SelectService} from '../../../../services/select.service';
+import {SelectService} from "../../../../services/select.service";
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -163,7 +163,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
 
   createFilter(): (data: any, filter: string) => boolean {
     // tslint:disable-next-line:only-arrow-functions
-    let filterFunction = function(data, filter): boolean {
+    const filterFunction = function(data, filter): boolean {
       const searchTerms = JSON.parse(filter);
       let result = data.start.toString().toLowerCase().indexOf(searchTerms.start) !== -1
         && data.end.toString().toLowerCase().indexOf(searchTerms.end) !== -1

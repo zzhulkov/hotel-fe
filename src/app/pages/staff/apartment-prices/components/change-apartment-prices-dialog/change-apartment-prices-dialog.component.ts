@@ -103,7 +103,8 @@ export class ChangeApartmentPricesDialogComponent extends Unsubscribable impleme
       startPeriod: startDateCleaned,
       endPeriod: endDateCleaned,
       nameClass: this.addForm.value.nameClass,
-      price: this.addForm.value.price});
+      price: this.addForm.value.price
+    });
     this.apartmentPrice.apartmentClass = this.selectedApartmentsClass;
     this.apartmentPrice.startPeriod = this.addForm.value.startPeriod;
     this.apartmentPrice.endPeriod = this.addForm.value.endPeriod;

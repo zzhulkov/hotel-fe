@@ -30,6 +30,7 @@ export class AddApartmentPricesDialogComponent extends Unsubscribable implements
 
   apartmentsClassesList: ApartmentsClass[];
   selectedApartmentsClass: ApartmentsClass;
+
   // tslint:disable-next-line:max-line-length
   constructor(private formBuilder: FormBuilder, private http: HttpClient,
               public selectService: SelectService, private datePipe: DatePipe) {
@@ -79,7 +80,8 @@ export class AddApartmentPricesDialogComponent extends Unsubscribable implements
       startPeriod: startDateCleaned,
       endPeriod: endDateCleaned,
       nameClass: this.addForm.value.nameClass,
-      price: this.addForm.value.price});
+      price: this.addForm.value.price
+    });
     this.apartmentPrice.apartmentClass = this.selectedApartmentsClass;
     this.apartmentPrice.startPeriod = this.addForm.value.startPeriod;
     this.apartmentPrice.endPeriod = this.addForm.value.endPeriod;

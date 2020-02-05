@@ -25,4 +25,5 @@ import {AnimationsModule} from "../../modules/animations/animations.module";
     HttpService
   ]
 })
-export class TaskPageModule {}
+export class TaskPageModule {
+}
