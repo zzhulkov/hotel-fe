@@ -1,14 +1,14 @@
-import {ConstantsService} from "../../../../services/constants.service";
-import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from "@angular/core";
-import {Unsubscribable} from "../../../../component/Unsubscribable";
-import {DataTransferService} from "../../../../services/data-transfer.service";
-import {MatPaginator} from "@angular/material/paginator";
-import {FormControl} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
-import {Task} from "../../../../component/task";
+import {ConstantsService} from '../../../../services/constants.service';
+import {AfterViewInit, Component, OnInit, Output, ViewChild} from '@angular/core';
+import {Unsubscribable} from '../../../../component/Unsubscribable';
+import {DataTransferService} from '../../../../services/data-transfer.service';
+import {MatPaginator} from '@angular/material/paginator';
+import {FormControl} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
+import {Task} from '../../../../component/task';
 import {MatTableDataSource} from '@angular/material/table';
 import {takeUntil} from 'rxjs/operators';
-import {SelectService} from "../../../../services/select.service";
+import {SelectService} from '../../../../services/select.service';
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -36,7 +36,6 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   executorFilter = new FormControl('');
 
   filterValues = {
-    id: '',
     start: '',
     end: '',
     accept: '',
@@ -164,7 +163,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
 
   createFilter(): (data: any, filter: string) => boolean {
     // tslint:disable-next-line:only-arrow-functions
-    const filterFunction = function(data, filter): boolean {
+    let filterFunction = function(data, filter): boolean {
       const searchTerms = JSON.parse(filter);
       let result = data.start.toString().toLowerCase().indexOf(searchTerms.start) !== -1
         && data.end.toString().toLowerCase().indexOf(searchTerms.end) !== -1
@@ -174,10 +173,10 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
         && data.creator.user.email.indexOf(searchTerms.creator) !== -1
         && data.executor.user.email.indexOf(searchTerms.executor) !== -1;
       if (data.accept !== null) {
-        result = result && data.accept.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
+        result = result && data.accept.toString().toLowerCase().indexOf(searchTerms.accept) !== -1;
       }
       if (data.complete !== null) {
-        result = result && data.complete.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
+        result = result && data.complete.toString().toLowerCase().indexOf(searchTerms.complete) !== -1;
       }
       return result;
     };
