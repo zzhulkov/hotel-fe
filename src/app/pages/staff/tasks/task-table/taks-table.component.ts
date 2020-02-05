@@ -10,6 +10,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {takeUntil} from 'rxjs/operators';
 import {SelectService} from "../../../../services/select.service";
 
+
 const URL = new ConstantsService().BASE_URL;
 
 @Component({
@@ -37,7 +38,6 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   executorFilter = new FormControl('');
 
   filterValues = {
-    id: '',
     start: '',
     end: '',
     accept: '',
@@ -177,10 +177,10 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
         && data.creator.user.email.indexOf(searchTerms.creator) !== -1
         && data.executor.user.email.indexOf(searchTerms.executor) !== -1;
       if (data.accept !== null) {
-        result = result && data.accept.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
+        result = result && data.accept.toString().toLowerCase().indexOf(searchTerms.accept) !== -1;
       }
       if (data.complete !== null) {
-        result = result && data.complete.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
+        result = result && data.complete.toString().toLowerCase().indexOf(searchTerms.complete) !== -1;
       }
       return result;
     };
