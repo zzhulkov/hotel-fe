@@ -7,7 +7,7 @@ import {Booking} from '../../../../../component/booking';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {FormControl} from '@angular/forms';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
-import {SelectService} from "../../../../../services/select.service";
+import {SelectService} from '../../../../../services/select.service';
 
 
 const URL = new ConstantsService().BASE_URL;
@@ -28,8 +28,20 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
   private dataTransfer: DataTransferService;
   selectedRow: any;
   bookingList = new MatTableDataSource<Booking>();
-  selectedBooking: Booking;
-  displayedColumns = ['id', 'startDate', 'endDate', 'totalPrice', 'comments', 'createdDate', 'review', 'bookingStatus', 'email', 'nameClass', 'roomNumber'];
+  displayedColumns = [
+    'id',
+    'startDate',
+    'endDate',
+    'totalPrice',
+    'comments',
+    'createdDate',
+    'review',
+    'bookingStatus',
+    'email',
+    'nameClass',
+    'roomNumber'
+  ];
+
   dataSource = this.bookingList;
   startDateFilter = new FormControl('');
   endDateFilter = new FormControl('');
@@ -64,11 +76,11 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
   }
 
   haveApartments(booking: any): boolean {
-    if (booking.apartment == null) {
-      return false;
-    } else {
-      return true;
-    }
+    return booking.apartment != null;
+  }
+
+  haveUser(booking: any): boolean {
+    return booking.user != null;
   }
 
   selectRow(row: any): void {
@@ -78,9 +90,6 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     this.selectService.announceSelect(row);
   }
 
-  onSelect(booking: Booking): void {
-    this.selectedBooking = booking;
-  }
 
   ngOnInit() {
     this.startDateFilter.valueChanges.pipe(takeUntil(this.destroy$))
@@ -169,19 +178,23 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
 
   createFilter(): (data: any, filter: string) => boolean {
     // tslint:disable-next-line:only-arrow-functions
-    const filterFunction = function (data, filter): boolean {
-      const searchTerms = JSON.parse(filter);
+    let filterFunction = function (data, filter): boolean {
+      let searchTerms = JSON.parse(filter);
       let result = data.startDate.toString().toLowerCase().indexOf(searchTerms.startDate) !== -1
         && data.endDate.toString().toLowerCase().indexOf(searchTerms.endDate) !== -1
         && data.totalPrice.toString().toLowerCase().indexOf(searchTerms.totalPrice) !== -1
         && data.createdDate.toString().toLowerCase().indexOf(searchTerms.createdDate) !== -1
         && data.bookingStatus.toString().toLowerCase().indexOf(searchTerms.bookingStatus) !== -1
-        && data.user.firstname.indexOf(searchTerms.firstname) !== -1
         && data.apartmentClass.nameClass.indexOf(searchTerms.nameClass) !== -1;
 
       if (data.apartment !== null) {
         result = result && data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
       }
+
+      if (data.user !== null) {
+        result = result && data.user.firstname.indexOf(searchTerms.firstname) !== -1;
+      }
+
       return result;
     };
     return filterFunction;
