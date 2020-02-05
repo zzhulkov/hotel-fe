@@ -30,7 +30,7 @@ import {ConstantsService} from './services/constants.service';
   providers: [
     HttpService,
     ConstantsService,
-    { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true }
+    {provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

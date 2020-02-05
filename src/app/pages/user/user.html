@@ -2,8 +2,10 @@
 <app-user-header></app-user-header>
 
 <div style="width: 100%" *ngIf="openBooking" class="booking-container">
-  <div class="close-btn"><img src="../../../assets/img/icons/close-button-clipart-6.png" (click)="openBooking = false"/></div>
-  <app-booking-creator [sDate]="datesForm.get('startDate').value" [eDate]="datesForm.get('endDate').value"></app-booking-creator>
+  <div class="close-btn"><img src="../../../assets/img/icons/close-button-clipart-6.png" (click)="openBooking = false"/>
+  </div>
+  <app-booking-creator [sDate]="datesForm.get('startDate').value"
+                       [eDate]="datesForm.get('endDate').value"></app-booking-creator>
 </div>
 <div class="carousel-container">
   <mat-carousel
@@ -27,23 +29,32 @@
   <div class="container home-date-container">
     <form class="search-date-form" [formGroup]="datesForm">
       <mat-form-field>
-        <input matInput [matDatepicker]="startDate" [min]="currentDate" [max]="datesForm.get('endDate').value" formControlName="startDate" placeholder="Arrive date" disabled>
+        <input matInput [matDatepicker]="startDate" [min]="currentDate" [max]="datesForm.get('endDate').value"
+               formControlName="startDate" placeholder="Arrive date" disabled>
         <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
         <mat-datepicker #startDate disabled="false"></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [matDatepicker]="endDate" [min]="(datesForm.get('startDate').value != null)? datesForm.get('startDate').value: currentDate" formControlName="endDate" placeholder="Departure date" disabled>
+        <input matInput [matDatepicker]="endDate"
+               [min]="(datesForm.get('startDate').value != null)? datesForm.get('startDate').value: currentDate"
+               formControlName="endDate" placeholder="Departure date" disabled>
         <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
         <mat-datepicker #endDate disabled="false"></mat-datepicker>
       </mat-form-field>
 
-      <button mat-button  (click)="onDatesFormClick()">Find apartments</button>
+      <button mat-button (click)="onDatesFormClick()">Find apartments</button>
     </form>
   </div>
   <div class="container home-about-container">
     <div class="home-about-wrapper">
       <h2>About</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad alias asperiores assumenda, beatae corporis dicta dolores eos error expedita fugiat iusto mollitia nam nostrum nulla officia omnis pariatur quae quisquam saepe sapiente sed sint, tempora ullam unde voluptas, voluptates voluptatibus? Adipisci dicta earum enim expedita illum minima minus natus nemo odit, quam qui quis repudiandae sequi suscipit voluptatum. Ab aliquid amet, assumenda at autem consequuntur cumque doloremque dolores ea enim eos expedita inventore ipsa ipsum iure maxime minus necessitatibus nulla officia omnis optio perspiciatis provident quia quibusdam quod saepe sequi sit soluta temporibus ullam vel velit veniam veritatis. Earum.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad alias asperiores assumenda, beatae corporis
+        dicta dolores eos error expedita fugiat iusto mollitia nam nostrum nulla officia omnis pariatur quae quisquam
+        saepe sapiente sed sint, tempora ullam unde voluptas, voluptates voluptatibus? Adipisci dicta earum enim
+        expedita illum minima minus natus nemo odit, quam qui quis repudiandae sequi suscipit voluptatum. Ab aliquid
+        amet, assumenda at autem consequuntur cumque doloremque dolores ea enim eos expedita inventore ipsa ipsum iure
+        maxime minus necessitatibus nulla officia omnis optio perspiciatis provident quia quibusdam quod saepe sequi sit
+        soluta temporibus ullam vel velit veniam veritatis. Earum.</p>
     </div>
   </div>
 </div>
@@ -57,23 +68,32 @@
       <mat-card>
         <mat-card-title>Apartment</mat-card-title>
         <mat-card-subtitle>price 100$</mat-card-subtitle>
-        <img mat-card-image src="https://190f4a0218cc8fdbe8d6-d9457336dc20f9a8a1bf4251900c4bd5.ssl.cf3.rackcdn.com/wp-content/uploads/2015/08/0953HW-kbphihi_4-tile-small.jpg">
-        <mat-card-content>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus nobis nostrum quidem rem reprehenderit! Corporis.</mat-card-content>
+        <img mat-card-image
+             src="https://190f4a0218cc8fdbe8d6-d9457336dc20f9a8a1bf4251900c4bd5.ssl.cf3.rackcdn.com/wp-content/uploads/2015/08/0953HW-kbphihi_4-tile-small.jpg">
+        <mat-card-content>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus nobis nostrum quidem rem
+          reprehenderit! Corporis.
+        </mat-card-content>
       </mat-card>
       <mat-card>
         <mat-card-title>Apartment</mat-card-title>
         <mat-card-subtitle>price 100$</mat-card-subtitle>
-        <img mat-card-image src="https://190f4a0218cc8fdbe8d6-d9457336dc20f9a8a1bf4251900c4bd5.ssl.cf3.rackcdn.com/wp-content/uploads/2015/08/0953HW-kbphihi_4-tile-small.jpg">
-        <mat-card-content>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus nobis nostrum quidem rem reprehenderit! Corporis.</mat-card-content>
+        <img mat-card-image
+             src="https://190f4a0218cc8fdbe8d6-d9457336dc20f9a8a1bf4251900c4bd5.ssl.cf3.rackcdn.com/wp-content/uploads/2015/08/0953HW-kbphihi_4-tile-small.jpg">
+        <mat-card-content>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus nobis nostrum quidem rem
+          reprehenderit! Corporis.
+        </mat-card-content>
       </mat-card>
       <mat-card>
         <mat-card-title>Apartment</mat-card-title>
         <mat-card-subtitle>price 100$</mat-card-subtitle>
-        <img mat-card-image src="https://190f4a0218cc8fdbe8d6-d9457336dc20f9a8a1bf4251900c4bd5.ssl.cf3.rackcdn.com/wp-content/uploads/2015/08/0953HW-kbphihi_4-tile-small.jpg">
-        <mat-card-content>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus nobis nostrum quidem rem reprehenderit! Corporis.</mat-card-content>
+        <img mat-card-image
+             src="https://190f4a0218cc8fdbe8d6-d9457336dc20f9a8a1bf4251900c4bd5.ssl.cf3.rackcdn.com/wp-content/uploads/2015/08/0953HW-kbphihi_4-tile-small.jpg">
+        <mat-card-content>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus nobis nostrum quidem rem
+          reprehenderit! Corporis.
+        </mat-card-content>
       </mat-card>
     </div>
-    <div  class="see-more">
+    <div class="see-more">
       <button mat-button>See more</button>
     </div>
   </div>
@@ -90,7 +110,7 @@
       <ngx-tweet tweetId="1205918107690102784"></ngx-tweet>
       <ngx-tweet tweetId="1208434138455400450"></ngx-tweet>
     </div>
-    <div  class="see-more">
+    <div class="see-more">
       <button mat-button>See more</button>
     </div>
   </div>
@@ -106,17 +126,23 @@
     <div class="service-card">
       <div class="service-img"></div>
       <h3>Breakfast</h3>
-      <p>Breakfast is the first meal of a day. The word in English refers to breaking the fasting period of the previous night. There is a strong likelihood for one or more "typical", or "traditional", breakfast menus to exist in most places, but their composition varies widely from place to place, and has varied over time, so that globally a very wide range of preparations and ingredients are now associated with breakfast.</p>
+      <p>Breakfast is the first meal of a day. The word in English refers to breaking the fasting period of the previous
+        night. There is a strong likelihood for one or more "typical", or "traditional", breakfast menus to exist in
+        most places, but their composition varies widely from place to place, and has varied over time, so that globally
+        a very wide range of preparations and ingredients are now associated with breakfast.</p>
 
     </div>
     <div class="service-card">
       <div class="service-img"></div>
       <div class="service-card-text">
         <h3>Swimming pool</h3>
-        <p>A swimming pool, swimming bath, wading pool, paddling pool, or simply pool is a structure designed to hold water to enable swimming or other leisure activities. Pools can be built into the ground (in-ground pools) or built above ground (as a freestanding construction or as part of a building or other larger structure), and are also a common feature aboard ocean-liners and cruise ships.</p>
+        <p>A swimming pool, swimming bath, wading pool, paddling pool, or simply pool is a structure designed to hold
+          water to enable swimming or other leisure activities. Pools can be built into the ground (in-ground pools) or
+          built above ground (as a freestanding construction or as part of a building or other larger structure), and
+          are also a common feature aboard ocean-liners and cruise ships.</p>
       </div>
     </div>
-    <div  class="see-more">
+    <div class="see-more">
       <button mat-button>See more</button>
     </div>
   </div>

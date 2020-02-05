@@ -102,7 +102,7 @@ export class UnavailableApartmentsTableComponent extends Unsubscribable implemen
 
   createFilter(): (data: any, filter: string) => boolean {
     // tslint:disable-next-line:only-arrow-functions
-    const filterFunction = function(data, filter): boolean {
+    const filterFunction = function (data, filter): boolean {
       const searchTerms = JSON.parse(filter);
       let result = data.startDate.toString().toLowerCase().indexOf(searchTerms.startDate) !== -1
         && data.endDate.toString().toLowerCase().indexOf(searchTerms.endDate) !== -1

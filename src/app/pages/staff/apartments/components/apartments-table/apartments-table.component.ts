@@ -1,14 +1,5 @@
-import {
-  AfterViewInit, ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input, OnDestroy,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
-import {take, takeUntil} from 'rxjs/operators';
+import {AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
+import {takeUntil} from 'rxjs/operators';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {HttpClient} from '@angular/common/http';
 import {Apartments} from '../../../../../component/apartments';
@@ -17,7 +8,7 @@ import {FormControl} from '@angular/forms';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from "../../../../../services/data-transfer.service";
 import {SelectService} from "../../../../../services/select.service";
-import {Observable, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 
 const URL = new ConstantsService().BASE_URL;
 

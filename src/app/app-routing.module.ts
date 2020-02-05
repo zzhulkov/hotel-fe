@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {ApartmentsManagerComponent} from './pages/staff/apartments/apartments-manager.component';
 import {BookingManagerComponent} from './pages/staff/booking/booking-manager.component';
 import {TaskManagerComponent} from './pages/staff/tasks/task.manager.component';

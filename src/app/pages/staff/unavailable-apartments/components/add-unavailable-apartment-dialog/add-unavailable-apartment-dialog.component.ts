@@ -30,6 +30,7 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
 
   apartmentsList: Apartments[];
   selectedApartment: Apartments;
+
   // tslint:disable-next-line:max-line-length
   constructor(private formBuilder: FormBuilder, private http: HttpClient,
               public selectService: SelectService, private datePipe: DatePipe) {
@@ -69,7 +70,8 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
     const endDateCleaned = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
     this.addForm.patchValue({
       startDate: startDateCleaned,
-      endDate: endDateCleaned});
+      endDate: endDateCleaned
+    });
     this.unavailableApartment.apartment = this.selectedApartment;
     this.unavailableApartment.startDate = this.addForm.value.startDate;
     this.unavailableApartment.endDate = this.addForm.value.endDate;

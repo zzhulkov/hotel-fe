@@ -1,5 +1,11 @@
 <div [ngSwitch]="page">
-  <ng-template [ngSwitchCase]="'user'"><app-user></app-user></ng-template>
-  <ng-template [ngSwitchCase]="'manager'"><app-staff></app-staff></ng-template>
-  <ng-template [ngSwitchCase]="'task-page'"><app-task-page></app-task-page></ng-template>
+  <ng-template [ngSwitchCase]="'user'">
+    <app-user></app-user>
+  </ng-template>
+  <ng-template [ngSwitchCase]="'manager'">
+    <app-staff></app-staff>
+  </ng-template>
+  <ng-template [ngSwitchCase]="'task-page'">
+    <app-task-page></app-task-page>
+  </ng-template>
 </div>

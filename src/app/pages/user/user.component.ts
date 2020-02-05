@@ -18,7 +18,8 @@ export class UserComponent implements OnInit {
     'https://www3.hilton.com/resources/media/hi/KBPHIHI/en_US/img/shared/full_page_image_gallery/main/HL_sideext_1270x560_FitToBoxSmallDimension_UpperCenter.jpg',
     'https://www3.hilton.com/resources/media/hi/KBPHIHI/en_US/img/shared/full_page_image_gallery/main/HL_pool01_21_1270x560_FitToBoxSmallDimension_Center.jpg'];
 
-  constructor(private fb: FormBuilder, private auth: AuthenticationService) {}
+  constructor(private fb: FormBuilder, private auth: AuthenticationService) {
+  }
 
   ngOnInit(): void {
     this.datesForm = this.fb.group({
@@ -28,7 +29,7 @@ export class UserComponent implements OnInit {
   }
 
   onDatesFormClick() {
-    if ( this.auth.currentUserObject ) {
+    if (this.auth.currentUserObject) {
       this.openBooking = true;
     } else {
       alert('You should sign in first');

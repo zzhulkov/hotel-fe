@@ -13,7 +13,7 @@ import {Apartments} from '../../../../../component/apartments';
 import {BookingStatus} from '../../../../../component/booking-status.type';
 import {MatDialog} from '@angular/material';
 import {DeleteBookingDialogComponent} from '../delete-booking-dialog/delete-booking-dialog.component';
-import {DatePipe} from "@angular/common";
+import {DatePipe} from '@angular/common';
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -60,7 +60,9 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
     this.getAllApartmentsClasses();
     this.getAllUsers();
     this.booking = dataTransfer.getData();
-    this.getFreeApartments(this.booking.startDate.toString(), this.booking.endDate.toString(), this.booking.apartmentClass.id.toString());
+    this.getFreeApartments(this.booking.startDate.toString(),
+      this.booking.endDate.toString(),
+      this.booking.apartmentClass.id.toString());
     console.log(this.booking);
   }
 
@@ -72,16 +74,13 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
       comment: [this.booking.comment],
       review: [this.booking.review],
       bookingStatus: [this.booking.bookingStatus],
-      email: [this.booking.user.email],
+      email: [this.getEmail(this.booking.user)],
       nameClass: [this.booking.apartmentClass.nameClass],
       roomNumber: [this.getRoomNumber(this.booking.apartment)]
     });
 
     this.getUserByEmail();
 
-    // if (this.booking.apartment !== null) {
-    //   this.addForm.value.roomNumber = this.booking.apartment.roomNumber;
-    // }
     this.checkValid();
 
     this.subscription = this.selectService.selectAnnounced$
@@ -91,6 +90,9 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
         this.selectedApartmentsClass = this.booking.apartmentClass;
         if (this.booking.apartment !== null) {
           this.selectedApartment = this.booking.apartment;
+        }
+        if (this.booking.user !== null) {
+          this.selectedUser = this.booking.user;
         }
         this.fillForm(row);
       });
@@ -104,6 +106,14 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
     return roomNumber;
   }
 
+  getEmail(user: User): string {
+    let email = '';
+    if (user !== null) {
+      email = user.email.toString();
+    }
+    return email;
+  }
+
   fillForm(row: Booking) {
     this.changeForm.setValue({
       startDate: row.startDate,
@@ -112,7 +122,7 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
       comment: row.comment,
       review: row.review,
       bookingStatus: row.bookingStatus,
-      email: row.user.email,
+      email: this.getEmail(row.user),
       nameClass: row.apartmentClass.nameClass,
       roomNumber: this.getRoomNumber(row.apartment)
     });
