@@ -34,11 +34,6 @@
         <br/>
         <mat-action-row align="end">
           <button mat-raised-button
-                  mat-dialog-close
-                  [mat-dialog-close]="true">
-            Cancel
-          </button>
-          <button mat-raised-button
                   type="submit"
                   (click)="checkValid()"
                   [disabled]="isSubmitDisabled()" mat-button>
