@@ -51,6 +51,8 @@
       </div>
       <div *ngIf="freeapartmentClasses !== null">
 
+        <p *ngIf="freeapartmentClasses[0] == null">We do not have free apartments for these dates.</p>
+
         <div class="apartment-classes-list">
           <div *ngFor="let apartClass of freeapartmentClasses">
             <input type="radio"

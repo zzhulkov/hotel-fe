@@ -11,6 +11,7 @@ import {SelectService} from '../../../../../services/select.service';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material';
 import {DeleteUnavailableApartmentDialogComponent} from '../delete-unavailable-apartment-dialog/delete-unavailable-apartment-dialog.component';
+import {DatePipe} from "@angular/common";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -38,7 +39,8 @@ export class ChangeUnavailableApartmentDialogComponent extends Unsubscribable im
               private formBuilder: FormBuilder,
               private http: HttpClient,
               private dataTransfer: DataTransferService,
-              public selectService: SelectService) {
+              public selectService: SelectService,
+              private datePipe: DatePipe) {
     super(selectService);
     this.getAllApartments();
     this.unavailableApartment = dataTransfer.getData();
@@ -49,8 +51,8 @@ export class ChangeUnavailableApartmentDialogComponent extends Unsubscribable im
     this.addForm = this.formBuilder.group({
       apartment: ['', Validators.required], // outputs room number
       causeDescription: ['', Validators.required],
-      startDate: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')],
-      endDate: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')]
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required]
     });
     this.checkValid();
     this.subscription = this.selectService.selectAnnounced$
@@ -89,6 +91,12 @@ export class ChangeUnavailableApartmentDialogComponent extends Unsubscribable im
   }
 
   setUnavailableApartment() {
+    const startDateCleaned = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
+    const endDateCleaned = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
+    this.addForm.patchValue({
+      startDate: startDateCleaned,
+      endDate: endDateCleaned
+    });
     this.unavailableApartment.apartment = this.selectedApartments;
     this.unavailableApartment.startDate = this.addForm.value.startDate;
     this.unavailableApartment.endDate = this.addForm.value.endDate;

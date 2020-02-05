@@ -7,6 +7,7 @@ import {UnavailableApartment} from '../../../../../component/unavailable-apartme
 import {Subscription} from 'rxjs';
 import {SelectService} from '../../../../../services/select.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
+import {DatePipe} from "@angular/common";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -31,7 +32,8 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
   selectedApartment: Apartments;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, public selectService: SelectService) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,
+              public selectService: SelectService, private datePipe: DatePipe) {
     super(selectService);
     this.getAllApartments();
   }
@@ -40,8 +42,8 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
     this.addForm = this.formBuilder.group({
       apartment: ['', Validators.required],
       causeDescription: ['', Validators.required],
-      startDate: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')],
-      endDate: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')]
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required]
     });
 
     this.checkValid();
@@ -64,6 +66,12 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
   }
 
   setUnavailableApartment() {
+    const startDateCleaned = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
+    const endDateCleaned = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
+    this.addForm.patchValue({
+      startDate: startDateCleaned,
+      endDate: endDateCleaned
+    });
     this.unavailableApartment.apartment = this.selectedApartment;
     this.unavailableApartment.startDate = this.addForm.value.startDate;
     this.unavailableApartment.endDate = this.addForm.value.endDate;

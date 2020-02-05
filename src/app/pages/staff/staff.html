@@ -1,3 +1,4 @@
+
 <div *ngIf="logged && !canAccess" class="logged">
   <p>You are logged in as <span style="color: #023EBC">{{username}}</span></p>
   <p style="color: crimson">You can't use this page, because you aren't Worker</p>
@@ -31,7 +32,7 @@
         <button mat-button>Booking</button>
       </a>
       <a [routerLink]="['manager/apartment-prices']" routerLinkActive="coral">
-        <button mat-button>Class prices</buttton>
+        <button mat-button>Class prices</button>
       </a>
       <a [routerLink]="['/manager/apartments-classes']" routerLinkActive="coral">
         <button mat-button>Classes</button>

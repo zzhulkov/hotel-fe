@@ -4,10 +4,10 @@ import {DatePipe} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../component/apartments-class';
 import {Apartments} from '../../../../component/apartments';
-import {Booking} from "../../../../component/booking";
-import {AuthenticationService} from "../../../../modules/authentication/authentication.service";
-import {BookingAddService} from "../../../../component/bookingAddService";
-import {ConstantsService} from "../../../../services/constants.service";
+import {Booking} from '../../../../component/booking';
+import {AuthenticationService} from '../../../../modules/authentication/authentication.service';
+import {BookingAddService} from '../../../../component/bookingAddService';
+import {ConstantsService} from '../../../../services/constants.service';
 
 const BASE_URL = new ConstantsService().BASE_URL;
 
@@ -49,8 +49,10 @@ export class BookingCreatorComponent implements OnInit {
       endDate: [{value: this.eDate, disabled: true}, [Validators.required]]
     });
 
-    if (this.sDate != null && this.eDate != null)
+    // Check dates inputed from parent component
+    if (this.sDate != null && this.eDate != null) {
       this.isDatesFromComplete = true;
+    }
 
     this.apartmentClassChooseForm = this.fb.group({
       apartmentClassId: [null, Validators.required]
@@ -67,7 +69,7 @@ export class BookingCreatorComponent implements OnInit {
 
   onDatesFormChange() {
     let tmp = true;
-    for (let key in this.datesForm.controls) {
+    for (const key in this.datesForm.controls) {
       tmp = tmp && this.datesForm.get(key).errors === null && this.datesForm.get(key).value !== null;
     }
     this.isDatesFromComplete = tmp;
@@ -81,15 +83,17 @@ export class BookingCreatorComponent implements OnInit {
   }
 
   onDateFormSubmit() {
-    if (!this.isDatesFromComplete) return;
+    if (!this.isDatesFromComplete) {
+      return;
+    }
     const sd = this.datePipe.transform(this.startDate().value, 'yyyy-MM-dd');
     const ed = this.datePipe.transform(this.endDate().value, 'yyyy-MM-dd');
+
+    // Get info about free apartmentsClasse
     this.http.get(BASE_URL + `bookings/find?startDate=${sd}&endDate=${ed}`)
       .subscribe(
         (data: FreeApartments[]) => {
-          this.freeapartmentClasses = data.filter(cl => {
-            return cl.countOfApartments > 0
-          });
+          this.freeapartmentClasses = data.filter(cl => cl.countOfApartments > 0);
           console.log('got free apartments');
         },
         error => {
@@ -114,8 +118,13 @@ export class BookingCreatorComponent implements OnInit {
   }
 
   onApartmentClassFormSubmit() {
-    if (!this.isApartmentClassFormComplete) return;
+    if (!this.isApartmentClassFormComplete) {
+      return;
+    }
+
     console.log(this.apartmentClassId().value);
+
+    // send booking
     const booking = new BookingToSend();
     booking.apartmentClass = {id: this.apartmentClassId().value};
     booking.bookingStatus = 'Created';
@@ -135,6 +144,7 @@ export class BookingCreatorComponent implements OnInit {
         }
       );
 
+    // get services list
     this.http.get(BASE_URL + 'bookingAddServices')
       .subscribe(
         (data: BookingAddService[]) => {
@@ -172,6 +182,7 @@ export class BookingCreatorComponent implements OnInit {
   }
 
   onServicesFormSubmit() {
+    // get choosed services from html
     let servicesCount = 0;
     this.currentServices = [];
     const values = document.getElementsByName('service-checkbox')
@@ -183,6 +194,7 @@ export class BookingCreatorComponent implements OnInit {
       });
     console.log(this.currentServices);
 
+    // send choosed services
     this.http.post(BASE_URL + 'bookings/' + this.currentBooking.id + '/servicesList', this.currentServices)
       .subscribe(
         data => {
@@ -210,7 +222,6 @@ export class BookingCreatorComponent implements OnInit {
         }
       );
   }
-
   getCurrentBookingServicesFromDB() {
     this.http.get(BASE_URL + 'bookingAddServicesShip?booking=' + this.currentBooking.id)
       .subscribe(
