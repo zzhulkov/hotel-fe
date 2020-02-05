@@ -18,26 +18,28 @@ import {DeleteTaskDialogComponent} from "./delete-task-dialog/delete-task-dialog
 import {MatExpansionModule} from "@angular/material/expansion";
 import {TextMaskModule} from "angular2-text-mask";
 import {NgxMaskModule} from "ngx-mask";
+import {AnimationsModule} from "../../../modules/animations/animations.module";
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatPaginatorModule,
-    MatTableModule,
-    MatExpansionModule,
-    TextMaskModule,
-    FormsModule,
-    NgxMaskModule.forRoot({
-      showMaskTyped : true,
-    })
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatExpansionModule,
+        TextMaskModule,
+        FormsModule,
+        NgxMaskModule.forRoot({
+            showMaskTyped: true,
+        }),
+        AnimationsModule
+    ],
   declarations: [
     TaskManagerComponent,
     AddTaskDialogComponent,

@@ -49,7 +49,7 @@ export class ChangeUnavailableApartmentDialogComponent extends Unsubscribable im
 
   ngOnInit(): void {
     this.addForm = this.formBuilder.group({
-      apartment: ['', Validators.required], // outputs room number
+      roomNumber: ['', Validators.required], // outputs room number
       causeDescription: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required]
@@ -68,7 +68,7 @@ export class ChangeUnavailableApartmentDialogComponent extends Unsubscribable im
       startDate: row.startDate,
       endDate: row.endDate,
       causeDescription: row.causeDescription,
-      apartment: row.apartment.roomNumber
+      roomNumber: row.apartment.roomNumber
     });
   }
 

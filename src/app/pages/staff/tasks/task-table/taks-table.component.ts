@@ -23,6 +23,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   taskList = new MatTableDataSource<Task>();
   selectedTask: Task;
+  isEmptyTable = false;
   displayedColumns = ['id', 'start', 'end', 'accept', 'complete', 'description', 'status', 'apartmentsRoomNumber', 'creatorEmail', 'executorEmail'];
   dataSource = this.taskList;
   startFilter = new FormControl('');
@@ -53,6 +54,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
 
   constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
     super(selectService);
+    console.log(this.dataTransfer);
     this.getAllTask();
     this.dataTransfer = dataTransfer;
     this.taskList.filterPredicate = this.createFilter();
@@ -159,6 +161,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
     this.http.get(URL + 'tasks/').subscribe(res => {
       console.log(res);
       this.dataSource.data = (res as Task[]);
+      this.isEmptyTable = true;
     });
   }
 

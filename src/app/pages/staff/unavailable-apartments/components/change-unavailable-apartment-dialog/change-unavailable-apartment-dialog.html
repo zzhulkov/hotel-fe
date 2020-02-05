@@ -32,13 +32,13 @@
         </mat-form-field>
         <br/>
         <mat-form-field>
-          <mat-label>Room number</mat-label>
-          <mat-select required="required" placeholder="Class name" formControlName="apartment">
-            <mat-option *ngFor="let apartments of apartmentsList"
-                        (click)="onSelectApartment(apartments)"
-                        value={{apartments?.roomNumber}}>
+        <!--  <mat-label>Room number</mat-label> -->
+          <mat-select required="required" placeholder="Room number" formControlName="roomNumber">
+            <mat-option *ngFor="let apartment of apartmentsList"
+                        (click)="onSelectApartment(apartment)"
+                        value={{apartment?.roomNumber}}>
 
-              {{apartments?.roomNumber}}
+              {{apartment?.roomNumber}}
             </mat-option>
           </mat-select>
         </mat-form-field>
