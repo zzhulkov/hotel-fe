@@ -41,28 +41,30 @@ export class AuthenticationService {
 
     // TODO: CHANGE URLS
     const response = this.http.get(BASE_URL + 'authenticate?'
-                                  + 'username=' + username
-                                  + '&password=' + password);
+      + 'username=' + username
+      + '&password=' + password);
     response.subscribe(
       data => {
-          if (data.hasOwnProperty('token')) {
-            const tok = (data as {token});
-            this.token = tok.token;
-            localStorage.setItem('token', tok.token);
-            if (isNotNullOrUndefined(tok)) {
-              this.http.get(BASE_URL + 'users?login=' + username)
-                .subscribe(
-                  resp => {
-                    this.currentUserSubject.next((resp as User));
-                    localStorage.setItem('user', JSON.stringify(resp as User));
-                    isRespounseCorrect.next(1);
-                  }
-                );
-            }
+        if (data.hasOwnProperty('token')) {
+          const tok = (data as { token });
+          this.token = tok.token;
+          localStorage.setItem('token', tok.token);
+          if (isNotNullOrUndefined(tok)) {
+            this.http.get(BASE_URL + 'users?login=' + username)
+              .subscribe(
+                resp => {
+                  this.currentUserSubject.next((resp as User));
+                  localStorage.setItem('user', JSON.stringify(resp as User));
+                  isRespounseCorrect.next(1);
+                }
+              );
           }
+        }
       },
-      err => {isRespounseCorrect.next(2);}
-      );
+      err => {
+        isRespounseCorrect.next(2);
+      }
+    );
     return isRespounseCorrect;
   }
 
@@ -80,17 +82,17 @@ export class AuthenticationService {
 
     this.http.post(BASE_URL + 'users', user)
       .subscribe(data => {
-        console.log(data);
-        this.login(user.login, user.password);
-      },
-      err => {
-        console.log(err);
-        const fields = err.error.match(/\(\w+\)/g);
-        if (fields) {
-          let f = fields[0].replace(/[()]/g, '');
-          errorField.next(f);
-        }
-      });
+          console.log(data);
+          this.login(user.login, user.password);
+        },
+        err => {
+          console.log(err);
+          const fields = err.error.match(/\(\w+\)/g);
+          if (fields) {
+            let f = fields[0].replace(/[()]/g, '');
+            errorField.next(f);
+          }
+        });
     return errorField.asObservable();
   }
 }

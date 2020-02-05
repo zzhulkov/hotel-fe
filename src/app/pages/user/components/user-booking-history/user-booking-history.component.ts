@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Booking} from "../../../../component/booking";
 import {HttpClient} from "@angular/common/http";
 import {AuthenticationService} from "../../../../modules/authentication/authentication.service";
-import {Form, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DatePipe} from "@angular/common";
 import {ConstantsService} from "../../../../services/constants.service";
 
@@ -20,7 +20,8 @@ export class UserBookingHistoryComponent implements OnInit {
   userBookingsHistory: Booking[];
   reviewForm: FormGroup;
 
-  constructor(private http: HttpClient, private authService: AuthenticationService, private fb: FormBuilder, private dp: DatePipe) {}
+  constructor(private http: HttpClient, private authService: AuthenticationService, private fb: FormBuilder, private dp: DatePipe) {
+  }
 
   ngOnInit(): void {
     this.reviewForm = this.fb.group({

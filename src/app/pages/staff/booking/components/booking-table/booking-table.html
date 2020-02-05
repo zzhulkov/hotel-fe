@@ -96,7 +96,17 @@
           <input matInput [formControl]="bookedByFilter">
         </mat-form-field>
       </th>
-      <td mat-cell *matCellDef="let booking"> {{booking?.user.email}} </td>
+      <td mat-cell *matCellDef="let booking">
+        <div *ngIf="haveUser(booking); then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+          <!-- if condition is true -->
+          {{booking?.user.email}}
+        </ng-template>
+        <ng-template #elseBlock>
+          <!-- if condition is false -->
+          -
+        </ng-template>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="nameClass">

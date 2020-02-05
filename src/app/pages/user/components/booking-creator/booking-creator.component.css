@@ -1,39 +1,40 @@
-::ng-deep .mat-horizontal-stepper-header{
+::ng-deep .mat-horizontal-stepper-header {
   pointer-events: none !important;
 }
 
-.datesForm{
+.datesForm {
   display: flex;
   flex-direction: column;
   max-width: 300px;
   margin: 0 auto;
 }
 
-.mat-button[disabled]{
+.mat-button[disabled] {
   background-color: #023EBC;
   color: white;
   opacity: 0.7;
 }
 
-.mat-button{
+.mat-button {
   background-color: #023EBC;
   color: white;
 }
-.mat-button[type="reset"]{
+
+.mat-button[type="reset"] {
   background-color: crimson;
   color: white;
 }
 
-mat-horizontal-stepper{
+mat-horizontal-stepper {
   padding: 0 20px;
 }
 
 
-form button:nth-of-type(2){
+form button:nth-of-type(2) {
   float: right;
 }
 
-.apartment-classes-list{
+.apartment-classes-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -41,10 +42,11 @@ form button:nth-of-type(2){
 }
 
 
-input[type="radio"]{
+input[type="radio"] {
   display: none;
 }
-label{
+
+label {
   display: grid;
   margin: 10px;
   padding: 10px;
@@ -54,36 +56,41 @@ label{
   cursor: pointer;
 }
 
-label:hover{
+label:hover {
   transition: 0.5s;
   background: ghostwhite;
 }
 
-label h3, label p{
+label h3, label p {
   transition: 0.5s;
   margin: 5px 0;
 }
-label h3{
+
+label h3 {
   font-size: 16px;
   font-weight: 500;
 }
-label p{
+
+label p {
   font-size: 14px;
 }
 
-.apartment-class-row p:nth-of-type(1){
+.apartment-class-row p:nth-of-type(1) {
   float: left;
 }
-.apartment-class-row p:nth-of-type(2){
+
+.apartment-class-row p:nth-of-type(2) {
   float: right;
 }
-.apartment-number{
+
+.apartment-number {
   text-align: right;
   font-size: 16px;
   font-weight: 500;
   color: crimson;
 }
-.apartment-price{
+
+.apartment-price {
   text-align: right;
   font-size: 16px;
   font-weight: 500;
@@ -92,7 +99,7 @@ label p{
 
 
 input[type="radio"]:checked + label,
-input[type="checkbox"]:checked + label{
+input[type="checkbox"]:checked + label {
   transition: 0.5s;
   background-color: #023EBC;
 }
@@ -100,45 +107,44 @@ input[type="checkbox"]:checked + label{
 input[type="radio"]:checked + label p,
 input[type="radio"]:checked + label h3,
 input[type="checkbox"]:checked + label p,
-input[type="checkbox"]:checked + label h3
-{
+input[type="checkbox"]:checked + label h3 {
   transition: 0.5s;
   color: white;
 }
 
-.form-loader{
+.form-loader {
   display: grid;
   width: 80px;
   margin: 10px auto;
 }
 
 
-.services{
+.services {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: flex-start;
 }
 
-.services > div{
+.services > div {
   margin: 5px;
 }
 
-input[type="checkbox"]{
+input[type="checkbox"] {
   display: none;
 }
 
-.final-step{
+.final-step {
   max-width: 500px;
   margin: 10px auto;
 }
 
-.final-step p span{
+.final-step p span {
   font-weight: 500;
   color: #023EBC;
 }
 
-ul{
+ul {
   list-style: square;
   color: #023EBC;
 }

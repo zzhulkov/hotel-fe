@@ -8,7 +8,7 @@
                formControlName="startDate"
                (ngModelChange)="onDatesFormChange()"
                [min]="currentDate"
-               [max] = "maxDate"
+               [max]="maxDate"
                placeholder="Arrive date"
                disabled
                required
@@ -39,7 +39,8 @@
               matStepperNext
               (click)="onDateFormSubmit()"
               [disabled]="!isDatesFromComplete"
-              >Choose apartments</button>
+      >Choose apartments
+      </button>
     </form>
   </mat-step>
   <mat-step [completed]="isApartmentClassFormComplete">
@@ -53,30 +54,33 @@
         <p *ngIf="freeapartmentClasses[0] == null">We do not have free apartments for these dates.</p>
 
         <div class="apartment-classes-list">
-        <div *ngFor="let apartClass of freeapartmentClasses">
-          <input type="radio"
-                 formControlName="apartmentClassId"
-                 [value]="apartClass.apartmentClass.id"
-                 [id]="'apartmentClass' + apartClass.apartmentClass.id"
-                 (ngModelChange)="onApartmentClassFormChange()"
-                 required>
-          <label [for]="'apartmentClass' + apartClass.apartmentClass.id">
-            <h3>{{apartClass.apartmentClass.nameClass}}</h3>
-            <div class="apartment-class-row">
-              <p>Couchettes: {{apartClass.apartmentClass.numberOfCouchette}}</p>
-              <p class="apartment-number" *ngIf="apartClass.countOfApartments <= 4">Only {{apartClass.countOfApartments}} left</p>
-            </div>
-            <div class="apartment-class-row">
-              <p>Rooms: {{apartClass.apartmentClass.numberOfRooms}}</p>
-              <p class="apartment-price">{{apartClass.apartmentPriceOnDates}}$</p>
-            </div>
-          </label>
-        </div>
+          <div *ngFor="let apartClass of freeapartmentClasses">
+            <input type="radio"
+                   formControlName="apartmentClassId"
+                   [value]="apartClass.apartmentClass.id"
+                   [id]="'apartmentClass' + apartClass.apartmentClass.id"
+                   (ngModelChange)="onApartmentClassFormChange()"
+                   required>
+            <label [for]="'apartmentClass' + apartClass.apartmentClass.id">
+              <h3>{{apartClass.apartmentClass.nameClass}}</h3>
+              <div class="apartment-class-row">
+                <p>Couchettes: {{apartClass.apartmentClass.numberOfCouchette}}</p>
+                <p class="apartment-number" *ngIf="apartClass.countOfApartments <= 4">
+                  Only {{apartClass.countOfApartments}} left</p>
+              </div>
+              <div class="apartment-class-row">
+                <p>Rooms: {{apartClass.apartmentClass.numberOfRooms}}</p>
+                <p class="apartment-price">{{apartClass.apartmentPriceOnDates}}$</p>
+              </div>
+            </label>
+          </div>
         </div>
 
       </div>
       <button mat-button matStepperPrevious type="reset" (click)="onChangeDatesClick()">Change dates</button>
-      <button mat-button matStepperNext (click)="onApartmentClassFormSubmit()" [disabled]="!isApartmentClassFormComplete">Choose additional services</button>
+      <button mat-button matStepperNext (click)="onApartmentClassFormSubmit()"
+              [disabled]="!isApartmentClassFormComplete">Choose additional services
+      </button>
     </form>
   </mat-step>
   <mat-step>
@@ -117,7 +121,8 @@
       </ul>
 
       <p>Total price: <span>{{dbBooking.totalPrice}}$</span></p>
-      <p *ngIf="currentBooking.bookingStatus == 'Confirmed'" style="color: #023EBC">Booking confirmed, you can close this window</p>
+      <p *ngIf="currentBooking.bookingStatus == 'Confirmed'" style="color: #023EBC">Booking confirmed, you can close
+        this window</p>
     </div>
     <form>
       <button mat-button type="reset" matStepperPrevious (click)="onChangeServicesClick()">Change services</button>

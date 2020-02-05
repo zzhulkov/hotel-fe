@@ -95,7 +95,8 @@ export class ChangeUnavailableApartmentDialogComponent extends Unsubscribable im
     const endDateCleaned = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
     this.addForm.patchValue({
       startDate: startDateCleaned,
-      endDate: endDateCleaned});
+      endDate: endDateCleaned
+    });
     this.unavailableApartment.apartment = this.selectedApartments;
     this.unavailableApartment.startDate = this.addForm.value.startDate;
     this.unavailableApartment.endDate = this.addForm.value.endDate;

@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {HttpService} from '../../http.service';
 import {AuthenticationService} from "../../modules/authentication/authentication.service";
 import {User} from "../../component/user";
-import {LoginFormComponent} from "../../modules/authentication/login-form/login-form.component";
 
 
 @Component({
@@ -18,7 +17,7 @@ export class StaffComponent {
   canAccess = false;
   username: string;
 
-  constructor(private authService: AuthenticationService){
+  constructor(private authService: AuthenticationService) {
     this.authService.currentUserObservable
       .subscribe((user: User) => {
         this.logged = user !== null;

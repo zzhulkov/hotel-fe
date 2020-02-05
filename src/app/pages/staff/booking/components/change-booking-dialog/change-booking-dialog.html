@@ -15,7 +15,7 @@
                  (dateChange)="onClickStartPicker()"
                  required="required" formControlName="startDate"
                  class="full-width" placeholder="Start date">
-          <mat-datepicker-toggle  matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
           <mat-datepicker #pickerStart></mat-datepicker>
           <!--<input matInput required="required" formControlName="startDate" class="full-width" placeholder="Start date"> -->
         </mat-form-field>
@@ -67,7 +67,8 @@
     <br/>
     <mat-form-field>
       <mat-label>Apartments</mat-label>
-      <mat-select placeholder="Apartment room number" formControlName="roomNumber" [disabled]="!selectedApartmentsClass">
+      <mat-select placeholder="Apartment room number" formControlName="roomNumber"
+                  [disabled]="!selectedApartmentsClass">
         <mat-option *ngFor="let apartment of apartmentsList"
                     (click)="onSelectAprtmnt(apartment)"
                     value={{apartment?.roomNumber}}>
@@ -91,7 +92,8 @@
         <mat-dialog-actions align="end">
           <p></p>
           <button style="background-color: tomato" class="mat-button"
-                  mat-raised-button (click)="deleteBooking()">Delete</button>
+                  mat-raised-button (click)="deleteBooking()">Delete
+          </button>
           <button mat-button
                   [mat-dialog-close]="true">
             Cancel

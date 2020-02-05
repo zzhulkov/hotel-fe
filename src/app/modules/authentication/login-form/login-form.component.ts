@@ -1,17 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../authentication.service';
-import {error} from "selenium-webdriver";
-import {combineAll, takeUntil} from "rxjs/operators";
-import {Subject} from "rxjs";
-import {Unsubscribable} from "../../../component/Unsubscribable";
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
 })
-export class LoginFormComponent implements OnInit{
+export class LoginFormComponent implements OnInit {
 
   private authenticationForm: FormGroup;
   private isValid: boolean;
@@ -46,11 +42,11 @@ export class LoginFormComponent implements OnInit{
   onSubmit() {
     if (this.isValid) {
       this.authService.login(this.authenticationForm.value.login, this.authenticationForm.value.password)
-          .subscribe(
-            code => {
-              if (code === 2)
-                this.login().setErrors({loginError: 'Unknown login/password combination'});
-            });
+        .subscribe(
+          code => {
+            if (code === 2)
+              this.login().setErrors({loginError: 'Unknown login/password combination'});
+          });
     }
   }
 

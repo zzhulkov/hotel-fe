@@ -5,12 +5,14 @@
 <div *ngIf="userBookingsHistory[0] == null"><p>You have not created any orders yet.</p></div>
 
 <div class="userBookingHistory" *ngIf="userBookingsHistory != null">
-  <div class="booking" *ngFor="let booking of userBookingsHistory" [ngClass]="{'finished': booking.endDate < currentDate}">
+  <div class="booking" *ngFor="let booking of userBookingsHistory"
+       [ngClass]="{'finished': booking.endDate < currentDate}">
     <div class="info">
       <p>{{booking.startDate}} - {{booking.endDate}}</p>
       <p>Apartment class: {{booking.apartmentClass.nameClass}}</p>
       <p>Price: {{booking.totalPrice}}</p>
-      <button mat-button (click)="deleteBooking(booking.id)" *ngIf="booking.startDate > currentDate">Cancel booking</button>
+      <button mat-button (click)="deleteBooking(booking.id)" *ngIf="booking.startDate > currentDate">Cancel booking
+      </button>
     </div>
 
     <div class="review" *ngIf="booking.endDate < currentDate">
