@@ -1,14 +1,15 @@
-import {ConstantsService} from '../../../../services/constants.service';
-import {AfterViewInit, Component, OnInit, Output, ViewChild} from '@angular/core';
-import {Unsubscribable} from '../../../../component/Unsubscribable';
-import {DataTransferService} from '../../../../services/data-transfer.service';
-import {MatPaginator} from '@angular/material/paginator';
-import {FormControl} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
-import {Task} from '../../../../component/task';
+import {ConstantsService} from "../../../../services/constants.service";
+import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
+import {Unsubscribable} from "../../../../component/Unsubscribable";
+import {DataTransferService} from "../../../../services/data-transfer.service";
+import {MatPaginator} from "@angular/material/paginator";
+import {FormControl} from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
+import {Task} from "../../../../component/task";
 import {MatTableDataSource} from '@angular/material/table';
 import {takeUntil} from 'rxjs/operators';
 import {SelectService} from "../../../../services/select.service";
+
 
 const URL = new ConstantsService().BASE_URL;
 
