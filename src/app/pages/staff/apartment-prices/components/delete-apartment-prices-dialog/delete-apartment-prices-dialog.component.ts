@@ -4,6 +4,7 @@ import {ConstantsService} from '../../../../../services/constants.service';
 import {take} from 'rxjs/operators';
 import {SelectService} from '../../../../../services/select.service';
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialogRef} from "@angular/material/dialog";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -19,7 +20,8 @@ const URL = new ConstantsService().BASE_URL;
 export class DeleteApartmentPricesDialogComponent {
 
   constructor(private http: HttpClient, private selectService: SelectService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private matDialogRef: MatDialogRef<DeleteApartmentPricesDialogComponent>) {
   }
 
   deleteApartmentPrice() {
@@ -29,9 +31,11 @@ export class DeleteApartmentPricesDialogComponent {
         this.http.delete(URL + 'apartmentPrices/' + id.id)
           .subscribe(res => {
             this.snackBar.open('Delete successful', 'Ok', {duration: 6000});
+            this.matDialogRef.close();
             this.selectService.announceSelect(null);
             },
               error => {
+            this.matDialogRef.close();
             this.snackBar.open('Delete denied', 'Ok', {duration: 6000});
           } );
       });

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
@@ -14,6 +14,7 @@ import {BookingStatus} from '../../../../../component/booking-status.type';
 import {MatDialog} from '@angular/material';
 import {DeleteBookingDialogComponent} from '../delete-booking-dialog/delete-booking-dialog.component';
 import {DatePipe} from '@angular/common';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -31,6 +32,7 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   isChangedEndPicker = false;
   changeForm: FormGroup;
 
+  isError = false;
   booking = {} as Booking;
   subscription: Subscription;
   userList: User[];
@@ -45,7 +47,8 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
     'Created',
     'CheckedIn',
     'Closed',
-    'Canceled'
+    'Canceled',
+    'Confirmed'
   ];
   private selectedStatus: BookingStatus;
 
@@ -55,7 +58,8 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
               private http: HttpClient,
               private dataTransfer: DataTransferService,
               public selectService: SelectService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private snackBar: MatSnackBar) {
     super(selectService);
     this.getAllApartmentsClasses();
     this.getAllUsers();
@@ -76,7 +80,7 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
       bookingStatus: [this.booking.bookingStatus],
       email: [this.getEmail(this.booking.user)],
       nameClass: [this.booking.apartmentClass.nameClass],
-      roomNumber: [this.getRoomNumber(this.booking.apartment)]
+      roomNumber: [this.getRoomNumber(this.booking.apartment), Validators.required]
     });
 
     this.getUserByEmail();
@@ -157,8 +161,9 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   }
 
   onSubmit() {
+    this.isError = true;
     if (this.changeForm.valid) {
-      this.getUserByEmail();
+      //this.getUserByEmail();
       this.setBooking();
       this.createBooking();
     }
@@ -169,6 +174,11 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
       res => {
         console.log(res);
         this.booking = (res as Booking);
+        this.isError = false;
+        this.snackBar.open('Booking has been changed!', 'Ok', {duration: 6000});
+      }, error => {
+        this.isError = false;
+        this.snackBar.open('Error: '.concat(error.error), 'Ok', {duration: 6000});
       });
   }
 

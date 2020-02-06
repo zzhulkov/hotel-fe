@@ -5,6 +5,8 @@ import {ConstantsService} from "../../../../services/constants.service";
 import {take} from "rxjs/operators";
 import {SelectService} from "../../../../services/select.service";
 import {Unsubscribable} from "../../../../component/Unsubscribable";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialogRef} from "@angular/material/dialog";
 
 
 /**
@@ -18,22 +20,29 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../styles/change-dialog.css'],
   templateUrl: './delete-task-dialog.html',
 })
-export class DeleteTaskDialogComponent extends Unsubscribable {
-
-  deleteTaskForm: FormGroup;
+export class DeleteTaskDialogComponent {
 
   constructor(private formBuilder: FormBuilder,
               private http: HttpClient,
-              public selectService: SelectService) {
-    super(selectService);
+              public selectService: SelectService,
+              private snackBar: MatSnackBar,
+              private matDialogRef: MatDialogRef<DeleteTaskDialogComponent>) {
   }
 
-  deleteApartment() {
+  deleteTask() {
     this.selectService.selectAnnounced$
-      .pipe(take(1))
+      .pipe(take(2))
       .subscribe(id => {
         this.http.delete(URL + 'tasks/' + id.id)
-          .subscribe(res => this.selectService.announceSelect(null));
+          .subscribe(res => {
+            this.snackBar.open('Delete succeeded!', 'Ok', {duration: 8000});
+            this.selectService.announceSelect(null);
+            this.matDialogRef.close();
+          }, error => {
+            console.log(error);
+            this.matDialogRef.close();
+            this.snackBar.open('Error: '.concat(error.error), 'Ok', {duration: 8000});
+          });
       });
   }
 }

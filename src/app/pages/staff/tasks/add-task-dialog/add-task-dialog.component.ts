@@ -1,11 +1,13 @@
-import {ConstantsService} from "../../../../services/constants.service";
-import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Staff} from "../../../../component/staff";
-import {HttpClient} from "@angular/common/http";
-import {Apartments} from "../../../../component/apartments";
-import {Booking} from "../../../../component/booking";
-import {Task} from "../../../../component/task";
+import {ConstantsService} from '../../../../services/constants.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Staff} from '../../../../component/staff';
+import {HttpClient} from '@angular/common/http';
+import {Apartments} from '../../../../component/apartments';
+import {Booking} from '../../../../component/booking';
+import {Task} from '../../../../component/task';
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialogRef} from "@angular/material/dialog";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -20,6 +22,7 @@ const URL = new ConstantsService().BASE_URL;
 })
 export class AddTaskDialogComponent implements OnInit {
   addTaskForm: FormGroup;
+  isSubmit = false;
   staff = {} as Staff;
   apartment = {} as Apartments;
   task = {} as Task;
@@ -38,7 +41,9 @@ export class AddTaskDialogComponent implements OnInit {
   selectedApartment: Apartments;
   selectedTask: any;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,
+              private snackBar: MatSnackBar,
+              private matDialogRef: MatDialogRef<AddTaskDialogComponent>) {
 
     this.getAllApartment();
     this.getAllAStaff();
@@ -72,6 +77,7 @@ export class AddTaskDialogComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isSubmit = true;
     if (this.addTaskForm.valid) {
       this.setTask();
       this.createTask();
@@ -87,6 +93,12 @@ export class AddTaskDialogComponent implements OnInit {
       res => {
         console.log(res);
         this.task = (res as Task);
+        this.snackBar.open('Task has been created!', 'Ok', {duration: 5000});
+        this.isSubmit = false;
+        this.matDialogRef.close();
+      }, error => {
+        this.snackBar.open('Error: '.concat(error.error), 'Ok', {duration: 5000});
+        this.isSubmit = false;
       });
   }
 

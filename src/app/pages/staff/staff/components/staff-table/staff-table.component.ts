@@ -20,6 +20,7 @@ const URL = new ConstantsService().BASE_URL;
 export class StaffTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  isEmptyTable = false;
   private dataTransfer: DataTransferService;
   selectedRow: any;
 
@@ -104,6 +105,7 @@ export class StaffTableComponent extends Unsubscribable implements OnInit, After
     this.http.get(URL + 'staff').subscribe(res => {
       console.log(res);
       this.staffList.data = (res as Staff[]);
+      this.isEmptyTable = true;
     });
   }
 
