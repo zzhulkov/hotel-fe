@@ -8,6 +8,8 @@ import {Subscription} from 'rxjs';
 import {SelectService} from '../../../../../services/select.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
 import {DatePipe} from "@angular/common";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialogRef} from "@angular/material/dialog";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -23,7 +25,7 @@ const URL = new ConstantsService().BASE_URL;
 export class AddUnavailableApartmentDialogComponent extends Unsubscribable implements OnInit {
 
   addForm: FormGroup;
-
+  isError = false;
   unavailableApartment = {} as UnavailableApartment;
   subscription: Subscription;
 
@@ -31,9 +33,12 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
   apartmentsList: Apartments[];
   selectedApartment: Apartments;
 
-  // tslint:disable-next-line:max-line-length
-  constructor(private formBuilder: FormBuilder, private http: HttpClient,
-              public selectService: SelectService, private datePipe: DatePipe) {
+  constructor(private formBuilder: FormBuilder,
+              private http: HttpClient,
+              public selectService: SelectService,
+              private datePipe: DatePipe,
+              private snackBar: MatSnackBar,
+              private matDialogRef: MatDialogRef<AddUnavailableApartmentDialogComponent>) {
     super(selectService);
     this.getAllApartments();
   }
@@ -60,6 +65,7 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
   }
 
   onSubmit() {
+    this.isError = true;
     if (this.addForm.valid) {
       this.setUnavailableApartment();
     }
@@ -96,6 +102,13 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
       res => {
         console.log(res);
         this.unavailableApartment = (res as UnavailableApartment);
+        this.isError = false;
+        this.matDialogRef.close();
+        this.snackBar.open('Unavailable apartment has been added!', 'Ok', { duration: 6000});
+      },
+      error => {
+        this.isError = false;
+        this.snackBar.open('Error: '.concat(error.error), 'Ok', { duration: 6000});
       });
   }
 }

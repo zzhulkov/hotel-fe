@@ -18,6 +18,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {TextMaskModule} from "angular2-text-mask";
 import {NgxMaskModule} from "ngx-mask";
 import {AnimationsModule} from "../../../modules/animations/animations.module";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
     imports: [
@@ -37,7 +38,8 @@ import {AnimationsModule} from "../../../modules/animations/animations.module";
         NgxMaskModule.forRoot({
             showMaskTyped: true,
         }),
-        AnimationsModule
+        AnimationsModule,
+      MatSnackBarModule
     ],
   declarations: [
     TaskManagerComponent,

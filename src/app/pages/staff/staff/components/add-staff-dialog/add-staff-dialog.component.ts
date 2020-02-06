@@ -6,6 +6,9 @@ import {User} from '../../../../../component/user';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {Roles} from "../../../../../component/roles.type";
 import {Speciality} from "../../../../../component/speciality.type";
+import {templateJitUrl} from "@angular/compiler";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialogRef} from "@angular/material/dialog";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -19,9 +22,12 @@ const URL = new ConstantsService().BASE_URL;
 })
 export class AddStaffDialogComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private  http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private  http: HttpClient,
+              private snackBar: MatSnackBar,
+              private matDialogRef: MatDialogRef<AddStaffDialogComponent>) {
   }
 
+  isError = false;
   addStaffFrom: FormGroup;
   staff = {} as Staff;
   user = {} as User;
@@ -64,6 +70,7 @@ export class AddStaffDialogComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isError = true;
     if (this.addStaffFrom.valid) {
       console.log(this.addStaffFrom.value);
       this.setStaff();
@@ -86,6 +93,12 @@ export class AddStaffDialogComponent implements OnInit {
       res => {
         console.log(res);
         this.staff = (res as Staff);
+        this.isError = false;
+        this.matDialogRef.close();
+        this.snackBar.open('Staff has been created!', 'Ok', {duration: 6000});
+      }, error => {
+        this.isError = false;
+        this.snackBar.open(error.error, 'Ok', {duration: 6000});
       });
   }
 
