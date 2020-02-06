@@ -1,7 +1,7 @@
  <div class="table-component">
 
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons [disabled]="!dataSource.data"></mat-paginator>
-   <div *ngIf="!isEmptyTable" class="form-loader">
+   <div *ngIf="!isEmptyTable" style="margin-left: 400px ">
      <app-loading-animation></app-loading-animation>
    </div>
    <div *ngIf="isEmptyTable">
