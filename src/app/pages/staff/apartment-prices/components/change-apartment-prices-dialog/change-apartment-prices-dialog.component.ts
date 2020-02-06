@@ -133,7 +133,8 @@ export class ChangeApartmentPricesDialogComponent extends Unsubscribable impleme
 
 
   deleteApartmentPrice() {
-    const dialogRef = this.dialog.open(DeleteApartmentPricesDialogComponent);
+    const dialogRef = this.dialog.open(DeleteApartmentPricesDialogComponent,
+      {disableClose: true, autoFocus: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

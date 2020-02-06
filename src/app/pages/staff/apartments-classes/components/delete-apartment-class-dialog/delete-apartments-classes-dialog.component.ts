@@ -38,6 +38,7 @@ export class DeleteApartmentsClassesDialogComponent {
             {duration: 6000});
           this.selectService.announceSelect(null);
           this.matDialogRef.close();
+          this.selectService.announceDelete(1);
         }, error => {
           this.matDialogRef.close();
           this.snackBar.open('Error: '.concat(error.error), 'Ok',

@@ -5,6 +5,8 @@ import {ConstantsService} from '../../../../../services/constants.service';
 import {Service} from '../../../../../component/service';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialogRef} from "@angular/material/dialog";
+import {SelectService} from "../../../../../services/select.service";
+import {Unsubscribable} from "../../../../../component/Unsubscribable";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -25,7 +27,8 @@ export class AddServicesDialogComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient,
               private snackBar: MatSnackBar,
-              private matDialogRef: MatDialogRef<AddServicesDialogComponent>) {
+              private matDialogRef: MatDialogRef<AddServicesDialogComponent>,
+              public selectService: SelectService) {
   }
 
   ngOnInit(): void {
@@ -58,6 +61,7 @@ export class AddServicesDialogComponent implements OnInit {
         console.log(res);
         this.service = (res as Service);
         this.isError = false;
+        this.selectService.announceAdd(res);
         this.matDialogRef.close();
         this.snackBar.open('Additional Service has been created!', 'Ok', {duration: 6000});
       }, error => {

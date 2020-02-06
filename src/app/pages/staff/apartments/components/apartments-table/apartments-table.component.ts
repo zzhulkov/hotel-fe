@@ -25,6 +25,8 @@ const URL = new ConstantsService().BASE_URL;
 export class ApartmentsTableComponent extends Unsubscribable implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   subscription: Subscription;
+  subscriptionDelete: Subscription;
+
   isEmptyTable = false;
   private dataTransfer: DataTransferService;
   selectedRow: any;
@@ -72,7 +74,28 @@ export class ApartmentsTableComponent extends Unsubscribable implements OnInit, 
     console.log(this.selectedApartments);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.subscription = this.selectService.addAnnounced$
+      .subscribe(res => {
+        if (res != null) {
+          this.isEmptyTable = false;
+          this.getAllApartments();
+          this.ngAfterViewInit();
+          this.selectService.announceAdd(null);
+        }
+      }, error => {
+        console.log(error);
+      });
+    this.subscriptionDelete = this.selectService.deleteAnnounced$
+      .subscribe(res => {
+        if (res != null) {
+          this.isEmptyTable = false;
+          this.getAllApartments();
+          this.ngAfterViewInit();
+          this.selectService.announceDelete(null);
+        }
+      });
+
     this.roomNumberFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         roomNumber => {

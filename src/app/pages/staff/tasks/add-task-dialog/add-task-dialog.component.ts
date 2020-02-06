@@ -8,6 +8,7 @@ import {Booking} from '../../../../component/booking';
 import {Task} from '../../../../component/task';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialogRef} from "@angular/material/dialog";
+import {SelectService} from "../../../../services/select.service";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -43,7 +44,8 @@ export class AddTaskDialogComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient,
               private snackBar: MatSnackBar,
-              private matDialogRef: MatDialogRef<AddTaskDialogComponent>) {
+              private matDialogRef: MatDialogRef<AddTaskDialogComponent>,
+              private selectService: SelectService) {
 
     this.getAllApartment();
     this.getAllAStaff();
@@ -95,6 +97,7 @@ export class AddTaskDialogComponent implements OnInit {
         this.task = (res as Task);
         this.snackBar.open('Task has been created!', 'Ok', {duration: 5000});
         this.isSubmit = false;
+        this.selectService.announceAdd(res);
         this.matDialogRef.close();
       }, error => {
         this.snackBar.open('Error: '.concat(error.error), 'Ok', {duration: 5000});

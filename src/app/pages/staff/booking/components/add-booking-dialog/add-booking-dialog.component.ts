@@ -179,6 +179,7 @@ export class AddBookingDialogComponent implements OnInit {
         this.booking = (res as Booking);
         this.isError = false;
         this.matDialogRef.close();
+        this.selectService.announceAdd(res);
         this.snackBar.open('Booking has been created!', 'Ok', {duration: 6000});
       }, error => {
         this.isError = false;

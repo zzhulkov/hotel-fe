@@ -22,7 +22,7 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './add-apartment-prices-dialog.html',
 })
-export class AddApartmentPricesDialogComponent extends Unsubscribable implements OnInit {
+export class AddApartmentPricesDialogComponent implements OnInit {
   isError = false;
   addForm: FormGroup;
 
@@ -37,7 +37,6 @@ export class AddApartmentPricesDialogComponent extends Unsubscribable implements
               public selectService: SelectService, private datePipe: DatePipe,
               private snackBar: MatSnackBar,
               private matDialogRef: MatDialogRef<AddApartmentPricesDialogComponent>) {
-    super(selectService);
     this.getAllApartmentsClasses();
   }
 
@@ -110,6 +109,7 @@ export class AddApartmentPricesDialogComponent extends Unsubscribable implements
         this.snackBar.open('Class price has been added!', 'Ok',
           {duration: 5000});
         this.isError = true;
+        this.selectService.announceAdd(res);
         this.matDialogRef.close();
       },
         error => {

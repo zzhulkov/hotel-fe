@@ -33,6 +33,7 @@ export class DeleteBookingDialogComponent {
             this.selectService.announceSelect(null);
             this.matDialogRef.close();
             this.snackBar.open('Delete succeeded!', 'Ok', {duration: 6000});
+            this.selectService.announceDelete(1);
           }, error => {
             this.matDialogRef.close();
             this.snackBar.open(error.error, 'Ok', {duration: 6000});

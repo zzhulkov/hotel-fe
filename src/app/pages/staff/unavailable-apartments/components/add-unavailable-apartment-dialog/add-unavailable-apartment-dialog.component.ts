@@ -22,7 +22,7 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './add-unavailable-apartment-dialog.html',
 })
-export class AddUnavailableApartmentDialogComponent extends Unsubscribable implements OnInit {
+export class AddUnavailableApartmentDialogComponent implements OnInit {
 
   addForm: FormGroup;
   isError = false;
@@ -39,7 +39,6 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
               private datePipe: DatePipe,
               private snackBar: MatSnackBar,
               private matDialogRef: MatDialogRef<AddUnavailableApartmentDialogComponent>) {
-    super(selectService);
     this.getAllApartments();
   }
 
@@ -104,6 +103,7 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
         this.unavailableApartment = (res as UnavailableApartment);
         this.isError = false;
         this.matDialogRef.close();
+        this.selectService.announceAdd(res);
         this.snackBar.open('Unavailable apartment has been added!', 'Ok', { duration: 6000});
       },
       error => {

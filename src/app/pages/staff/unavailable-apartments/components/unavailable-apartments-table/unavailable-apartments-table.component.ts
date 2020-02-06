@@ -9,6 +9,7 @@ import {ConstantsService} from '../../../../../services/constants.service';
 import {FormControl} from '@angular/forms';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
 import {SelectService} from '../../../../../services/select.service';
+import {Subscription} from "rxjs";
 
 
 const URL = new ConstantsService().BASE_URL;
@@ -36,6 +37,8 @@ export class UnavailableApartmentsTableComponent extends Unsubscribable implemen
   endDateFilter = new FormControl('');
   causeDescriptionFilter = new FormControl('');
   apartmentFilter = new FormControl('');
+  subscription: Subscription;
+  subscriptionDelete: Subscription;
 
   filterValues = {
     id: '',
@@ -60,6 +63,27 @@ export class UnavailableApartmentsTableComponent extends Unsubscribable implemen
   }
 
   ngOnInit() {
+    this.subscription = this.selectService.addAnnounced$
+      .subscribe(res => {
+        if (res != null) {
+          this.isEmptyTable = false;
+          this.getAllUnavailableApartments();
+          this.ngAfterViewInit();
+          this.selectService.announceAdd(null);
+        }
+      }, error => {
+        console.log(error);
+      });
+    this.subscriptionDelete = this.selectService.deleteAnnounced$
+      .subscribe(res => {
+        if (res != null) {
+          this.isEmptyTable = false;
+          this.getAllUnavailableApartments();
+          this.ngAfterViewInit();
+          this.selectService.announceDelete(null);
+        }
+      });
+
     this.startDateFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         startDate => {
