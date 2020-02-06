@@ -7,6 +7,7 @@ import {BookingAddServiceShip} from '../../../../../component/booking-add-servic
 import {ConstantsService} from '../../../../../services/constants.service';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
 import {SelectService} from '../../../../../services/select.service';
+import {FormControl} from '@angular/forms';
 
 
 const URL = new ConstantsService().BASE_URL;
@@ -33,15 +34,45 @@ export class BookingAddServiceDialogComponent extends Unsubscribable implements 
     'countServices'
   ];
   dataSource = this.bookingAddServiceShipList;
+  serviceNameFilter = new FormControl('');
+  priceFilter = new FormControl('');
+  countServicesFilter = new FormControl('');
 
+  filterValues = {
+    serviceName: '',
+    price: '',
+    countServices: ''
+  };
 
   constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
     super(selectService);
     this.getServiceShips();
     this.dataTransfer = dataTransfer;
+    this.bookingAddServiceShipList.filterPredicate = this.createFilter();
   }
 
   ngOnInit() {
+    this.serviceNameFilter.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(
+        serviceName => {
+          this.filterValues.price = serviceName;
+          this.bookingAddServiceShipList.filter = JSON.stringify(this.filterValues);
+        }
+      );
+    this.priceFilter.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(
+        price => {
+          this.filterValues.price = price;
+          this.bookingAddServiceShipList.filter = JSON.stringify(this.filterValues);
+        }
+      );
+    this.countServicesFilter.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(
+        countServices => {
+          this.filterValues.countServices = countServices;
+          this.bookingAddServiceShipList.filter = JSON.stringify(this.filterValues);
+        }
+      );
   }
 
   ngAfterViewInit(): void {
@@ -57,6 +88,18 @@ export class BookingAddServiceDialogComponent extends Unsubscribable implements 
           this.dataSource.data = (res as BookingAddServiceShip[]);
         });
       });
+  }
+
+  createFilter(): (data: any, filter: string) => boolean {
+    // tslint:disable-next-line:only-arrow-functions
+    const filterFunction = function (data, filter): boolean {
+      const searchTerms = JSON.parse(filter);
+      const result = data.bookingAddServices.serviceName.toString().toLowerCase().indexOf(searchTerms.serviceName) !== -1
+        && data.bookingAddServices.price.toString().toLowerCase().indexOf(searchTerms.price) !== -1
+        && data.countServices.toString().toLowerCase().indexOf(searchTerms.countServices) !== -1;
+      return result;
+    };
+    return filterFunction;
   }
 
 }
