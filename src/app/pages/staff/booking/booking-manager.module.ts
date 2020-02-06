@@ -14,6 +14,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {HttpService} from '../../../http.service';
 import {BookingManagerComponent} from './booking-manager.component';
 import {BookingTableComponent} from './components/booking-table/booking-table.component';
+import {BookingAddServiceDialogComponent} from './components/booking-add-service-dialog/booking-add-service-dialog.component';
 import {DeleteBookingDialogComponent} from './components/delete-booking-dialog/delete-booking-dialog.component';
 import {ChangeBookingDialogComponent} from './components/change-booking-dialog/change-booking-dialog.component';
 import {AddBookingDialogComponent} from './components/add-booking-dialog/add-booking-dialog.component';
@@ -27,7 +28,7 @@ import {
   NativeDateAdapter
 } from '@angular/material/core';
 import {DatePipe} from '@angular/common';
-import {APP_DATE_FORMATS, AppDateAdapter} from "../../../utils/AppDateAdapter";
+import {APP_DATE_FORMATS, AppDateAdapter} from '../../../utils/AppDateAdapter';
 
 @NgModule({
     imports: [
@@ -58,7 +59,8 @@ import {APP_DATE_FORMATS, AppDateAdapter} from "../../../utils/AppDateAdapter";
     BookingTableComponent,
     DeleteBookingDialogComponent,
     ChangeBookingDialogComponent,
-    AddBookingDialogComponent
+    AddBookingDialogComponent,
+    BookingAddServiceDialogComponent
   ],
   providers: [HttpService, EventEmitter,
     DatePipe,
@@ -68,7 +70,8 @@ import {APP_DATE_FORMATS, AppDateAdapter} from "../../../utils/AppDateAdapter";
   entryComponents: [
     DeleteBookingDialogComponent,
     ChangeBookingDialogComponent,
-    AddBookingDialogComponent
+    AddBookingDialogComponent,
+    BookingAddServiceDialogComponent,
   ],
 })
 export class BookingManagerModule {
