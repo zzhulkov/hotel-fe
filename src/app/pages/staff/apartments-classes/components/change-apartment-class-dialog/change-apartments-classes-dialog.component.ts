@@ -105,7 +105,8 @@ export class ChangeApartmentsClassesDialogComponent extends Unsubscribable imple
   }
 
   deleteDialog() {
-    const dialogRef = this.dialog.open(DeleteApartmentsClassesDialogComponent);
+    const dialogRef = this.dialog.open(DeleteApartmentsClassesDialogComponent,
+      {disableClose: true, autoFocus: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

@@ -101,7 +101,8 @@ export class ChangeServicesDialogComponent extends Unsubscribable implements OnI
 
 
   deleteDialog() {
-    const dialogRef = this.dialog.open(DeleteServicesDialogComponent);
+    const dialogRef = this.dialog.open(DeleteServicesDialogComponent,
+      {disableClose: true, autoFocus: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

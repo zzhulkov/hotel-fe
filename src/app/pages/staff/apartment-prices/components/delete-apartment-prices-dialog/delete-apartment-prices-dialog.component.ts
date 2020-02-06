@@ -33,6 +33,7 @@ export class DeleteApartmentPricesDialogComponent {
             this.snackBar.open('Delete successful', 'Ok', {duration: 6000});
             this.matDialogRef.close();
             this.selectService.announceSelect(null);
+            this.selectService.announceDelete(1);
             },
               error => {
             this.matDialogRef.close();

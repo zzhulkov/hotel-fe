@@ -25,7 +25,8 @@ export class ServicesManagerComponent extends Unsubscribable {
   }
 
   addDialog() {
-    const dialogRef = this.dialog.open(AddServicesDialogComponent);
+    const dialogRef = this.dialog.open(AddServicesDialogComponent,
+      {disableClose: true, autoFocus: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

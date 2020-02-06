@@ -136,7 +136,8 @@ export class ChangeUnavailableApartmentDialogComponent extends Unsubscribable im
 
 
   deleteUnavailableApartment() {
-    const dialogRef = this.dialog.open(DeleteUnavailableApartmentDialogComponent);
+    const dialogRef = this.dialog.open(DeleteUnavailableApartmentDialogComponent,
+      {disableClose: true, autoFocus: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

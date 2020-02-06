@@ -32,6 +32,7 @@ export class DeleteServicesDialogComponent {
         this.http.delete(URL + 'bookingAddServices/' + id.id)
           .subscribe(res =>  {
             this.selectService.announceSelect(null);
+            this.selectService.announceDelete(1);
             this.matDialogRef.close();
             this.snackBar.open('Delete succeeded!', 'Ok', {duration: 6000});
           }, error => {

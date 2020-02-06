@@ -31,6 +31,7 @@ export class DeleteUnavailableApartmentDialogComponent {
         this.http.delete(URL + 'unavailableApartments/' + id.id)
           .subscribe(res => {
             this.selectService.announceSelect(null);
+            this.selectService.announceDelete(res);
             this.matDialogRef.close();
             this.snackBar.open('Delete succeeded!', 'Ok', {duration: 8000});
           }, error => {

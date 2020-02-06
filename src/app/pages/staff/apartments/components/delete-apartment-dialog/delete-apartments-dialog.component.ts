@@ -36,6 +36,7 @@ export class DeleteApartmentsDialogComponent {
             this.snackBar.open('Apartment has been deleted!', 'Ok',
               {duration: 6000});
             this.selectService.announceSelect(null);
+            this.selectService.announceDelete(1);
           }, error => {
         this.snackBar.open('Error: '.concat(error.error), 'Ok',
           { duration: 6000});

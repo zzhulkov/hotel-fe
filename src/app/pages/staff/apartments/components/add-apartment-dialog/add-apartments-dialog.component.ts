@@ -7,6 +7,8 @@ import {ConstantsService} from '../../../../../services/constants.service';
 import {ApartmentStatus} from '../../../../../component/apartment-status.type';
 import {MatDialogRef} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {SelectService} from "../../../../../services/select.service";
+import {Unsubscribable} from "../../../../../component/Unsubscribable";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -25,7 +27,8 @@ export class AddApartmentsDialogComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient,
               private dialogRef: MatDialogRef<AddApartmentsDialogComponent>,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private selectService: SelectService) {
     this.getAllApartmentsClasses();
   }
 
@@ -84,6 +87,7 @@ export class AddApartmentsDialogComponent implements OnInit {
         this.isError = false;
         this.snackBar.open('Apartment has been added!', 'Ok',
           {duration: 5000});
+        this.selectService.announceAdd(res);
         this.dialogRef.close();
       },
       error => {

@@ -9,6 +9,7 @@ import {Speciality} from "../../../../../component/speciality.type";
 import {templateJitUrl} from "@angular/compiler";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialogRef} from "@angular/material/dialog";
+import {SelectService} from "../../../../../services/select.service";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -24,7 +25,8 @@ export class AddStaffDialogComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private  http: HttpClient,
               private snackBar: MatSnackBar,
-              private matDialogRef: MatDialogRef<AddStaffDialogComponent>) {
+              private matDialogRef: MatDialogRef<AddStaffDialogComponent>,
+              private selectService: SelectService) {
   }
 
   isError = false;
@@ -95,6 +97,7 @@ export class AddStaffDialogComponent implements OnInit {
         this.staff = (res as Staff);
         this.isError = false;
         this.matDialogRef.close();
+        this.selectService.announceAdd(res);
         this.snackBar.open('Staff has been created!', 'Ok', {duration: 6000});
       }, error => {
         this.isError = false;

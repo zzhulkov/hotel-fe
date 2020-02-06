@@ -27,7 +27,8 @@ export class StaffManagerComponent extends Unsubscribable {
   }
 
   addDialog() {
-    const dialogRef = this.dialog.open(AddStaffDialogComponent);
+    const dialogRef = this.dialog.open(AddStaffDialogComponent,
+      {disableClose: true, autoFocus: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

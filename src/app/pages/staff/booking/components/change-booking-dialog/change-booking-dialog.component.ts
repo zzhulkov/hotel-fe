@@ -288,7 +288,8 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   }
 
   deleteBooking() {
-    const dialogRef = this.dialog.open(DeleteBookingDialogComponent);
+    const dialogRef = this.dialog.open(DeleteBookingDialogComponent,
+      {disableClose: true, autoFocus: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

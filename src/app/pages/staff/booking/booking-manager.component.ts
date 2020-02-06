@@ -28,7 +28,8 @@ export class BookingManagerComponent extends Unsubscribable implements OnInit {
   }
 
   addApartmentDialog() {
-    const dialogRef = this.dialog.open(AddBookingDialogComponent);
+    const dialogRef = this.dialog.open(AddBookingDialogComponent,
+      {disableClose: true, autoFocus: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

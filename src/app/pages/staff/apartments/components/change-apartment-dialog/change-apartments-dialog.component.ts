@@ -117,7 +117,8 @@ export class ChangeApartmentsDialogComponent extends Unsubscribable implements O
   }
 
   deleteApartment() {
-    const dialogRef = this.dialog.open(DeleteApartmentsDialogComponent);
+    const dialogRef = this.dialog.open(DeleteApartmentsDialogComponent,
+      {disableClose: true, autoFocus: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

@@ -5,6 +5,7 @@ import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialogRef} from "@angular/material/dialog";
+import {SelectService} from "../../../../../services/select.service";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -24,7 +25,8 @@ export class AddApartmentsClassesDialogComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient,
               private snackBar: MatSnackBar,
-              private matDialogRef: MatDialogRef<AddApartmentsClassesDialogComponent>) {
+              private matDialogRef: MatDialogRef<AddApartmentsClassesDialogComponent>,
+              private selectService: SelectService) {
   }
 
   ngOnInit(): void {
@@ -60,6 +62,7 @@ export class AddApartmentsClassesDialogComponent implements OnInit {
         this.snackBar.open('Class has been added', 'Ok',
           {duration: 5000});
         this.isError = false;
+        this.selectService.announceAdd(res);
         this.matDialogRef.close();
       }, error => {
         this.isError = false;
