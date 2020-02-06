@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApartmentsClass} from '../../../../../component/apartments-class';
 import {HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../../../../../services/constants.service';
@@ -15,6 +15,7 @@ import {MatDialog} from '@angular/material';
 import {DeleteBookingDialogComponent} from '../delete-booking-dialog/delete-booking-dialog.component';
 import {BookingAddServiceDialogComponent} from '../booking-add-service-dialog/booking-add-service-dialog.component';
 import {DatePipe} from '@angular/common';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -32,6 +33,8 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   isChangedEndPicker = false;
   changeForm: FormGroup;
 
+  isError = false;
+  apartmentClassId: string;
   booking = {} as Booking;
   subscription: Subscription;
   userList: User[];
@@ -41,29 +44,31 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   selectedApartmentsClass: ApartmentsClass;
   selectedApartment: Apartments;
   user: User;
+  public selected: any;
 
   status = [
     'Created',
     'CheckedIn',
     'Closed',
-    'Canceled'
+    'Canceled',
+    'Confirmed'
   ];
   private selectedStatus: BookingStatus;
 
   // tslint:disable-next-line:max-line-length
+  private startDateStr: string;
+  private endDateStr: string;
   constructor(public dialog: MatDialog,
               private formBuilder: FormBuilder,
               private http: HttpClient,
               private dataTransfer: DataTransferService,
               public selectService: SelectService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private snackBar: MatSnackBar) {
     super(selectService);
     this.getAllApartmentsClasses();
     this.getAllUsers();
     this.booking = dataTransfer.getData();
-    this.getFreeApartments(this.booking.startDate.toString(),
-      this.booking.endDate.toString(),
-      this.booking.apartmentClass.id.toString());
     console.log(this.booking);
   }
 
@@ -77,7 +82,7 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
       bookingStatus: [this.booking.bookingStatus],
       email: [this.getEmail(this.booking.user)],
       nameClass: [this.booking.apartmentClass.nameClass],
-      roomNumber: [this.getRoomNumber(this.booking.apartment)]
+      roomNumber: [this.getRoomNumber(this.booking.apartment), Validators.required]
     });
 
     this.getUserByEmail();
@@ -100,9 +105,37 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   }
 
   getRoomNumber(apartment: Apartments): string {
-    let roomNumber = '';
-    if (apartment !== null) {
-      roomNumber = apartment.roomNumber.toString();
+    const roomNumber = '';
+    if (apartment != null) {
+      this.isError = true;
+      this.http.get(URL + 'bookings' + '/findList?'
+        + 'startDate=' + this.startDateStr
+        + '&endDate=' + this.endDateStr
+        + '&apartmentClass=' + this.apartmentClassId)
+        .subscribe(res => {
+          this.apartmentsList = (res as Apartments[]);
+          this.apartmentsList.push(apartment);
+          this.onSelectAprtmnt(apartment);
+          this.booking.apartment = apartment;
+          this.changeForm.patchValue({
+            roomNumber: apartment.roomNumber
+          });
+          this.isError = false;
+          return this.changeForm.value.roomNumber;
+        });
+    } else {
+      this.isError = true;
+      this.http.get(URL + 'bookings' + '/findList?'
+        + 'startDate=' + this.startDateStr
+        + '&endDate=' + this.endDateStr
+        + '&apartmentClass=' + this.apartmentClassId)
+        .subscribe(res => {
+          this.changeForm.patchValue({
+            roomNumber: ''
+          });
+          this.apartmentsList = (res as Apartments[]);
+          this.isError = false;
+        });
     }
     return roomNumber;
   }
@@ -116,6 +149,9 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   }
 
   fillForm(row: Booking) {
+    this.apartmentClassId = row.apartmentClass.id.toString();
+    this.startDateStr = row.startDate.toString();
+    this.endDateStr = row.endDate.toString();
     this.changeForm.setValue({
       startDate: row.startDate,
       endDate: row.endDate,
@@ -158,8 +194,8 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
   }
 
   onSubmit() {
+    this.isError = true;
     if (this.changeForm.valid) {
-      this.getUserByEmail();
       this.setBooking();
       this.createBooking();
     }
@@ -170,6 +206,11 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
       res => {
         console.log(res);
         this.booking = (res as Booking);
+        this.isError = false;
+        this.snackBar.open('Booking has been changed!', 'Ok', {duration: 6000});
+      }, error => {
+        this.isError = false;
+        this.snackBar.open('Error: '.concat(error.error), 'Ok', {duration: 6000});
       });
   }
 
@@ -239,6 +280,12 @@ export class ChangeBookingDialogComponent extends Unsubscribable implements OnIn
         console.log(res);
         this.apartmentsList = (res as Apartments[]);
       });
+  }
+
+  getAllApartments() {
+    this.http.get(URL + 'apartments').subscribe(res => {
+      this.apartmentsList = (res as Apartments[]);
+    });
   }
 
   viewBookingAddServices() {

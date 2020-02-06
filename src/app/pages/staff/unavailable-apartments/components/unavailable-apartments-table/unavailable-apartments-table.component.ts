@@ -26,6 +26,7 @@ export class UnavailableApartmentsTableComponent extends Unsubscribable implemen
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  isEmptyTable = false;
   private dataTransfer: DataTransferService;
   selectedRow: any;
   unavailableApartmentList = new MatTableDataSource<UnavailableApartment>();
@@ -97,6 +98,7 @@ export class UnavailableApartmentsTableComponent extends Unsubscribable implemen
     this.http.get(URL + 'unavailableApartments/').subscribe(res => {
       console.log(res);
       this.dataSource.data = (res as UnavailableApartment[]);
+      this.isEmptyTable = true;
     });
   }
 

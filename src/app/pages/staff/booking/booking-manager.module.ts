@@ -28,24 +28,28 @@ import {
   NativeDateAdapter
 } from '@angular/material/core';
 import {DatePipe} from '@angular/common';
-import {APP_DATE_FORMATS, AppDateAdapter} from '../../../utils/AppDateAdapter';
+import {APP_DATE_FORMATS, AppDateAdapter} from "../../../utils/AppDateAdapter";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {AnimationsModule} from "../../../modules/animations/animations.module";
 
 @NgModule({
-    imports: [
-        MatPaginatorModule,
-        BrowserModule,
-        HttpClientModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatTableModule,
-        MatDialogModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        MatExpansionModule,
-        MatDatepickerModule,
-        MatNativeDateModule
-    ],
+  imports: [
+    MatPaginatorModule,
+    BrowserModule,
+    HttpClientModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatTableModule,
+    MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSnackBarModule,
+    AnimationsModule
+  ],
   exports: [
     MatButtonModule,
     MatDialogModule,

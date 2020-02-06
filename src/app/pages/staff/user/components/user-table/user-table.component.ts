@@ -24,6 +24,7 @@ export class UserTableComponent extends Unsubscribable implements OnInit, AfterV
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  isEmptyTable = false;
   private dataTransfer: DataTransferService;
   selectedRow: any;
   usersList = new MatTableDataSource<User>();
@@ -121,6 +122,7 @@ export class UserTableComponent extends Unsubscribable implements OnInit, AfterV
     this.http.get(URL + 'users/').subscribe(res => {
       console.log(res);
       this.usersList.data = (res as User[]);
+      this.isEmptyTable = true;
     });
   }
 

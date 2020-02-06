@@ -25,6 +25,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  isEmptyTable = false;
   private dataTransfer: DataTransferService;
   selectedRow: any;
   bookingList = new MatTableDataSource<Booking>();
@@ -173,6 +174,7 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     this.http.get(URL + 'bookings/').subscribe(res => {
       console.log(res);
       this.dataSource.data = (res as Booking[]);
+      this.isEmptyTable = true;
     });
   }
 
