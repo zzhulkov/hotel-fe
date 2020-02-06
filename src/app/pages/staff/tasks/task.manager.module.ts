@@ -14,7 +14,6 @@ import {ChangeTaskDialogComponent} from './change-task-dialog/change-task-dialog
 import {TaskTableComponent} from "./task-table/taks-table.component";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
-import {DeleteTaskDialogComponent} from "./delete-task-dialog/delete-task-dialog.component";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {TextMaskModule} from "angular2-text-mask";
 import {NgxMaskModule} from "ngx-mask";
@@ -46,13 +45,11 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     TaskManagerComponent,
     AddTaskDialogComponent,
     ChangeTaskDialogComponent,
-    DeleteTaskDialogComponent,
     TaskTableComponent
   ],
   entryComponents: [
     AddTaskDialogComponent,
-    ChangeTaskDialogComponent,
-  DeleteTaskDialogComponent],
+    ChangeTaskDialogComponent],
   providers: [HttpService]
 })
 export class TaskManagerModule {

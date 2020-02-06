@@ -5,7 +5,6 @@ import {MatDialog} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
 import {DataTransferService} from "../../../../services/data-transfer.service";
 import {Task} from "../../../../component/task";
-import {DeleteTaskDialogComponent} from "../delete-task-dialog/delete-task-dialog.component";
 import {Staff} from "../../../../component/staff";
 import {Apartments} from "../../../../component/apartments";
 import {SelectService} from "../../../../services/select.service";
@@ -174,13 +173,5 @@ export class ChangeTaskDialogComponent implements OnInit {
 
   onSelectTaskStatus(status: any): void {
     this.selectedStatus = status;
-  }
-
-  deleteDialog() {
-    const dialogRef = this.dialog.open(DeleteTaskDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 }
