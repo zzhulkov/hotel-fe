@@ -67,7 +67,7 @@
             <mat-select required="required" placeholder="Apartment" formControlName="apartmentsRoomNumber">
               <mat-option *ngFor="let apartments of apartmentList"
                           (click)="onSelectApartment(apartments)"
-                          value="{{apartments?.roomNumber}}">
+                          [value]="apartments?.roomNumber">
 
                 {{apartments?.roomNumber}}
               </mat-option>
@@ -103,12 +103,7 @@
           </mat-form-field>
           <br/>
           <mat-dialog-actions align="end">
-            <button style="background-color: tomato" class="mat-button" mat-raised-button (click)="deleteDialog()">
-              Delete
-            </button>
-            <button mat-button [mat-dialog-close]="true">
-              Cancel
-            </button>
+
             <button type="submit" (click)="onSubmit()" [disabled]="isSubmitDisabled()" mat-button>
               Change
             </button>

@@ -77,6 +77,7 @@ export class ChangeTaskDialogComponent implements OnInit {
     this.selectService.selectAnnounced$
       .subscribe(row => {
         console.log(row);
+        this.getAllApartment();
         this.task = row;
         this.fillForm(row);
       });

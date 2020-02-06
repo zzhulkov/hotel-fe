@@ -102,7 +102,6 @@ export class ChangeStaffDialogComponent extends Unsubscribable implements OnInit
     this.http.put(URL + 'staff/' + this.staff.id, this.staff).subscribe(
       res => {
         console.log(res);
-        this.staff = (res as Staff);
         this.isError = false;
         this.snackBar.open('Staff has been changed!', 'Ok', {duration: 7000});
       }, error => {
@@ -112,10 +111,9 @@ export class ChangeStaffDialogComponent extends Unsubscribable implements OnInit
   }
 
   setStaff() {
-    this.staff.active = Object.assign( {}, true);
     this.staff.active = (this.changeStaffFrom.value.active as boolean);
     this.staff.speciality = this.selectedSpeciality;
-    console.log(this.staff);
+    console.log('Staff',  this.staff);
   }
 }
 

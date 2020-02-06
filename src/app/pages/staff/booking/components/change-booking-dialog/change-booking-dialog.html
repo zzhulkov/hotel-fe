@@ -72,7 +72,7 @@
                         [disabled]="!selectedApartmentsClass">
               <mat-option *ngFor="let apartment of apartmentsList"
                           (click)="onSelectAprtmnt(apartment)"
-                          value={{apartment?.roomNumber}}>
+                          [value]="apartment?.roomNumber">
 
                 {{apartment?.roomNumber}}
               </mat-option>
@@ -94,10 +94,6 @@
             <p></p>
             <button style="background-color: tomato" class="mat-button"
                     mat-raised-button (click)="deleteBooking()">Delete
-            </button>
-            <button mat-button
-                    [mat-dialog-close]="true">
-              Cancel
             </button>
             <button
               type="submit"
