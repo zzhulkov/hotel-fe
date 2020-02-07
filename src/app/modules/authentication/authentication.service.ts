@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Injectable, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {User} from '../../component/user';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
@@ -11,16 +11,22 @@ const BASE_URL = new ConstantsService().BASE_URL;
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public token: string;
-  public currentUser: Observable<User>;
-  private http: HttpClient;
+  private currentUserSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+  private tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public currentUser: Observable<User> = this.currentUserSubject.asObservable();
 
-  constructor(http: HttpClient) {
-    this.http = http;
-    this.token = localStorage.getItem('token');
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
-    this.currentUser = this.currentUserSubject.asObservable();
+  constructor(private http: HttpClient) {
+    this.tokenSubject.next(localStorage.getItem('token'));
+  }
+
+  public getUser() {
+    if (this.tokenSubject.value !== null) {
+      this.http.get(BASE_URL + 'users/current')
+        .subscribe(
+          (user: User) => {
+            this.currentUserSubject.next(user);
+          });
+    }
   }
 
   public get currentUserObservable(): Observable<User> {
@@ -29,6 +35,10 @@ export class AuthenticationService {
 
   public get currentUserObject(): User {
     return this.currentUserSubject.value;
+  }
+
+  token(): string {
+    return this.tokenSubject.value;
   }
 
   login(username: string, password: string): Observable<any> {
@@ -47,14 +57,13 @@ export class AuthenticationService {
       data => {
           if (data.hasOwnProperty('token')) {
             const tok = (data as {token});
-            this.token = tok.token;
+            this.tokenSubject.next(tok.token);
             localStorage.setItem('token', tok.token);
             if (isNotNullOrUndefined(tok)) {
               this.http.get(BASE_URL + 'users?login=' + username)
                 .subscribe(
                   resp => {
                     this.currentUserSubject.next((resp as User));
-                    localStorage.setItem('user', JSON.stringify(resp as User));
                     isRespounseCorrect.next(1);
                   }
                 );
@@ -67,10 +76,9 @@ export class AuthenticationService {
   }
 
   logout() {
-    localStorage.removeItem('user');
     localStorage.removeItem('token');
     this.currentUserSubject.next(null);
-    this.token = null;
+    this.tokenSubject.next(null);
   }
 
   registration(user: User): Observable<any> {

@@ -1,10 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {AuthenticationService} from '../authentication.service';
-import {error} from "selenium-webdriver";
-import {combineAll, takeUntil} from "rxjs/operators";
-import {Subject} from "rxjs";
-import {Unsubscribable} from "../../../component/Unsubscribable";
 
 @Component({
   selector: 'app-login-form',
@@ -22,8 +18,8 @@ export class LoginFormComponent implements OnInit{
   ngOnInit() {
     this.authenticationForm = this.fb.group({
       // TODO: delete values
-      login: ['', Validators.required],
-      password: ['', Validators.required]
+      login: ['',[Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern('(\\w|_|\\d)+')]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(30), Validators.pattern('(\\w|_|\\d)+')]]
     });
   }
 
