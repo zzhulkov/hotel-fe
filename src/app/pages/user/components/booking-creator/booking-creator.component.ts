@@ -255,7 +255,7 @@ export class BookingCreatorComponent implements OnInit {
   }
 
   onConfirmBookingClick() {
-    this.http.patch(BASE_URL + 'bookings/' + this.currentBooking.id, {status: 'Confirmed'})
+    this.http.patch(BASE_URL + 'bookings/' + this.currentBooking.id, {bookingStatus: 'Confirmed'})
       .subscribe(
         data => {
           this.currentBooking.bookingStatus = 'Confirmed';
