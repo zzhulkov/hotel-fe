@@ -5,11 +5,11 @@ import {DatePipe} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {ApartmentsClass} from '../../../../component/apartments-class';
 import {Apartments} from '../../../../component/apartments';
-import {Booking} from "../../../../component/booking";
-import {AuthenticationService} from "../../../../modules/authentication/authentication.service";
-import {User} from "../../../../component/user";
-import {BookingAddService} from "../../../../component/bookingAddService";
-import {ConstantsService} from "../../../../services/constants.service";
+import {Booking} from '../../../../component/booking';
+import {AuthenticationService} from '../../../../modules/authentication/authentication.service';
+import {User} from '../../../../component/user';
+import {BookingAddService} from '../../../../component/bookingAddService';
+import {ConstantsService} from '../../../../services/constants.service';
 
 const BASE_URL = new ConstantsService().BASE_URL;
 
