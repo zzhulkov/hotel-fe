@@ -13,6 +13,7 @@ import {TaskPageModule} from "./pages/tasks-page/task-page.module";
 import {ConstantsService} from './services/constants.service';
 import {AuthenticationService} from "./modules/authentication/authentication.service";
 
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -31,7 +32,7 @@ import {AuthenticationService} from "./modules/authentication/authentication.ser
     HttpService,
     AuthenticationService,
     ConstantsService,
-    { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true }
+    {provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

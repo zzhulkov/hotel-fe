@@ -1,6 +1,6 @@
 /*styles for navigation*/
 
-nav{
+nav {
   max-width: 1000px;
   height: 70px;
   display: flex;
@@ -11,20 +11,22 @@ nav{
   grid-area: container-content;
 }
 
-nav a{
+nav a {
   color: inherit;
 }
-.logo{
+
+.logo {
   width: 90px;
   display: flex;
   justify-content: center;
   margin-right: auto;
 }
-.logo img{
+
+.logo img {
   width: 60px;
 }
 
-.menu{
+.menu {
   max-width: 500px;
   width: 100%;
   display: flex;
@@ -33,10 +35,11 @@ nav a{
   margin: 0 15px;
 }
 
-.sign-welcome, .signed{
+.sign-welcome, .signed {
   margin-left: auto;
   width: 96px;
 }
+
 .signed p {
   font-size: 16px;
   cursor: pointer;
@@ -51,32 +54,36 @@ nav a{
   align-items: center;
   align-content: center;
 }
-.sign-welcome{
+
+.sign-welcome {
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 10px 0;
 }
+
 /*end of styles for navigation*/
 
-.auth-reg-container{
+.auth-reg-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
 }
-.close-btn{
+
+.close-btn {
   align-self: flex-end;
 }
 
-.close-btn img{
+.close-btn img {
   width: 25px;
   background-color: white;
   margin-right: 30px;
   cursor: pointer;
 }
-app-registration-form, app-login-form{
+
+app-registration-form, app-login-form {
   max-width: 400px;
   width: 100%;
   padding-bottom: 20px;

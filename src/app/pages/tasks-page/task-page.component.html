@@ -4,7 +4,9 @@
   <p *ngIf="!canAccess" style="color: crimson">You can't use this page, because you aren't Worker</p>
   <button mat-button (click)="logout()">Logout</button>
 </div>
-<div *ngIf="!logged" class="login"><app-login-form></app-login-form></div>
+<div *ngIf="!logged" class="login">
+  <app-login-form></app-login-form>
+</div>
 
 
 <div class="loading" *ngIf="canAccess && workerTasks == null">
@@ -16,15 +18,15 @@
     <div class="task-container opened">
       <img src="../../../assets/img/meme/0ed9e2cd36d1268a03fda0f83d32f68a.jpg"/>
       <div *ngFor="let t of workerTasks">
-      <div *ngIf="t.status == 'OPEN'" class="task">
-        <p>Created: <span>{{t.start}}</span></p>
-        <p>End: <span>{{t.end}}</span></p>
-        <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
-        <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
-        <p>Description: <span>{{t.description}}</span></p>
-        <button mat-button (click)="accept(t.id)" class="blue-button">Accept</button>
-        <button mat-button (click)="cancel(t.id)" class="red-button">Cancel</button>
-      </div>
+        <div *ngIf="t.status == 'OPEN'" class="task">
+          <p>Created: <span>{{t.start}}</span></p>
+          <p>End: <span>{{t.end}}</span></p>
+          <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
+          <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
+          <p>Description: <span>{{t.description}}</span></p>
+          <button mat-button (click)="accept(t.id)" class="blue-button">Accept</button>
+          <button mat-button (click)="cancel(t.id)" class="red-button">Cancel</button>
+        </div>
       </div>
     </div>
   </mat-tab>
@@ -32,16 +34,16 @@
     <div class="task-container started">
       <img src="https://cs8.pikabu.ru/images/previews_comm/2016-03_6/14592464771100688822.png" alt="Готов вкалывать">
       <div *ngFor="let t of workerTasks">
-      <div *ngIf="t.status == 'Started'" class="task">
-        <p>Created: <span>{{t.start}}</span></p>
-        <p>End: <span>{{t.end}}</span></p>
-        <p>Accepted: <span>{{t.accept}}</span></p>
-        <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
-        <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
-        <p>Description: <span>{{t.description}}</span></p>
-        <button mat-button (click)="finish(t.id)" class="green-button">Finish</button>
-        <button mat-button (click)="cancel(t.id)" class="red-button">Cancel</button>
-      </div>
+        <div *ngIf="t.status == 'Started'" class="task">
+          <p>Created: <span>{{t.start}}</span></p>
+          <p>End: <span>{{t.end}}</span></p>
+          <p>Accepted: <span>{{t.accept}}</span></p>
+          <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
+          <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
+          <p>Description: <span>{{t.description}}</span></p>
+          <button mat-button (click)="finish(t.id)" class="green-button">Finish</button>
+          <button mat-button (click)="cancel(t.id)" class="red-button">Cancel</button>
+        </div>
       </div>
     </div>
   </mat-tab>
@@ -49,47 +51,47 @@
     <div class="task-container complete">
       <img src="../../../assets/img/meme/482ef9914092da367914a188a6e04c65.jpg"/>
       <div *ngFor="let t of workerTasks">
-      <div *ngIf="t.status == 'Complete'" class="task">
-        <p>Created: <span>{{t.start}}</span></p>
-        <p>End: <span>{{t.end}}</span></p>
-        <p>Accepted: <span>{{t.accept}}</span></p>
-        <p>Complete: <span>{{t.complete}}</span></p>
-        <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
-        <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
-        <p>Description: <span>{{t.description}}</span></p>
-      </div>
+        <div *ngIf="t.status == 'Complete'" class="task">
+          <p>Created: <span>{{t.start}}</span></p>
+          <p>End: <span>{{t.end}}</span></p>
+          <p>Accepted: <span>{{t.accept}}</span></p>
+          <p>Complete: <span>{{t.complete}}</span></p>
+          <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
+          <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
+          <p>Description: <span>{{t.description}}</span></p>
+        </div>
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="Failed" >
+  <mat-tab label="Failed">
     <div class="task-container failed">
       <img src="../../../assets/img/meme/5f4a9fc5f614bc23cbd1abbfc817baa5.jpg"/>
       <div *ngFor="let t of workerTasks">
-      <div *ngIf="t.status == 'Failed'" class="task">
-        <p>Created: <span>{{t.start}}</span></p>
-        <p>End: <span>{{t.end}}</span></p>
-        <p>Accepted: <span>{{t.accept}}</span></p>
-        <p>Complete: <span>{{t.complete}}</span></p>
-        <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
-        <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
-        <p>Description: <span>{{t.description}}</span></p>
-      </div>
+        <div *ngIf="t.status == 'Failed'" class="task">
+          <p>Created: <span>{{t.start}}</span></p>
+          <p>End: <span>{{t.end}}</span></p>
+          <p>Accepted: <span>{{t.accept}}</span></p>
+          <p>Complete: <span>{{t.complete}}</span></p>
+          <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
+          <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
+          <p>Description: <span>{{t.description}}</span></p>
+        </div>
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="Canceled" >
+  <mat-tab label="Canceled">
     <div class="task-container canceled">
       <img src="../../../assets/img/meme/16ae280f30f62db671a9338448e5b69e.jpg"/>
       <div *ngFor="let t of workerTasks">
-      <div *ngIf="t.status == 'Canceled'" class="task">
-        <p>Created: <span>{{t.start}}</span></p>
-        <p>End: <span>{{t.end}}</span></p>
-        <p>Accepted: <span>{{t.accept}}</span></p>
-        <p>Complete: <span>{{t.complete}}</span></p>
-        <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
-        <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
-        <p>Description: <span>{{t.description}}</span></p>
-      </div>
+        <div *ngIf="t.status == 'Canceled'" class="task">
+          <p>Created: <span>{{t.start}}</span></p>
+          <p>End: <span>{{t.end}}</span></p>
+          <p>Accepted: <span>{{t.accept}}</span></p>
+          <p>Complete: <span>{{t.complete}}</span></p>
+          <p>Room: <span>{{t.apartment.roomNumber}}</span></p>
+          <p>Creator: <span>{{t.creator.user.firstname + ' ' + t.creator.user.lastname}}</span></p>
+          <p>Description: <span>{{t.description}}</span></p>
+        </div>
       </div>
     </div>
   </mat-tab>

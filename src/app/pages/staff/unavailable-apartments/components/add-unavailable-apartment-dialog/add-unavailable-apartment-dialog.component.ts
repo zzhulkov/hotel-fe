@@ -7,6 +7,9 @@ import {UnavailableApartment} from '../../../../../component/unavailable-apartme
 import {Subscription} from 'rxjs';
 import {SelectService} from '../../../../../services/select.service';
 import {Unsubscribable} from '../../../../../component/Unsubscribable';
+import {DatePipe} from "@angular/common";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialogRef} from "@angular/material/dialog";
 
 /**
  * @title Dialog with header, scrollable content and actions
@@ -19,19 +22,23 @@ const URL = new ConstantsService().BASE_URL;
   styleUrls: ['../../../styles/change-dialog.css'],
   templateUrl: './add-unavailable-apartment-dialog.html',
 })
-export class AddUnavailableApartmentDialogComponent extends Unsubscribable implements OnInit {
+export class AddUnavailableApartmentDialogComponent implements OnInit {
 
   addForm: FormGroup;
-
+  isError = false;
   unavailableApartment = {} as UnavailableApartment;
   subscription: Subscription;
 
 
   apartmentsList: Apartments[];
   selectedApartment: Apartments;
-  // tslint:disable-next-line:max-line-length
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, public selectService: SelectService) {
-    super(selectService);
+
+  constructor(private formBuilder: FormBuilder,
+              private http: HttpClient,
+              public selectService: SelectService,
+              private datePipe: DatePipe,
+              private snackBar: MatSnackBar,
+              private matDialogRef: MatDialogRef<AddUnavailableApartmentDialogComponent>) {
     this.getAllApartments();
   }
 
@@ -39,8 +46,8 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
     this.addForm = this.formBuilder.group({
       apartment: ['', Validators.required],
       causeDescription: ['', Validators.required],
-      startDate: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')],
-      endDate: ['', Validators.pattern('(\\d{4})-(\\d{2})-(\\d{2})')]
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required]
     });
 
     this.checkValid();
@@ -57,12 +64,19 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
   }
 
   onSubmit() {
+    this.isError = true;
     if (this.addForm.valid) {
       this.setUnavailableApartment();
     }
   }
 
   setUnavailableApartment() {
+    const startDateCleaned = this.datePipe.transform(this.addForm.value.startDate, 'yyyy-MM-dd');
+    const endDateCleaned = this.datePipe.transform(this.addForm.value.endDate, 'yyyy-MM-dd');
+    this.addForm.patchValue({
+      startDate: startDateCleaned,
+      endDate: endDateCleaned
+    });
     this.unavailableApartment.apartment = this.selectedApartment;
     this.unavailableApartment.startDate = this.addForm.value.startDate;
     this.unavailableApartment.endDate = this.addForm.value.endDate;
@@ -87,6 +101,14 @@ export class AddUnavailableApartmentDialogComponent extends Unsubscribable imple
       res => {
         console.log(res);
         this.unavailableApartment = (res as UnavailableApartment);
+        this.isError = false;
+        this.matDialogRef.close();
+        this.selectService.announceAdd(res);
+        this.snackBar.open('Unavailable apartment has been added!', 'Ok', { duration: 6000});
+      },
+      error => {
+        this.isError = false;
+        this.snackBar.open('Error: '.concat(error.error), 'Ok', { duration: 6000});
       });
   }
 }

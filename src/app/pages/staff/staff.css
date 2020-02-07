@@ -1,10 +1,10 @@
-.logged{
+.logged {
   text-align: center;
   justify-content: center;
   padding: 10px;
 }
 
-.login{
+.login {
   width: 100%;
   height: 100vh;
   display: flex;
@@ -12,62 +12,71 @@
   justify-content: center;
 }
 
-app-login-form{
+app-login-form {
   width: 300px;
 }
 
-nav{
+nav {
   height: 70px;
   display: flex;
   align-content: center;
   padding: 10px 30px;
-  background: rgb(2,62,188);
-  background: linear-gradient(166deg, rgba(2,62,188,1) 0%, rgba(0,212,255,1) 100%);
+  background: rgb(2, 62, 188);
+  background: linear-gradient(166deg, rgba(2, 62, 188, 1) 0%, rgba(0, 212, 255, 1) 100%);
 }
 
-.mat-button{
+.mat-button {
   color: white;
 }
 
-.logo img{
+.logo img {
   width: 70px;
 }
-.menu{
+
+.menu {
   margin: 0 auto;
   display: flex;
   align-items: center;
 }
-.menu button{
+
+.menu button {
   margin: 0 5px;
 }
 
-.logout{
+.logout {
   display: flex;
   align-items: center;
 }
 
 /*colors*/
-.blueviolet{
-  background: rgba(124,0,255,0.3) ;
+.blueviolet {
+  background: rgba(124, 0, 255, 0.3);
 }
-.coral{
+
+.coral {
   border-bottom: 2px solid coral;
   /*background-color: coral;*/
 
 }
-.cornflowerblue{
+
+.cornflowerblue {
   background-color: cornflowerblue;
 }
-.darkorange{
+
+.darkorange {
   background-color: darkorange;
 }
-.darkorchid{
+
+.darkorchid {
   background-color: darkorchid;
 }
-.lightseagreen{
+
+.lightseagreen {
   background-color: lightseagreen;
 }
-.mediumorchid{
+
+.mediumorchid {
   background-color: mediumorchid;
 }
+
 /*colors end*/

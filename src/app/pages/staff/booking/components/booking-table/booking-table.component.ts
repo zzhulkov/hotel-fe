@@ -7,7 +7,8 @@ import {Booking} from '../../../../../component/booking';
 import {ConstantsService} from '../../../../../services/constants.service';
 import {FormControl} from '@angular/forms';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
-import {SelectService} from "../../../../../services/select.service";
+import {SelectService} from '../../../../../services/select.service';
+import {Subscription} from "rxjs";
 
 
 const URL = new ConstantsService().BASE_URL;
@@ -25,11 +26,26 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  isEmptyTable = false;
   private dataTransfer: DataTransferService;
   selectedRow: any;
   bookingList = new MatTableDataSource<Booking>();
-  selectedBooking: Booking;
-  displayedColumns = ['id', 'startDate', 'endDate', 'totalPrice', 'comments', 'createdDate', 'review', 'bookingStatus', 'email', 'nameClass', 'roomNumber'];
+  displayedColumns = [
+    'id',
+    'startDate',
+    'endDate',
+    'totalPrice',
+    'comments',
+    'createdDate',
+    'review',
+    'bookingStatus',
+    'email',
+    'nameClass',
+    'roomNumber'
+  ];
+
+  subscription: Subscription;
+  subscriptionDelete: Subscription;
   dataSource = this.bookingList;
   startDateFilter = new FormControl('');
   endDateFilter = new FormControl('');
@@ -64,11 +80,11 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
   }
 
   haveApartments(booking: any): boolean {
-    if (booking.apartment == null) {
-      return false;
-    } else {
-      return true;
-    }
+    return booking.apartment != null;
+  }
+
+  haveUser(booking: any): boolean {
+    return booking.user != null;
   }
 
   selectRow(row: any): void {
@@ -78,11 +94,29 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     this.selectService.announceSelect(row);
   }
 
-  onSelect(booking: Booking): void {
-    this.selectedBooking = booking;
-  }
 
   ngOnInit() {
+    this.subscription = this.selectService.addAnnounced$
+      .subscribe(res => {
+        if (res != null) {
+          this.isEmptyTable = false;
+          this.getAllBookings();
+          this.ngAfterViewInit();
+          this.selectService.announceAdd(null);
+        }
+      }, error => {
+        console.log(error);
+      });
+    this.subscriptionDelete = this.selectService.deleteAnnounced$
+      .subscribe(res => {
+        if (res != null) {
+          this.isEmptyTable = false;
+          this.getAllBookings();
+          this.ngAfterViewInit();
+          this.selectService.announceDelete(null);
+        }
+      });
+
     this.startDateFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         startDate => {
@@ -164,24 +198,29 @@ export class BookingTableComponent extends Unsubscribable implements OnInit, Aft
     this.http.get(URL + 'bookings/').subscribe(res => {
       console.log(res);
       this.dataSource.data = (res as Booking[]);
+      this.isEmptyTable = true;
     });
   }
 
   createFilter(): (data: any, filter: string) => boolean {
     // tslint:disable-next-line:only-arrow-functions
-    const filterFunction = function (data, filter): boolean {
-      const searchTerms = JSON.parse(filter);
+    let filterFunction = function (data, filter): boolean {
+      let searchTerms = JSON.parse(filter);
       let result = data.startDate.toString().toLowerCase().indexOf(searchTerms.startDate) !== -1
         && data.endDate.toString().toLowerCase().indexOf(searchTerms.endDate) !== -1
         && data.totalPrice.toString().toLowerCase().indexOf(searchTerms.totalPrice) !== -1
         && data.createdDate.toString().toLowerCase().indexOf(searchTerms.createdDate) !== -1
         && data.bookingStatus.toString().toLowerCase().indexOf(searchTerms.bookingStatus) !== -1
-        && data.user.firstname.indexOf(searchTerms.firstname) !== -1
         && data.apartmentClass.nameClass.indexOf(searchTerms.nameClass) !== -1;
 
       if (data.apartment !== null) {
         result = result && data.apartment.roomNumber.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
       }
+
+      if (data.user !== null) {
+        result = result && data.user.firstname.indexOf(searchTerms.firstname) !== -1;
+      }
+
       return result;
     };
     return filterFunction;

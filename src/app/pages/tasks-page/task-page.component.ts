@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {AuthenticationService} from '../../modules/authentication/authentication.service';
-import {LoginFormComponent} from '../../modules/authentication/login-form/login-form.component';
 import {Task} from '../../component/task';
 import {HttpClient} from '@angular/common/http';
 import {TaskStatus} from '../../component/task-status.type';
@@ -50,7 +49,7 @@ export class TaskPageComponent {
   }
 
   changeTaskStatus(id: number, newStatus: string) {
-    this.http.patch( BASE_URL + 'tasks/' + id, {status: newStatus})
+    this.http.patch(BASE_URL + 'tasks/' + id, {status: newStatus})
       .subscribe(
         data => {
           this.workerTasks

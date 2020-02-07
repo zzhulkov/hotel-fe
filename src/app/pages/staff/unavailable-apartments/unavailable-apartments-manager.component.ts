@@ -28,7 +28,8 @@ export class UnavailableApartmentsManagerComponent extends Unsubscribable implem
   }
 
   addUnavailableApartmentDialog() {
-    const dialogRef = this.dialog.open(AddUnavailableApartmentDialogComponent);
+    const dialogRef = this.dialog.open(AddUnavailableApartmentDialogComponent,
+      {disableClose: true, autoFocus: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

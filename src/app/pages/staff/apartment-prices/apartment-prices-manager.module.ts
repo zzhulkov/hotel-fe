@@ -18,6 +18,18 @@ import {DeleteApartmentPricesDialogComponent} from './components/delete-apartmen
 import {ChangeApartmentPricesDialogComponent} from './components/change-apartment-prices-dialog/change-apartment-prices-dialog.component';
 import {AddApartmentPricesDialogComponent} from './components/add-apartment-prices-dialog/add-apartment-prices-dialog.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MatDateFormats,
+  MatNativeDateModule,
+  NativeDateAdapter
+} from '@angular/material/core';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {APP_DATE_FORMATS, AppDateAdapter} from '../../../utils/AppDateAdapter';
+import {AnimationsModule} from "../../../modules/animations/animations.module";
+
 
 @NgModule({
   imports: [
@@ -31,7 +43,10 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatDialogModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatSnackBarModule,
+    AnimationsModule
   ],
   exports: [
     MatButtonModule,
@@ -48,7 +63,11 @@ import {ReactiveFormsModule} from '@angular/forms';
     DeleteApartmentPricesDialogComponent,
     ChangeApartmentPricesDialogComponent
   ],
-  providers: [HttpService, EventEmitter],
+  providers: [HttpService, EventEmitter,
+    MatDatepickerModule,
+    MatSnackBar,
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}],
   entryComponents: [
     DeleteApartmentPricesDialogComponent,
     ChangeApartmentPricesDialogComponent,

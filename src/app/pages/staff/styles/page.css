@@ -1,8 +1,8 @@
-section{
+section {
   background-color: ghostwhite;
 }
 
-.wrap{
+.wrap {
   display: flex;
   justify-content: space-between;
 }
@@ -17,7 +17,7 @@ section{
   background-color: white;
 }
 
-.buttons>p{
+.buttons > p {
   color: coral;
 }
 
@@ -38,6 +38,6 @@ section{
   width: 100px;
 }
 
-.mat-dialog-actions{
+.mat-dialog-actions {
   justify-content: space-between;
 }

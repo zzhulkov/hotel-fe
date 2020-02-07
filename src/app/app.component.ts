@@ -22,7 +22,7 @@ export class AppComponent extends Unsubscribable implements OnInit {
 
   ngOnInit(): void {
     this.auth.getUser();
-    if (this.location.path().includes('task-page')){
+    if (this.location.path().includes('task-page')) {
       this.page = 'task-page';
     } else if (this.location.path().includes('manager')) {
       this.page = 'manager';

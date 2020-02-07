@@ -1,12 +1,25 @@
-<form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="change-apartment">
-  <h2 mat-dialog-title>Add Booking</h2>
+<form [formGroup]="addForm" class="change-apartment">
+  <div *ngIf="isError || apartmentsList == null" class="form-loader">
+    <app-loading-animation></app-loading-animation>
+  </div>
+  <div *ngIf="!isError && apartmentsList != null">
+  <h2 mat-dialog-title>Add Unavailable</h2>
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
-      <input matInput required="required" formControlName="startDate" class="full-width" placeholder="Start date">
+      <input matInput [matDatepicker]="pickerStart"
+             required="required" formControlName="startDate"
+             class="full-width" placeholder="Start date">
+      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
     </mat-form-field>
     <br/>
     <mat-form-field>
-      <input matInput required="required" formControlName="endDate" class="full-width" placeholder="End date">
+      <input matInput [matDatepicker]="pickerEnd"
+             required="required" formControlName="endDate"
+             class="full-width" placeholder="End date"
+             [disabled]="!addForm.value.startDate">
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
     </mat-form-field>
     <br/>
     <mat-form-field>
@@ -28,7 +41,9 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="true" mat-dialog-close>Cancel</button>
-    <button type="submit" (click)="checkValid()" mat-dialog-close [disabled]="isSubmitDisabled()" mat-button>Add</button>
+    <button type="submit" (click)="onSubmit()" [disabled]="isSubmitDisabled()" mat-button>Add
+    </button>
   </mat-dialog-actions>
+  </div>
 </form>
 

@@ -7,6 +7,7 @@ import {DatePipe} from '@angular/common';
 import {ConstantsService} from '../../../../services/constants.service';
 import {BookingAddService} from '../../../../component/bookingAddService';
 
+
 const BASE_URL = new ConstantsService().BASE_URL;
 
 @Component({
@@ -21,7 +22,8 @@ export class UserBookingHistoryComponent implements OnInit {
   userBookingsHistory: BookingWithServices[];
   reviewForms: ReviewForm[] = [];
 
-  constructor(private http: HttpClient, private authService: AuthenticationService, private fb: FormBuilder, private dp: DatePipe) {}
+  constructor(private http: HttpClient, private authService: AuthenticationService, private fb: FormBuilder, private dp: DatePipe) {
+  }
 
   ngOnInit(): void {
     this.getBookings();

@@ -31,7 +31,7 @@ export class ApartmentsClassesManagerComponent extends Unsubscribable {
   }
 
   addDialog() {
-    const dialogRef = this.dialog.open(AddApartmentsClassesDialogComponent);
+    const dialogRef = this.dialog.open(AddApartmentsClassesDialogComponent, {disableClose: true, autoFocus: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

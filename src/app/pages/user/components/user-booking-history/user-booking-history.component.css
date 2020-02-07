@@ -1,5 +1,5 @@
 
-.userBookingHistory{
+.userBookingHistory {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -7,14 +7,16 @@
   padding: 20px;
 }
 
-.booking{
+.booking {
   margin: 10px 5px;
   padding: 15px;
 }
-.info button{
+
+.info button {
   margin: 0 auto;
 }
-.info .mat-button{
+
+.info .mat-button {
   background-color: crimson;
   color: white;
 }
@@ -24,24 +26,23 @@
   justify-content: center;
 }
 
-.booking.finished .info{
+.booking.finished .info {
   float: right;
   margin-right: 30px;
 }
 
-
-.review{
+.review {
   display: flex;
   align-items: center;
   align-content: center;
 }
 
-.review textarea{
+.review textarea {
   width: 200px;
   height: 70px;
 }
 
-.review .mat-button{
+.review .mat-button {
   background-color: #023EBC;
   color: white;
   margin-top: 10px;

@@ -14,23 +14,27 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {DeleteApartmentsDialogComponent} from './components/delete-apartment-dialog/delete-apartments-dialog.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {AnimationsModule} from "../../../modules/animations/animations.module";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 @NgModule({
-  imports: [
-    MatPaginatorModule,
-    BrowserModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatTableModule,
-    MatDialogModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatExpansionModule,
-    MatCheckboxModule
-  ],
+    imports: [
+        MatPaginatorModule,
+        BrowserModule,
+        HttpClientModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatTableModule,
+        MatDialogModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatExpansionModule,
+        MatCheckboxModule,
+        AnimationsModule,
+      MatSnackBarModule
+    ],
   exports: [
     MatButtonModule,
     MatDialogModule,

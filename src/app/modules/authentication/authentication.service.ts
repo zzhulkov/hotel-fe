@@ -49,10 +49,10 @@ export class AuthenticationService {
     const isRespounseCorrect = new Subject<number>();
     isRespounseCorrect.next(0);
 
-    // TODO: CHANGE URLS
+  
     const response = this.http.get(BASE_URL + 'authenticate?'
-                                  + 'username=' + username
-                                  + '&password=' + password);
+      + 'username=' + username
+      + '&password=' + password);
     response.subscribe(
       data => {
           if (data.hasOwnProperty('token')) {
@@ -65,13 +65,14 @@ export class AuthenticationService {
                   resp => {
                     this.currentUserSubject.next((resp as User));
                     isRespounseCorrect.next(1);
-                  }
-                );
+                });
             }
           }
       },
-      err => {isRespounseCorrect.next(2);}
-      );
+      err => {
+        isRespounseCorrect.next(2);
+      }
+    );
     return isRespounseCorrect;
   }
 
@@ -88,17 +89,17 @@ export class AuthenticationService {
 
     this.http.post(BASE_URL + 'users', user)
       .subscribe(data => {
-        console.log(data);
-        this.login(user.login, user.password);
-      },
-      err => {
-        console.log(err);
-        const fields = err.error.match(/\(\w+\)/g);
-        if (fields) {
-          let f = fields[0].replace(/[()]/g, '');
-          errorField.next(f);
-        }
-      });
+          console.log(data);
+          this.login(user.login, user.password);
+        },
+        err => {
+          console.log(err);
+          const fields = err.error.match(/\(\w+\)/g);
+          if (fields) {
+            let f = fields[0].replace(/[()]/g, '');
+            errorField.next(f);
+          }
+        });
     return errorField.asObservable();
   }
 }

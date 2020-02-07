@@ -24,7 +24,8 @@ export class TaskManagerComponent extends Unsubscribable {
   }
 
   addDialog() {
-    const dialogRef = this.dialog.open(AddTaskDialogComponent);
+    const dialogRef = this.dialog.open(AddTaskDialogComponent,
+      {disableClose: true, autoFocus: true});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

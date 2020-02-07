@@ -5,6 +5,7 @@
 <div *ngIf="userBookingsHistory != null && userBookingsHistory[0] == null"><p>You have not created any orders yet.</p></div>
 
 <div class="userBookingHistory" *ngIf="userBookingsHistory != null">
+
   <div class="booking" *ngFor="let bookingWithServ of userBookingsHistory; let i = index" [ngClass]="{'finished': bookingWithServ.booking.endDate < currentDate}">
     <div class="info">
       <p class="colored">{{bookingWithServ.booking.startDate}} - {{bookingWithServ.booking.endDate}}</p>

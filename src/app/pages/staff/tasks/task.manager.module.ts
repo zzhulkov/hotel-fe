@@ -14,41 +14,42 @@ import {ChangeTaskDialogComponent} from './change-task-dialog/change-task-dialog
 import {TaskTableComponent} from "./task-table/taks-table.component";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
-import {DeleteTaskDialogComponent} from "./delete-task-dialog/delete-task-dialog.component";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {TextMaskModule} from "angular2-text-mask";
 import {NgxMaskModule} from "ngx-mask";
+import {AnimationsModule} from "../../../modules/animations/animations.module";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatPaginatorModule,
-    MatTableModule,
-    MatExpansionModule,
-    TextMaskModule,
-    FormsModule,
-    NgxMaskModule.forRoot({
-      showMaskTyped : true,
-    })
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatExpansionModule,
+        TextMaskModule,
+        FormsModule,
+        NgxMaskModule.forRoot({
+            showMaskTyped: true,
+        }),
+        AnimationsModule,
+      MatSnackBarModule
+    ],
   declarations: [
     TaskManagerComponent,
     AddTaskDialogComponent,
     ChangeTaskDialogComponent,
-    DeleteTaskDialogComponent,
     TaskTableComponent
   ],
   entryComponents: [
     AddTaskDialogComponent,
-    ChangeTaskDialogComponent,
-  DeleteTaskDialogComponent],
+    ChangeTaskDialogComponent],
   providers: [HttpService]
 })
 export class TaskManagerModule {
