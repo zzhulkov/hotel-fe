@@ -16,7 +16,7 @@ export class JWTInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.token();
     if (req.url.includes('authenticate')) {
-     return next.handle(req);
+      return next.handle(req);
     }
     if (isNotNullOrUndefined(token)) {
       req = req.clone({

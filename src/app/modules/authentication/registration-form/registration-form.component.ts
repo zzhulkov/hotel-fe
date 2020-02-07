@@ -1,10 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../authentication.service';
 import {User} from '../../../component/user';
-import {Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
-import {Unsubscribable} from "../../../component/Unsubscribable";
 
 @Component({
   selector: 'app-registration-form',
@@ -67,7 +64,7 @@ export class RegistrationFormComponent implements OnInit {
       return;
     }
 
-    const user: User =  this.registrationForm.value;
+    const user: User = this.registrationForm.value;
     user.userRole = 'Client';
     console.log(user);
     this.authService.registration(user)
@@ -78,7 +75,6 @@ export class RegistrationFormComponent implements OnInit {
         }
       });
   }
-
 
 
 }

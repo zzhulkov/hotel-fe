@@ -1,5 +1,5 @@
 import {ConstantsService} from "../../../../services/constants.service";
-import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
 import {Unsubscribable} from "../../../../component/Unsubscribable";
 import {DataTransferService} from "../../../../services/data-transfer.service";
 import {MatPaginator} from "@angular/material/paginator";
@@ -9,6 +9,8 @@ import {Task} from "../../../../component/task";
 import {MatTableDataSource} from '@angular/material/table';
 import {takeUntil} from 'rxjs/operators';
 import {SelectService} from "../../../../services/select.service";
+import {Subscription} from "rxjs";
+
 
 const URL = new ConstantsService().BASE_URL;
 
@@ -23,6 +25,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   taskList = new MatTableDataSource<Task>();
   selectedTask: Task;
+  isEmptyTable = false;
   displayedColumns = ['id', 'start', 'end', 'accept', 'complete', 'description', 'status', 'apartmentsRoomNumber', 'creatorEmail', 'executorEmail'];
   dataSource = this.taskList;
   startFilter = new FormControl('');
@@ -34,9 +37,10 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   apartmentsRoomNumberFilter = new FormControl('');
   creatorFilter = new FormControl('');
   executorFilter = new FormControl('');
+  subscription: Subscription;
+  subscriptionDelete: Subscription;
 
   filterValues = {
-    id: '',
     start: '',
     end: '',
     accept: '',
@@ -53,6 +57,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
 
   constructor(private http: HttpClient, dataTransfer: DataTransferService, public selectService: SelectService) {
     super(selectService);
+    console.log(this.dataTransfer);
     this.getAllTask();
     this.dataTransfer = dataTransfer;
     this.taskList.filterPredicate = this.createFilter();
@@ -86,6 +91,18 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
   }
 
   ngOnInit() {
+    this.subscription = this.selectService.addAnnounced$
+      .subscribe(res => {
+        if (res != null) {
+          this.isEmptyTable = false;
+          this.getAllTask();
+          this.ngAfterViewInit();
+          this.selectService.announceAdd(null);
+        }
+      }, error => {
+        console.log(error);
+      });
+
     this.startFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         start => {
@@ -159,6 +176,7 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
     this.http.get(URL + 'tasks/').subscribe(res => {
       console.log(res);
       this.dataSource.data = (res as Task[]);
+      this.isEmptyTable = true;
     });
   }
 
@@ -174,10 +192,10 @@ export class TaskTableComponent extends Unsubscribable implements OnInit, AfterV
         && data.creator.user.email.indexOf(searchTerms.creator) !== -1
         && data.executor.user.email.indexOf(searchTerms.executor) !== -1;
       if (data.accept !== null) {
-        result = result && data.accept.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
+        result = result && data.accept.toString().toLowerCase().indexOf(searchTerms.accept) !== -1;
       }
       if (data.complete !== null) {
-        result = result && data.complete.toString().toLowerCase().indexOf(searchTerms.roomNumber) !== -1;
+        result = result && data.complete.toString().toLowerCase().indexOf(searchTerms.complete) !== -1;
       }
       return result;
     };

@@ -19,6 +19,17 @@ import {DeleteUnavailableApartmentDialogComponent} from './components/delete-una
 import {ChangeUnavailableApartmentDialogComponent} from './components/change-unavailable-apartment-dialog/change-unavailable-apartment-dialog.component';
 import {AddUnavailableApartmentDialogComponent} from './components/add-unavailable-apartment-dialog/add-unavailable-apartment-dialog.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MatDateFormats,
+  MatNativeDateModule,
+  NativeDateAdapter
+} from '@angular/material/core';
+import {APP_DATE_FORMATS, AppDateAdapter} from '../../../utils/AppDateAdapter';
+import {AnimationsModule} from "../../../modules/animations/animations.module";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   imports: [
@@ -32,7 +43,10 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatDialogModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDatepickerModule,
+    AnimationsModule,
+    MatSnackBarModule
   ],
   exports: [
     MatButtonModule,
@@ -49,7 +63,9 @@ import {ReactiveFormsModule} from '@angular/forms';
     DeleteUnavailableApartmentDialogComponent,
     ChangeUnavailableApartmentDialogComponent
   ],
-  providers: [HttpService, EventEmitter],
+  providers: [HttpService, EventEmitter,
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}],
   entryComponents: [
     DeleteUnavailableApartmentDialogComponent,
     ChangeUnavailableApartmentDialogComponent,

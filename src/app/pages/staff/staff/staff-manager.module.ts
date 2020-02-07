@@ -19,6 +19,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {AddStaffDialogComponent} from './components/add-staff-dialog/add-staff-dialog.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import {AnimationsModule} from "../../../modules/animations/animations.module";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -34,8 +36,10 @@ import {MatExpansionModule} from "@angular/material/expansion";
         MatFormFieldModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
-      MatCheckboxModule,
-      MatExpansionModule
+        MatCheckboxModule,
+        MatExpansionModule,
+        AnimationsModule,
+      MatSnackBarModule
     ],
   exports: [
     MatButtonModule,

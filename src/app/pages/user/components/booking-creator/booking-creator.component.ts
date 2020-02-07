@@ -1,5 +1,5 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Form, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatHorizontalStepper} from '@angular/material';
 import {DatePipe} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
@@ -7,7 +7,6 @@ import {ApartmentsClass} from '../../../../component/apartments-class';
 import {Apartments} from '../../../../component/apartments';
 import {Booking} from '../../../../component/booking';
 import {AuthenticationService} from '../../../../modules/authentication/authentication.service';
-import {User} from '../../../../component/user';
 import {BookingAddService} from '../../../../component/bookingAddService';
 import {ConstantsService} from '../../../../services/constants.service';
 
@@ -51,8 +50,9 @@ export class BookingCreatorComponent implements OnInit {
     });
 
     // Check dates inputed from parent component
-    if(this.sDate != null && this.eDate != null)
+    if (this.sDate != null && this.eDate != null) {
       this.isDatesFromComplete = true;
+    }
 
     this.apartmentClassChooseForm = this.fb.group({
       apartmentClassId: [null, Validators.required]
@@ -74,16 +74,18 @@ export class BookingCreatorComponent implements OnInit {
     }
     this.isDatesFromComplete = tmp;
 
-    if ( this.startDate().value !== null) {
+    if (this.startDate().value !== null) {
       this.minDate = this.startDate().value;
     }
-    if ( this.endDate().value !== null) {
+    if (this.endDate().value !== null) {
       this.maxDate = this.endDate().value;
     }
   }
 
   onDateFormSubmit() {
-    if (!this.isDatesFromComplete) return;
+    if (!this.isDatesFromComplete) {
+      return;
+    }
     const sd = this.datePipe.transform(this.startDate().value, 'yyyy-MM-dd');
     const ed = this.datePipe.transform(this.endDate().value, 'yyyy-MM-dd');
 
@@ -91,7 +93,7 @@ export class BookingCreatorComponent implements OnInit {
     this.http.get(BASE_URL + `bookings/find?startDate=${sd}&endDate=${ed}`)
       .subscribe(
         (data: FreeApartments[]) => {
-          this.freeapartmentClasses = data.filter(cl => {return cl.countOfApartments > 0});
+          this.freeapartmentClasses = data.filter(cl => cl.countOfApartments > 0);
           console.log('got free apartments');
         },
         error => {
@@ -116,7 +118,9 @@ export class BookingCreatorComponent implements OnInit {
   }
 
   onApartmentClassFormSubmit() {
-    if (!this.isApartmentClassFormComplete) return;
+    if (!this.isApartmentClassFormComplete) {
+      return;
+    }
 
     console.log(this.apartmentClassId().value);
 
@@ -130,8 +134,8 @@ export class BookingCreatorComponent implements OnInit {
     this.http.post(BASE_URL + 'bookings', booking)
       .subscribe(
         (data: Booking) => {
-            this.currentBooking = data;
-            console.log('booking created with id ' + data.id);
+          this.currentBooking = data;
+          console.log('booking created with id ' + data.id);
         },
         error => {
           console.log('booking creation error');
@@ -167,21 +171,21 @@ export class BookingCreatorComponent implements OnInit {
   deleteBooking() {
     this.http.delete(BASE_URL + 'bookings/' + this.currentBooking.id)
       .subscribe(
-      data => {
-        console.log('booking deleted');
-      },
-      error1 => {
-        console.log('cant delete booking');
-        console.log(error1);
-      }
-    );
+        data => {
+          console.log('booking deleted');
+        },
+        error1 => {
+          console.log('cant delete booking');
+          console.log(error1);
+        }
+      );
   }
 
   onServicesFormSubmit() {
     // get choosed services from html
     let servicesCount = 0;
     this.currentServices = [];
-    const values =  document.getElementsByName('service-checkbox')
+    const values = document.getElementsByName('service-checkbox')
       .forEach((val, i, par) => {
         const v = (val as HTMLInputElement);
         if (v.checked) {

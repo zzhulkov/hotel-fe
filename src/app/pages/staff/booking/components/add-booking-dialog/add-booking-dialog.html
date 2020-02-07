@@ -1,23 +1,29 @@
-<form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="change-apartment">
+<form [formGroup]="addForm" class="change-apartment">
+  <div *ngIf="isError || userList == null || !isApartments" class="form-loader">
+    <app-loading-animation></app-loading-animation>
+  </div>
+  <div *ngIf="!isError && userList != null && isApartments">
   <h2 mat-dialog-title>Add Booking</h2>
   <mat-dialog-content class="mat-typography">
     <mat-form-field>
-        <input matInput [matDatepicker]="pickerStart"
-               required="required" formControlName="startDate"
-               class="full-width" placeholder="Start date">
-        <mat-datepicker-toggle  matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-        <mat-datepicker #pickerStart></mat-datepicker>
+      <input matInput [matDatepicker]="pickerStart"
+             (dateChange)="onClickStartPicker()"
+             required="required" formControlName="startDate"
+             class="full-width" placeholder="Start date">
+      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
       <!--<input matInput required="required" formControlName="startDate" class="full-width" placeholder="Start date"> -->
     </mat-form-field>
     <br/>
     <mat-form-field>
       <input matInput [matDatepicker]="pickerEnd"
+             (dateChange)="onClickEndPicker()"
              required="required" formControlName="endDate"
              class="full-width" placeholder="End date"
-      [disabled]="!addForm.value.startDate">
+             [disabled]="!addForm.value.startDate">
       <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
       <mat-datepicker #pickerEnd></mat-datepicker>
-     <!-- <input matInput required="required" formControlName="endDate" class="full-width" placeholder="End date"> -->
+      <!-- <input matInput required="required" formControlName="endDate" class="full-width" placeholder="End date"> -->
     </mat-form-field>
     <br/>
     <!--    <mat-form-field>-->
@@ -71,7 +77,7 @@
     <mat-form-field>
       <mat-label>Apartments Class</mat-label>
       <mat-select placeholder="Class name" formControlName="nameClass"
-      [disabled]="!addForm.value.endDate">
+                  [disabled]="!addForm.value.endDate">
         <mat-option *ngFor="let apartmentClass of apartmentsClassesList"
                     (click)="onSelectAprtmntClass(apartmentClass)"
                     value={{apartmentClass?.nameClass}}>
@@ -84,7 +90,8 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="true" mat-dialog-close>Cancel</button>
-    <button type="submit" (click)="checkValid()" mat-dialog-close [disabled]="isSubmitDisabled()" mat-button>Add</button>
+    <button type="submit" (click)="onSubmit()" [disabled]="isSubmitDisabled()" mat-button>Add</button>
   </mat-dialog-actions>
+  </div>
 </form>
 

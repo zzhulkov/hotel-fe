@@ -9,6 +9,7 @@ import {ConstantsService} from '../../../../../services/constants.service';
 import {FormControl} from '@angular/forms';
 import {DataTransferService} from '../../../../../services/data-transfer.service';
 import {SelectService} from '../../../../../services/select.service';
+import {Subscription} from "rxjs";
 
 
 const URL = new ConstantsService().BASE_URL;
@@ -26,6 +27,7 @@ export class UnavailableApartmentsTableComponent extends Unsubscribable implemen
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  isEmptyTable = false;
   private dataTransfer: DataTransferService;
   selectedRow: any;
   unavailableApartmentList = new MatTableDataSource<UnavailableApartment>();
@@ -35,6 +37,8 @@ export class UnavailableApartmentsTableComponent extends Unsubscribable implemen
   endDateFilter = new FormControl('');
   causeDescriptionFilter = new FormControl('');
   apartmentFilter = new FormControl('');
+  subscription: Subscription;
+  subscriptionDelete: Subscription;
 
   filterValues = {
     id: '',
@@ -59,6 +63,27 @@ export class UnavailableApartmentsTableComponent extends Unsubscribable implemen
   }
 
   ngOnInit() {
+    this.subscription = this.selectService.addAnnounced$
+      .subscribe(res => {
+        if (res != null) {
+          this.isEmptyTable = false;
+          this.getAllUnavailableApartments();
+          this.ngAfterViewInit();
+          this.selectService.announceAdd(null);
+        }
+      }, error => {
+        console.log(error);
+      });
+    this.subscriptionDelete = this.selectService.deleteAnnounced$
+      .subscribe(res => {
+        if (res != null) {
+          this.isEmptyTable = false;
+          this.getAllUnavailableApartments();
+          this.ngAfterViewInit();
+          this.selectService.announceDelete(null);
+        }
+      });
+
     this.startDateFilter.valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(
         startDate => {
@@ -97,12 +122,13 @@ export class UnavailableApartmentsTableComponent extends Unsubscribable implemen
     this.http.get(URL + 'unavailableApartments/').subscribe(res => {
       console.log(res);
       this.dataSource.data = (res as UnavailableApartment[]);
+      this.isEmptyTable = true;
     });
   }
 
   createFilter(): (data: any, filter: string) => boolean {
     // tslint:disable-next-line:only-arrow-functions
-    const filterFunction = function(data, filter): boolean {
+    const filterFunction = function (data, filter): boolean {
       const searchTerms = JSON.parse(filter);
       let result = data.startDate.toString().toLowerCase().indexOf(searchTerms.startDate) !== -1
         && data.endDate.toString().toLowerCase().indexOf(searchTerms.endDate) !== -1
