@@ -53,6 +53,7 @@ export class UserBookingHistoryComponent implements OnInit {
             });
             this.userBookingsHistory = [];
             data.forEach((val, i, ref) => {
+
               if (this.dp.transform(val.endDate, 'yyyy-MM-dd') < this.currentDate && val.review === null) {
                 this.reviewForms[i] = new ReviewForm();
                 this.reviewForms[i].id = val.id;
